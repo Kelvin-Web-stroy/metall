@@ -3,355 +3,603 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>ГераМеталл — металлопрокат в наличии, доставка, резка</title>
-  <meta name="description" content="Черный металлопрокат: трубы, профиль, лист, уголок, швеллер, балка. Опт/розница, доставка, резка в размер. Каталог по прайсу."/>
+  <title>ГераМеталл — металлопрокат | Склад | Доставка | Резка</title>
+  <meta name="description" content="Черный металлопрокат со склада: трубы, профиль, лист, уголок, швеллер, балка. Опт/розница. Доставка, резка в размер. Каталог по прайсу."/>
+
   <style>
-:root{
-  --bg:#0b0f14;
-  --panel:#101723;
-  --panel2:#0f1621;
-  --text:#e8eef7;
-  --muted:#a8b3c2;
-  --brand:#3ddc97;
-  --brand2:#2bb5ff;
-  --border:rgba(255,255,255,.08);
-  --shadow: 0 14px 30px rgba(0,0,0,.35);
-  --radius:18px;
-  --maxw:1160px;
-  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  font-family:var(--sans);
-  background:
-    radial-gradient(1100px 600px at 15% -10%, rgba(61,220,151,.18), transparent 60%),
-    radial-gradient(900px 520px at 80% 0%, rgba(43,181,255,.16), transparent 55%),
-    linear-gradient(180deg, #070b10, #0b0f14 55%, #070b10);
-  color:var(--text);
-}
-a{color:inherit;text-decoration:none}
-.container{max-width:var(--maxw); margin:0 auto; padding:0 18px;}
-.nav{
-  position:sticky; top:0; z-index:50;
-  backdrop-filter: blur(10px);
-  background:rgba(7,11,16,.62);
-  border-bottom:1px solid var(--border);
-}
-.nav-inner{display:flex; align-items:center; justify-content:space-between; padding:12px 0;}
-.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;}
-.logo{
-  width:38px;height:38px;border-radius:12px;
-  background:linear-gradient(135deg, rgba(61,220,151,1), rgba(43,181,255,1));
-  box-shadow:0 10px 26px rgba(61,220,151,.18);
-}
-.menu{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
-.menu a{color:var(--muted); font-weight:650; padding:8px 10px; border-radius:12px;}
-.menu a:hover{color:var(--text); background:rgba(255,255,255,.06)}
-.btn{
-  display:inline-flex; align-items:center; justify-content:center;
-  gap:10px; padding:12px 14px; border-radius:14px;
-  background:rgba(255,255,255,.06); border:1px solid var(--border);
-  box-shadow:0 10px 18px rgba(0,0,0,.25);
-  font-weight:750;
-}
-.btn.primary{
-  background:linear-gradient(135deg, rgba(61,220,151,.95), rgba(43,181,255,.95));
-  color:#071018; border:0;
-}
-.btn:hover{transform:translateY(-1px)}
-.hero{padding:52px 0 26px}
-.hero-grid{
-  display:grid; gap:18px;
-  grid-template-columns: 1.25fr .85fr;
-  align-items:stretch;
-}
-@media (max-width: 980px){
-  .hero-grid{grid-template-columns:1fr}
-}
-.h-card{
-  border:1px solid var(--border);
-  background:linear-gradient(180deg, rgba(16,23,35,.9), rgba(9,13,18,.9));
-  border-radius:var(--radius);
-  box-shadow:var(--shadow);
-  padding:22px;
-}
-.kicker{color:var(--muted); font-weight:700; letter-spacing:.5px; text-transform:uppercase; font-size:12px}
-.h1{font-size:44px; line-height:1.06; margin:10px 0 10px; font-weight:900}
-@media (max-width: 520px){.h1{font-size:34px}}
-.lead{color:var(--muted); font-size:16px; line-height:1.55}
-.actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
-.badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
-.badge{
-  display:inline-flex; align-items:center; gap:8px;
-  padding:8px 10px; border-radius:999px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.04);
-  color:var(--muted); font-weight:650; font-size:13px;
-}
-.grid3{
-  display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;
-}
-@media (max-width: 980px){.grid3{grid-template-columns:1fr}}
-.mini{
-  padding:16px; border-radius:16px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.03);
-}
-.mini .t{font-weight:850; margin:0 0 6px}
-.mini .d{color:var(--muted); margin:0; line-height:1.5}
-.section{padding:26px 0}
-.section-title{font-size:24px; font-weight:900; margin:0 0 10px}
-.section-sub{color:var(--muted); margin:0 0 16px; line-height:1.6}
-.cards{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px}
-@media (max-width: 980px){.cards{grid-template-columns:1fr}}
-.card{
-  display:block; padding:16px; border-radius:18px;
-  border:1px solid var(--border);
-  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
-  box-shadow:0 10px 22px rgba(0,0,0,.2);
-}
-.card:hover{transform:translateY(-2px)}
-.card-title{font-weight:900; margin-bottom:6px}
-.card-sub{color:var(--muted); font-weight:650}
-.card-cta{margin-top:10px; color:rgba(61,220,151,.95); font-weight:850}
-.footer{
-  padding:24px 0 38px; border-top:1px solid var(--border);
-  color:var(--muted);
-}
-.footer-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:14px}
-@media (max-width: 980px){.footer-grid{grid-template-columns:1fr}}
-.small{font-size:12.5px; line-height:1.55}
-hr.sep{border:none; border-top:1px solid var(--border); margin:18px 0}
-.notice{padding:12px 14px; border-radius:16px; border:1px solid var(--border); background:rgba(255,255,255,.03); color:var(--muted); line-height:1.55}
-</style>
+    :root{
+      --bg:#07090c;
+      --panel:#0c0f14;
+      --panel2:#0f141b;
+      --text:#eaf0f8;
+      --muted:#a7b0bf;
+      --border:rgba(255,255,255,.08);
+      --shadow: 0 18px 46px rgba(0,0,0,.55);
+      --r:18px;
+      --max:1180px;
+
+      /* акценты как логотип: графит + оранжевый градиент */
+      --a1:#ffb347;
+      --a2:#ff7a18;
+      --a3:#ff3d2e;
+      --accent: linear-gradient(135deg, var(--a1), var(--a2), var(--a3));
+      --accent2: linear-gradient(135deg, rgba(255,179,71,.18), rgba(255,122,24,.10), rgba(255,61,46,.08));
+      --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1000px 520px at 12% -10%, rgba(255,122,24,.18), transparent 60%),
+        radial-gradient(900px 520px at 80% 0%, rgba(255,61,46,.14), transparent 60%),
+        radial-gradient(800px 520px at 50% 110%, rgba(255,179,71,.08), transparent 60%),
+        linear-gradient(180deg, #050608, #07090c 55%, #050608);
+    }
+    a{color:inherit;text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* TOP BAR (как на промышленном сайте) */
+    .topbar{
+      border-bottom:1px solid var(--border);
+      background:rgba(6,8,11,.72);
+      backdrop-filter: blur(10px);
+    }
+    .topbar .row{
+      display:flex; gap:14px; align-items:center; justify-content:space-between;
+      padding:10px 0;
+      color:var(--muted); font-weight:650; font-size:13px;
+      flex-wrap:wrap;
+    }
+    .topbar a{color:#d6dde9}
+    .topbar .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px; border-radius:999px;
+      border:1px solid var(--border); background:rgba(255,255,255,.03);
+    }
+
+    /* HEADER */
+    header{
+      position:sticky; top:0; z-index:50;
+      border-bottom:1px solid var(--border);
+      background:rgba(7,9,12,.68);
+      backdrop-filter: blur(10px);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0; gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      font-weight:900; letter-spacing:.2px;
+    }
+    .logo{
+      width:40px;height:40px;border-radius:14px;
+      background:var(--accent);
+      box-shadow:0 16px 34px rgba(255,122,24,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-30%;
+      background:linear-gradient(180deg, rgba(255,255,255,.22), transparent 60%);
+      transform:rotate(18deg);
+    }
+
+    .menu{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .menu a{
+      padding:10px 12px;
+      border-radius:14px;
+      color:var(--muted);
+      font-weight:750;
+      border:1px solid transparent;
+    }
+    .menu a:hover{color:var(--text); background:rgba(255,255,255,.04); border-color:var(--border)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+      box-shadow:0 10px 20px rgba(0,0,0,.35);
+      font-weight:850;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      border:0;
+      background:var(--accent);
+      color:#0b0f14;
+      box-shadow:0 18px 40px rgba(255,122,24,.22);
+    }
+    .btn.ghost{
+      background:rgba(255,255,255,.03);
+    }
+
+    /* HERO (индустриальный) */
+    .hero{padding:34px 0 22px}
+    .hero-wrap{
+      display:grid;
+      grid-template-columns: 1.12fr .88fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .hero-wrap{grid-template-columns:1fr} }
+
+    .panel{
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(16,20,27,.78), rgba(10,12,16,.78));
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .panel:before{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.06), transparent 35%),
+        radial-gradient(800px 420px at 10% 10%, rgba(255,122,24,.14), transparent 55%),
+        radial-gradient(700px 420px at 90% 20%, rgba(255,61,46,.10), transparent 55%);
+      pointer-events:none;
+    }
+    .panel .in{position:relative; padding:22px}
+
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      font-weight:850; letter-spacing:.5px; text-transform:uppercase;
+      font-size:12px; color:#cbd5e1;
+    }
+    .kicker .dot{
+      width:10px;height:10px;border-radius:999px;background:var(--accent);
+      box-shadow:0 0 0 6px rgba(255,122,24,.12);
+    }
+    h1{
+      margin:12px 0 10px;
+      font-size:44px; line-height:1.04;
+      font-weight:950;
+    }
+    @media (max-width: 520px){ h1{font-size:34px} }
+    .lead{
+      margin:0;
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      max-width: 54ch;
+    }
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+      color:#d1d9e6;
+      font-weight:750;
+      font-size:13px;
+    }
+
+    /* Quick quote card */
+    .quote{
+      display:grid; gap:10px;
+      grid-template-columns:1fr 1fr;
+    }
+    @media (max-width: 520px){ .quote{grid-template-columns:1fr} }
+    .field{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    label{color:var(--muted); font-weight:750; font-size:12px}
+    input, select, textarea{
+      background:rgba(7,9,12,.55);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:12px 12px;
+      color:var(--text);
+      outline:none;
+      font-family:var(--sans);
+    }
+    textarea{min-height:92px; resize:vertical}
+    .help{color:var(--muted); font-size:12.5px; line-height:1.5}
+
+    /* SECTION */
+    .section{padding:18px 0}
+    .h2{
+      font-size:24px;
+      font-weight:950;
+      margin:0 0 10px;
+    }
+    .sub{margin:0 0 14px; color:var(--muted); line-height:1.6}
+
+    /* Category tiles (как “каталог блоками”) */
+    .tiles{
+      display:grid;
+      grid-template-columns:repeat(4, 1fr);
+      gap:12px;
+    }
+    @media (max-width: 980px){ .tiles{grid-template-columns:repeat(2, 1fr)} }
+    @media (max-width: 520px){ .tiles{grid-template-columns:1fr} }
+
+    .tile{
+      display:block;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      box-shadow:0 12px 26px rgba(0,0,0,.28);
+      position:relative;
+      overflow:hidden;
+      min-height:88px;
+    }
+    .tile:before{
+      content:"";
+      position:absolute; inset:-60% -40% auto auto;
+      width:240px; height:240px;
+      background:var(--accent2);
+      transform:rotate(18deg);
+    }
+    .tile b{display:block; font-size:14px; font-weight:950; position:relative}
+    .tile span{display:block; margin-top:6px; color:var(--muted); font-weight:750; position:relative}
+    .tile:hover{transform:translateY(-2px)}
+    .tile .go{margin-top:10px; display:inline-block; font-weight:950; color:rgba(255,179,71,.95); position:relative}
+
+    /* Advantage blocks */
+    .grid3{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px}
+    @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
+    .card{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+    }
+    .card .t{font-weight:950; margin:0 0 6px}
+    .card .d{margin:0; color:var(--muted); line-height:1.6}
+    .meta{
+      margin-top:10px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .tag{
+      font-family:var(--mono);
+      font-size:12px;
+      color:#d8e0ee;
+      background:rgba(255,255,255,.03);
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:6px 10px;
+    }
+
+    /* CTA */
+    .cta{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:12px;
+      align-items:center;
+    }
+    @media (max-width: 980px){ .cta{grid-template-columns:1fr} }
+    .cta .big{
+      font-size:28px; font-weight:950; margin:0 0 10px;
+    }
+
+    footer{
+      margin-top:18px;
+      padding:22px 0 36px;
+      border-top:1px solid var(--border);
+      color:var(--muted);
+    }
+    .foot{display:grid; grid-template-columns:1.2fr .8fr; gap:14px}
+    @media (max-width: 980px){ .foot{grid-template-columns:1fr} }
+    .small{font-size:12.5px; line-height:1.55}
+
+    .sep{border:none;border-top:1px solid var(--border); margin:14px 0}
+
+    /* Mobile nice */
+    @media (prefers-reduced-motion:no-preference){
+      .btn, .tile{transition:transform .15s ease, background .15s ease}
+    }
+  </style>
 </head>
+
 <body>
-  <header class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html">
-        <span class="logo" aria-hidden="true"></span>
-        <span>ГераМеталл</span>
-      </a>
-      <nav class="menu" aria-label="Навигация">
-        <a href="catalog.html">Каталог</a>
-        <a href="#delivery">Доставка</a>
-        <a href="#about">О компании</a>
-        <a href="#contacts">Контакты</a>
-      </nav>
-      <a class="btn primary" href="catalog.html">Открыть каталог</a>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="container">
+      <div class="row">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+          <span class="pill">⚙️ Склад • резка • доставка</span>
+          <span class="pill">🧾 Счёт / договор / документы</span>
+        </div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center">
+          <a class="pill" href="tel:+79000000000">☎️ +7 (900) 000-00-00</a>
+          <a class="pill" href="mailto:sales@gerametal.ru">✉️ sales@gerametal.ru</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="index.html">
+          <span class="logo" aria-hidden="true"></span>
+          <span>ГераМеталл</span>
+        </a>
+
+        <nav class="menu" aria-label="Навигация">
+          <a href="catalog.html">Каталог</a>
+          <a href="#services">Услуги</a>
+          <a href="#delivery">Доставка</a>
+          <a href="#about">О компании</a>
+          <a href="#contacts">Контакты</a>
+        </nav>
+
+        <div style="display:flex; gap:10px; align-items:center">
+          <a class="btn ghost" href="catalog.html">Цены</a>
+          <a class="btn primary" href="#request">Получить счёт</a>
+        </div>
+      </div>
     </div>
   </header>
 
+  <!-- HERO -->
   <main>
     <section class="hero">
-      <div class="container hero-grid">
-        <div class="h-card">
-          <div class="kicker">Металлопрокат • склад • сервис</div>
-          <h1 class="h1">Металл в наличии — быстро отгружаем и довозим до объекта</h1>
-          <p class="lead">Труба, профиль, лист, уголок, швеллер, балка и другое. Работаем с физлицами и организациями. 
-          Резка в размер, комплектация заявок, аккуратная логистика.</p>
+      <div class="container hero-wrap">
 
-          <div class="actions">
-            <a class="btn primary" href="catalog.html">Каталог и цены</a>
-            <a class="btn" href="#contacts">Запросить счёт</a>
-            <a class="btn" href="#delivery">Условия доставки</a>
-          </div>
+        <!-- left hero -->
+        <div class="panel">
+          <div class="in">
+            <div class="kicker"><span class="dot"></span> Металлопрокат со склада</div>
+            <h1>Чёрный металлопрокат: быстро отгружаем, режем, доставляем</h1>
+            <p class="lead">
+              Труба, профиль, лист, уголок, швеллер, балка и другое.
+              Опт/розница. Подбор по ГОСТ/ТУ, комплектуем заявки “под объект”.
+            </p>
 
-          <div class="badges">
-            <span class="badge">📦 653 позиций в прайсе</span>
-            <span class="badge">🚚 Доставка по городу и области</span>
-            <span class="badge">✂️ Резка и комплектация</span>
-            <span class="badge">🧾 Счёт/договор/НДС (при необходимости)</span>
-          </div>
+            <div class="actions">
+              <a class="btn primary" href="catalog.html">Открыть каталог</a>
+              <a class="btn" href="#request">Запросить счёт</a>
+              <a class="btn" href="#delivery">Условия доставки</a>
+            </div>
 
-          <hr class="sep"/>
-          <div class="notice">
-            <b>Важно:</b> цены на сайте — ориентир по прайсу. Для точного счёта и наличия по складу оставьте заявку — ответим быстро.
+            <div class="chips">
+              <span class="chip">📦 В наличии / под заказ</span>
+              <span class="chip">✂️ Резка в размер</span>
+              <span class="chip">🚚 Доставка по городу и области</span>
+              <span class="chip">🧰 Комплектация и маркировка</span>
+            </div>
+
+            <hr class="sep"/>
+            <div class="help">
+              Цены на сайте — ориентир по прайсу. Для точного счёта (объём, доставка, резка) оставьте заявку — ответим быстро.
+            </div>
           </div>
         </div>
 
-        <div class="h-card">
-          <div class="grid3">
-            <div class="mini">
-              <p class="t">Опт и розница</p>
-              <p class="d">От одной позиции до объёмных поставок по графику.</p>
+        <!-- right: quick request -->
+        <div class="panel" id="request">
+          <div class="in">
+            <div class="kicker"><span class="dot"></span> Быстрый запрос</div>
+            <div style="font-size:20px;font-weight:950;margin:10px 0 10px">Получить счёт за 10 минут</div>
+
+            <div class="quote">
+              <div class="field">
+                <label>Имя</label>
+                <input placeholder="Как к вам обращаться" />
+              </div>
+              <div class="field">
+                <label>Телефон</label>
+                <input placeholder="+7 ..." />
+              </div>
+              <div class="field">
+                <label>Категория</label>
+                <select>
+                  <option>Труба / профиль</option>
+                  <option>Лист</option>
+                  <option>Уголок / швеллер / балка</option>
+                  <option>Другое</option>
+                </select>
+              </div>
+              <div class="field">
+                <label>Объём</label>
+                <input placeholder="например: 0.5 т / 20 м / 10 шт" />
+              </div>
             </div>
-            <div class="mini">
-              <p class="t">Сроки</p>
-              <p class="d">Отгрузка день-в-день при наличии на складе.</p>
+
+            <div class="field" style="margin-top:10px">
+              <label>Что нужно (размер, марка, длина)</label>
+              <textarea placeholder="Например: труба 57х3.5, Ст3, 6м, 0.8 т. Нужна доставка + резка 3м/3м."></textarea>
             </div>
-            <div class="mini">
-              <p class="t">Качество</p>
-              <p class="d">Работаем по ГОСТ / ТУ, выдаём документы.</p>
+
+            <div class="actions" style="margin-top:12px">
+              <a class="btn primary" href="javascript:void(0)" onclick="alert('Подключим форму: Telegram/WhatsApp/почта. Скажи куда отправлять заявки — и сделаю.');">Отправить заявку</a>
+              <a class="btn" href="catalog.html">Смотреть цены</a>
+            </div>
+
+            <div class="help" style="margin-top:10px">
+              Можно подключить отправку заявок в Telegram/WhatsApp (без CRM) или на почту. Скажи — куда.
             </div>
           </div>
+        </div>
 
-          <div class="section" style="padding-bottom:0">
-            <h2 class="section-title">Популярные разделы</h2>
-            <p class="section-sub">Каталог сформирован из вашего прайса. Ниже — быстрые переходы по ключевым группам.</p>
-            <div class="cards">
-              
-      <a class="card" href="catalog.html#труба-профильная-гост-8639-82">
-        <div class="card-title">Труба профильная ГОСТ 8639-82</div>
-        <div class="card-sub">133 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
+      </div>
+    </section>
 
-      <a class="card" href="catalog.html#труба-электросварная-гост-10704-91-с-гидроиспытанием-и-узк-контролем">
-        <div class="card-title">Труба электросварная ГОСТ 10704-91 ( с гидроиспытанием и УЗК контролем)</div>
-        <div class="card-sub">101 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
+    <!-- CATALOG TILES -->
+    <section class="section">
+      <div class="container">
+        <div class="h2">Каталог металлопроката</div>
+        <p class="sub">Быстрый вход в основные группы. Внутри — поиск и фильтры по прайсу.</p>
 
-      <a class="card" href="catalog.html#труба-профильная-гост-8645-68">
-        <div class="card-title">Труба профильная ГОСТ 8645-68</div>
-        <div class="card-sub">78 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
+        <div class="tiles">
+          <a class="tile" href="catalog.html">
+            <b>Трубы / Профиль</b>
+            <span>Круглая, ВГП, профильная</span>
+            <span class="go">Открыть →</span>
+          </a>
+          <a class="tile" href="catalog.html">
+            <b>Лист</b>
+            <span>Горячекат / холоднокат</span>
+            <span class="go">Открыть →</span>
+          </a>
+          <a class="tile" href="catalog.html">
+            <b>Сортовой прокат</b>
+            <span>Круг, квадрат, полоса</span>
+            <span class="go">Открыть →</span>
+          </a>
+          <a class="tile" href="catalog.html">
+            <b>Фасонный прокат</b>
+            <span>Уголок, швеллер, балка</span>
+            <span class="go">Открыть →</span>
+          </a>
+        </div>
+      </div>
+    </section>
 
-      <a class="card" href="catalog.html#уголок-гост-8509-93">
-        <div class="card-title">Уголок ГОСТ 8509-93</div>
-        <div class="card-sub">45 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
+    <!-- SERVICES -->
+    <section class="section" id="services">
+      <div class="container">
+        <div class="h2">Услуги</div>
+        <p class="sub">Делаем “под ключ”: от подбора до доставки на объект.</p>
 
-      <a class="card" href="catalog.html#балка-двутавровая-гост-8239-89-сто-асчм-20-93">
-        <div class="card-title">Балка двутавровая ГОСТ 8239-89; СТО АСЧМ 20-93</div>
-        <div class="card-sub">40 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-
-      <a class="card" href="catalog.html#лист-горячекатаный-гост-16523-97-гост-14637-89">
-        <div class="card-title">Лист горячекатаный ГОСТ 16523-97; ГОСТ 14637-89</div>
-        <div class="card-sub">38 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-
-      <a class="card" href="catalog.html#швеллер-гост-8240-97">
-        <div class="card-title">Швеллер ГОСТ 8240-97</div>
-        <div class="card-sub">29 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-
-      <a class="card" href="catalog.html#арматура-класс-а-iii-гост-5781-82">
-        <div class="card-title">Арматура класс А-III ГОСТ 5781-82</div>
-        <div class="card-sub">28 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-
-      <a class="card" href="catalog.html#цветной-прокат">
-        <div class="card-title">цветной прокат</div>
-        <div class="card-sub">24 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-
-      <a class="card" href="catalog.html#лист-горячекатаный-низколегированный-гост-19281-89">
-        <div class="card-title">Лист горячекатаный низколегированный ГОСТ 19281-89</div>
-        <div class="card-sub">20 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-
-      <a class="card" href="catalog.html#арматура-класс-а-i-гост-5781-82">
-        <div class="card-title">Арматура класс А-I ГОСТ 5781-82</div>
-        <div class="card-sub">17 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-
-      <a class="card" href="catalog.html#труба-водогазопроводная-гост-3262-75-с-гидроиспытанием-и-узк-контролем">
-        <div class="card-title">Труба водогазопроводная ГОСТ 3262-75 (с гидроиспытанием и УЗК контролем)</div>
-        <div class="card-sub">15 позиций</div>
-        <div class="card-cta">Открыть →</div>
-      </a>
-    
-            </div>
+        <div class="grid3">
+          <div class="card">
+            <p class="t">Резка в размер</p>
+            <p class="d">Указывайте длины и допуски — подготовим металл к монтажу/производству.</p>
+            <div class="meta"><span class="tag">газ / ленточка</span><span class="tag">маркировка</span></div>
+          </div>
+          <div class="card">
+            <p class="t">Комплектация заявок</p>
+            <p class="d">Собираем заказ по спецификации: позиции, объёмы, упаковка, документы.</p>
+            <div class="meta"><span class="tag">под объект</span><span class="tag">по ведомости</span></div>
+          </div>
+          <div class="card">
+            <p class="t">Работа с юрлицами</p>
+            <p class="d">Счёт, договор, закрывающие. Постоянным — условия и приоритет по отгрузке.</p>
+            <div class="meta"><span class="tag">опт</span><span class="tag">регулярные поставки</span></div>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- DELIVERY -->
     <section class="section" id="delivery">
       <div class="container">
-        <h2 class="section-title">Доставка и сервис</h2>
-        <p class="section-sub">Пакуем, грузим, доставляем. При необходимости — резка в размер и комплектация по спецификации.</p>
+        <div class="h2">Доставка</div>
+        <p class="sub">Рассчитываем по адресу, объёму и формату разгрузки. Возможна доставка день-в-день при наличии.</p>
+
         <div class="grid3">
-          <div class="mini"><p class="t">Доставка</p><p class="d">По городу и области. Рассчитываем по адресу и объёму.</p></div>
-          <div class="mini"><p class="t">Резка</p><p class="d">Газ/ленточка — под задачи. Указывайте длину и допуски.</p></div>
-          <div class="mini"><p class="t">Комплектация</p><p class="d">Собираем заказ «под объект», маркируем позиции.</p></div>
+          <div class="card">
+            <p class="t">По городу</p>
+            <p class="d">Быстрая доставка на объект. Уточняем окна разгрузки и подъезд.</p>
+          </div>
+          <div class="card">
+            <p class="t">По области</p>
+            <p class="d">Доставка по маршруту. Для крупных объёмов — отдельный транспорт.</p>
+          </div>
+          <div class="card">
+            <p class="t">Самовывоз</p>
+            <p class="d">Быстрая отгрузка со склада. Подготовим металл заранее к приезду.</p>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- ABOUT + CTA -->
     <section class="section" id="about">
       <div class="container">
-        <h2 class="section-title">О компании</h2>
-        <p class="section-sub">ГераМеталл — поставки чёрного металлопроката со склада и под заказ. Работаем с прорабами, производствами, сервисными компаниями и частными клиентами.</p>
-        <div class="notice">
-          <b>Как мы работаем:</b> получаем заявку → уточняем марку/размер/объём → подтверждаем наличие → выставляем счёт → отгружаем/доставляем.
+        <div class="panel">
+          <div class="in cta">
+            <div>
+              <div class="kicker"><span class="dot"></span> Надёжный поставщик</div>
+              <p class="big">ГераМеталл — поставка чёрного металлопроката со склада и под заказ</p>
+              <p class="lead" style="max-width:none">
+                Работаем с прорабами, производствами, сервисными компаниями и частными клиентами.
+                Помогаем подобрать металл под задачу и быстро закрыть потребность по объекту.
+              </p>
+              <div class="actions">
+                <a class="btn primary" href="catalog.html">Перейти в каталог</a>
+                <a class="btn" href="#contacts">Связаться</a>
+              </div>
+            </div>
+            <div>
+              <div class="card">
+                <p class="t">Что отправить, чтобы быстро посчитали:</p>
+                <p class="d">1) позиции + размеры  2) марка/ГОСТ  3) объём  4) доставка/резка  5) адрес.</p>
+                <div class="meta">
+                  <span class="tag">ответ: 10–20 мин</span>
+                  <span class="tag">прайс: ₽/т</span>
+                </div>
+              </div>
+              <div class="card" style="margin-top:12px">
+                <p class="t">Для постоянных клиентов</p>
+                <p class="d">Фиксация условий, приоритет по отгрузке, регулярные поставки по графику.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
+    <!-- CONTACTS -->
     <section class="section" id="contacts">
       <div class="container">
-        <h2 class="section-title">Контакты</h2>
-        <p class="section-sub">Заполните данные под ваш город/офис. Контакты можно заменить на реальные перед публикацией.</p>
+        <div class="h2">Контакты</div>
+        <p class="sub">Поставь реальные контакты — и добавим кнопки WhatsApp/Telegram.</p>
 
         <div class="grid3">
-          <div class="mini">
+          <div class="card">
             <p class="t">Телефон</p>
             <p class="d"><a href="tel:+79000000000">+7 (900) 000-00-00</a></p>
           </div>
-          <div class="mini">
+          <div class="card">
             <p class="t">Почта</p>
             <p class="d"><a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a></p>
           </div>
-          <div class="mini">
-            <p class="t">Адрес</p>
+          <div class="card">
+            <p class="t">Адрес склада</p>
             <p class="d">Ваш город, ул. Примерная, 10</p>
           </div>
         </div>
 
-        <div class="actions" style="margin-top:16px">
-          <a class="btn primary" href="catalog.html">Перейти в каталог</a>
-          <a class="btn" href="javascript:void(0)" onclick="alert('Здесь можно подключить форму: Telegram/WhatsApp/почта.');">Оставить заявку</a>
+        <div class="actions" style="margin-top:14px">
+          <a class="btn primary" href="catalog.html">Каталог</a>
+          <a class="btn" href="#request">Запросить счёт</a>
         </div>
-
-        <p class="hint small">Сайт — статический HTML. Можно разместить на Beget или GitHub Pages. Каталог подтягивается из файла <span style="font-family:var(--mono)">products.json</span>.</p>
       </div>
     </section>
+
   </main>
 
-  <footer class="footer">
-    <div class="container footer-grid">
+  <footer>
+    <div class="container foot">
       <div>
         <div class="brand"><span class="logo" aria-hidden="true"></span><span>ГераМеталл</span></div>
-        <p class="small">Металлопрокат • склад • доставка • резка • комплектация. </p>
-        <p class="small">© 2026 ГераМеталл. Все права защищены.</p>
+        <p class="small">Металлопрокат • склад • доставка • резка • комплектация.</p>
+        <p class="small">© <span id="y"></span> ГераМеталл</p>
       </div>
       <div class="small">
         <b>Быстрые ссылки</b><br/>
         <a href="catalog.html">Каталог</a> ·
+        <a href="#services">Услуги</a> ·
         <a href="#delivery">Доставка</a> ·
-        <a href="#about">О компании</a> ·
         <a href="#contacts">Контакты</a>
         <hr class="sep"/>
-        <div class="notice">Источник каталога: прайс-лист, загруженный вами. Обновление каталога — заменой файла и пересборкой <span style="font-family:var(--mono)">products.json</span>.</div>
+        <div class="small">Каталог подтягивается из <span style="font-family:var(--mono)">products.json</span> (лежит рядом с <span style="font-family:var(--mono)">catalog.html</span>).</div>
       </div>
     </div>
   </footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
