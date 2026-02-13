@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>ГераМеталл — металлопрокат в наличии, доставка, резка</title>
+  <meta name="description" content="Черный металлопрокат: трубы, профиль, лист, уголок, швеллер, балка. Опт/розница, доставка, резка в размер. Каталог по прайсу."/>
+  <style>
+:root{
+  --bg:#0b0f14;
+  --panel:#101723;
+  --panel2:#0f1621;
+  --text:#e8eef7;
+  --muted:#a8b3c2;
+  --brand:#3ddc97;
+  --brand2:#2bb5ff;
+  --border:rgba(255,255,255,.08);
+  --shadow: 0 14px 30px rgba(0,0,0,.35);
+  --radius:18px;
+  --maxw:1160px;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--sans);
+  background:
+    radial-gradient(1100px 600px at 15% -10%, rgba(61,220,151,.18), transparent 60%),
+    radial-gradient(900px 520px at 80% 0%, rgba(43,181,255,.16), transparent 55%),
+    linear-gradient(180deg, #070b10, #0b0f14 55%, #070b10);
+  color:var(--text);
+}
+a{color:inherit;text-decoration:none}
+.container{max-width:var(--maxw); margin:0 auto; padding:0 18px;}
+.nav{
+  position:sticky; top:0; z-index:50;
+  backdrop-filter: blur(10px);
+  background:rgba(7,11,16,.62);
+  border-bottom:1px solid var(--border);
+}
+.nav-inner{display:flex; align-items:center; justify-content:space-between; padding:12px 0;}
+.brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px;}
+.logo{
+  width:38px;height:38px;border-radius:12px;
+  background:linear-gradient(135deg, rgba(61,220,151,1), rgba(43,181,255,1));
+  box-shadow:0 10px 26px rgba(61,220,151,.18);
+}
+.menu{display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+.menu a{color:var(--muted); font-weight:650; padding:8px 10px; border-radius:12px;}
+.menu a:hover{color:var(--text); background:rgba(255,255,255,.06)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:10px; padding:12px 14px; border-radius:14px;
+  background:rgba(255,255,255,.06); border:1px solid var(--border);
+  box-shadow:0 10px 18px rgba(0,0,0,.25);
+  font-weight:750;
+}
+.btn.primary{
+  background:linear-gradient(135deg, rgba(61,220,151,.95), rgba(43,181,255,.95));
+  color:#071018; border:0;
+}
+.btn:hover{transform:translateY(-1px)}
+.hero{padding:52px 0 26px}
+.hero-grid{
+  display:grid; gap:18px;
+  grid-template-columns: 1.25fr .85fr;
+  align-items:stretch;
+}
+@media (max-width: 980px){
+  .hero-grid{grid-template-columns:1fr}
+}
+.h-card{
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(16,23,35,.9), rgba(9,13,18,.9));
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px;
+}
+.kicker{color:var(--muted); font-weight:700; letter-spacing:.5px; text-transform:uppercase; font-size:12px}
+.h1{font-size:44px; line-height:1.06; margin:10px 0 10px; font-weight:900}
+@media (max-width: 520px){.h1{font-size:34px}}
+.lead{color:var(--muted); font-size:16px; line-height:1.55}
+.actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+.badges{display:flex; flex-wrap:wrap; gap:10px; margin-top:14px}
+.badge{
+  display:inline-flex; align-items:center; gap:8px;
+  padding:8px 10px; border-radius:999px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  color:var(--muted); font-weight:650; font-size:13px;
+}
+.grid3{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;
+}
+@media (max-width: 980px){.grid3{grid-template-columns:1fr}}
+.mini{
+  padding:16px; border-radius:16px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.03);
+}
+.mini .t{font-weight:850; margin:0 0 6px}
+.mini .d{color:var(--muted); margin:0; line-height:1.5}
+.section{padding:26px 0}
+.section-title{font-size:24px; font-weight:900; margin:0 0 10px}
+.section-sub{color:var(--muted); margin:0 0 16px; line-height:1.6}
+.cards{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px}
+@media (max-width: 980px){.cards{grid-template-columns:1fr}}
+.card{
+  display:block; padding:16px; border-radius:18px;
+  border:1px solid var(--border);
+  background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  box-shadow:0 10px 22px rgba(0,0,0,.2);
+}
+.card:hover{transform:translateY(-2px)}
+.card-title{font-weight:900; margin-bottom:6px}
+.card-sub{color:var(--muted); font-weight:650}
+.card-cta{margin-top:10px; color:rgba(61,220,151,.95); font-weight:850}
+.footer{
+  padding:24px 0 38px; border-top:1px solid var(--border);
+  color:var(--muted);
+}
+.footer-grid{display:grid; grid-template-columns:1.2fr .8fr; gap:14px}
+@media (max-width: 980px){.footer-grid{grid-template-columns:1fr}}
+.small{font-size:12.5px; line-height:1.55}
+hr.sep{border:none; border-top:1px solid var(--border); margin:18px 0}
+.notice{padding:12px 14px; border-radius:16px; border:1px solid var(--border); background:rgba(255,255,255,.03); color:var(--muted); line-height:1.55}
+</style>
+</head>
+<body>
+  <header class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <span class="logo" aria-hidden="true"></span>
+        <span>ГераМеталл</span>
+      </a>
+      <nav class="menu" aria-label="Навигация">
+        <a href="catalog.html">Каталог</a>
+        <a href="#delivery">Доставка</a>
+        <a href="#about">О компании</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <a class="btn primary" href="catalog.html">Открыть каталог</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="h-card">
+          <div class="kicker">Металлопрокат • склад • сервис</div>
+          <h1 class="h1">Металл в наличии — быстро отгружаем и довозим до объекта</h1>
+          <p class="lead">Труба, профиль, лист, уголок, швеллер, балка и другое. Работаем с физлицами и организациями. 
+          Резка в размер, комплектация заявок, аккуратная логистика.</p>
+
+          <div class="actions">
+            <a class="btn primary" href="catalog.html">Каталог и цены</a>
+            <a class="btn" href="#contacts">Запросить счёт</a>
+            <a class="btn" href="#delivery">Условия доставки</a>
+          </div>
+
+          <div class="badges">
+            <span class="badge">📦 653 позиций в прайсе</span>
+            <span class="badge">🚚 Доставка по городу и области</span>
+            <span class="badge">✂️ Резка и комплектация</span>
+            <span class="badge">🧾 Счёт/договор/НДС (при необходимости)</span>
+          </div>
+
+          <hr class="sep"/>
+          <div class="notice">
+            <b>Важно:</b> цены на сайте — ориентир по прайсу. Для точного счёта и наличия по складу оставьте заявку — ответим быстро.
+          </div>
+        </div>
+
+        <div class="h-card">
+          <div class="grid3">
+            <div class="mini">
+              <p class="t">Опт и розница</p>
+              <p class="d">От одной позиции до объёмных поставок по графику.</p>
+            </div>
+            <div class="mini">
+              <p class="t">Сроки</p>
+              <p class="d">Отгрузка день-в-день при наличии на складе.</p>
+            </div>
+            <div class="mini">
+              <p class="t">Качество</p>
+              <p class="d">Работаем по ГОСТ / ТУ, выдаём документы.</p>
+            </div>
+          </div>
+
+          <div class="section" style="padding-bottom:0">
+            <h2 class="section-title">Популярные разделы</h2>
+            <p class="section-sub">Каталог сформирован из вашего прайса. Ниже — быстрые переходы по ключевым группам.</p>
+            <div class="cards">
+              
+      <a class="card" href="catalog.html#труба-профильная-гост-8639-82">
+        <div class="card-title">Труба профильная ГОСТ 8639-82</div>
+        <div class="card-sub">133 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#труба-электросварная-гост-10704-91-с-гидроиспытанием-и-узк-контролем">
+        <div class="card-title">Труба электросварная ГОСТ 10704-91 ( с гидроиспытанием и УЗК контролем)</div>
+        <div class="card-sub">101 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#труба-профильная-гост-8645-68">
+        <div class="card-title">Труба профильная ГОСТ 8645-68</div>
+        <div class="card-sub">78 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#уголок-гост-8509-93">
+        <div class="card-title">Уголок ГОСТ 8509-93</div>
+        <div class="card-sub">45 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#балка-двутавровая-гост-8239-89-сто-асчм-20-93">
+        <div class="card-title">Балка двутавровая ГОСТ 8239-89; СТО АСЧМ 20-93</div>
+        <div class="card-sub">40 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#лист-горячекатаный-гост-16523-97-гост-14637-89">
+        <div class="card-title">Лист горячекатаный ГОСТ 16523-97; ГОСТ 14637-89</div>
+        <div class="card-sub">38 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#швеллер-гост-8240-97">
+        <div class="card-title">Швеллер ГОСТ 8240-97</div>
+        <div class="card-sub">29 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#арматура-класс-а-iii-гост-5781-82">
+        <div class="card-title">Арматура класс А-III ГОСТ 5781-82</div>
+        <div class="card-sub">28 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#цветной-прокат">
+        <div class="card-title">цветной прокат</div>
+        <div class="card-sub">24 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#лист-горячекатаный-низколегированный-гост-19281-89">
+        <div class="card-title">Лист горячекатаный низколегированный ГОСТ 19281-89</div>
+        <div class="card-sub">20 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#арматура-класс-а-i-гост-5781-82">
+        <div class="card-title">Арматура класс А-I ГОСТ 5781-82</div>
+        <div class="card-sub">17 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+
+      <a class="card" href="catalog.html#труба-водогазопроводная-гост-3262-75-с-гидроиспытанием-и-узк-контролем">
+        <div class="card-title">Труба водогазопроводная ГОСТ 3262-75 (с гидроиспытанием и УЗК контролем)</div>
+        <div class="card-sub">15 позиций</div>
+        <div class="card-cta">Открыть →</div>
+      </a>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="delivery">
+      <div class="container">
+        <h2 class="section-title">Доставка и сервис</h2>
+        <p class="section-sub">Пакуем, грузим, доставляем. При необходимости — резка в размер и комплектация по спецификации.</p>
+        <div class="grid3">
+          <div class="mini"><p class="t">Доставка</p><p class="d">По городу и области. Рассчитываем по адресу и объёму.</p></div>
+          <div class="mini"><p class="t">Резка</p><p class="d">Газ/ленточка — под задачи. Указывайте длину и допуски.</p></div>
+          <div class="mini"><p class="t">Комплектация</p><p class="d">Собираем заказ «под объект», маркируем позиции.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="about">
+      <div class="container">
+        <h2 class="section-title">О компании</h2>
+        <p class="section-sub">ГераМеталл — поставки чёрного металлопроката со склада и под заказ. Работаем с прорабами, производствами, сервисными компаниями и частными клиентами.</p>
+        <div class="notice">
+          <b>Как мы работаем:</b> получаем заявку → уточняем марку/размер/объём → подтверждаем наличие → выставляем счёт → отгружаем/доставляем.
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contacts">
+      <div class="container">
+        <h2 class="section-title">Контакты</h2>
+        <p class="section-sub">Заполните данные под ваш город/офис. Контакты можно заменить на реальные перед публикацией.</p>
+
+        <div class="grid3">
+          <div class="mini">
+            <p class="t">Телефон</p>
+            <p class="d"><a href="tel:+79000000000">+7 (900) 000-00-00</a></p>
+          </div>
+          <div class="mini">
+            <p class="t">Почта</p>
+            <p class="d"><a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a></p>
+          </div>
+          <div class="mini">
+            <p class="t">Адрес</p>
+            <p class="d">Ваш город, ул. Примерная, 10</p>
+          </div>
+        </div>
+
+        <div class="actions" style="margin-top:16px">
+          <a class="btn primary" href="catalog.html">Перейти в каталог</a>
+          <a class="btn" href="javascript:void(0)" onclick="alert('Здесь можно подключить форму: Telegram/WhatsApp/почта.');">Оставить заявку</a>
+        </div>
+
+        <p class="hint small">Сайт — статический HTML. Можно разместить на Beget или GitHub Pages. Каталог подтягивается из файла <span style="font-family:var(--mono)">products.json</span>.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <div class="brand"><span class="logo" aria-hidden="true"></span><span>ГераМеталл</span></div>
+        <p class="small">Металлопрокат • склад • доставка • резка • комплектация. </p>
+        <p class="small">© 2026 ГераМеталл. Все права защищены.</p>
+      </div>
+      <div class="small">
+        <b>Быстрые ссылки</b><br/>
+        <a href="catalog.html">Каталог</a> ·
+        <a href="#delivery">Доставка</a> ·
+        <a href="#about">О компании</a> ·
+        <a href="#contacts">Контакты</a>
+        <hr class="sep"/>
+        <div class="notice">Источник каталога: прайс-лист, загруженный вами. Обновление каталога — заменой файла и пересборкой <span style="font-family:var(--mono)">products.json</span>.</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
