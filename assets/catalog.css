@@ -155,3 +155,6 @@
   display:flex;
   gap:10px;
 }
+@media (max-width: 980px){
+  .side-nav{display:none;}
+}
