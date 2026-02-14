@@ -31,6 +31,11 @@
         </form>
 
         <div class="head-right">
+          <a class="cart-link" href="cart.html" title="Корзина">
+            🛒 Корзина
+            <span class="cart-badge" data-cart-badge style="display:none">0</span>
+          </a>
+
           <div class="mini-links">
             <a href="index.html#contacts">Контакты</a>
             <span>·</span>
@@ -100,6 +105,9 @@
     </div>
   </footer>
 
+  <!-- ВАЖНО: app.js подключаем ДО основного скрипта, чтобы cartAdd() был доступен -->
+  <script src="assets/app.js"></script>
+
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
@@ -138,11 +146,32 @@
       return null;
     }
 
+    function escapeHtml(str){
+      return (str || '').toString()
+        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+        .replaceAll('"','&quot;').replaceAll("'","&#039;");
+    }
+
+    function bindAddButtons(){
+      document.querySelectorAll('[data-add]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          try{
+            const p = JSON.parse(decodeURIComponent(btn.getAttribute('data-add')));
+            cartAdd(p);
+            btn.textContent = 'Добавлено ✅';
+            setTimeout(()=>btn.textContent='В корзину', 900);
+          }catch(e){}
+        });
+      });
+    }
+
     function renderSection(cat, list){
       const id = slugify(cat);
       const meta = `${list.length} позиций`;
 
       const mCards = list.map(p => {
+        const data = encodeURIComponent(JSON.stringify(p));
+
         const title = `${p.profile || "Позиция"} ${p.size || ""}`.trim();
         const sub = [
           p.steel ? `Марка: ${p.steel}` : "",
@@ -166,23 +195,32 @@
               <div class="m-price"><b>1–5 т</b><span>${fmtInt(p.price_ton_1_5) || "—"} ₽/т</span></div>
               <div class="m-price"><b>Цена 1 шт</b><span>${fmtMoney(p.price_piece_rub) || "—"} ₽</span></div>
             </div>
+
+            <div class="m-add">
+              <button class="add-btn" data-add="${data}">В корзину</button>
+              <a class="btn primary" href="cart.html">Оформить</a>
+            </div>
           </div>
         `;
       }).join("");
 
-      const rows = list.map(p => `
-        <tr>
-          <td><span class="badge">${escapeHtml(p.profile || "—")}</span></td>
-          <td class="mono">${escapeHtml(p.size || "—")}</td>
-          <td class="mono">${escapeHtml(p.steel || "—")}</td>
-          <td class="mono">${escapeHtml(p.length_m || "—")}</td>
-          <td class="mono">${fmtInt(p.price_ton_to_0_3) || ""}</td>
-          <td class="mono">${fmtInt(p.price_ton_0_3_1) || ""}</td>
-          <td class="mono">${fmtInt(p.price_ton_1_5) || ""}</td>
-          <td class="mono">${escapeHtml((p.weight_kg ?? "") + "")}</td>
-          <td class="mono">${fmtMoney(p.price_piece_rub) || ""}</td>
-        </tr>
-      `).join("");
+      const rows = list.map(p => {
+        const data = encodeURIComponent(JSON.stringify(p));
+        return `
+          <tr>
+            <td><span class="badge">${escapeHtml(p.profile || "—")}</span></td>
+            <td class="mono">${escapeHtml(p.size || "—")}</td>
+            <td class="mono">${escapeHtml(p.steel || "—")}</td>
+            <td class="mono">${escapeHtml(p.length_m || "—")}</td>
+            <td class="mono">${fmtInt(p.price_ton_to_0_3) || ""}</td>
+            <td class="mono">${fmtInt(p.price_ton_0_3_1) || ""}</td>
+            <td class="mono">${fmtInt(p.price_ton_1_5) || ""}</td>
+            <td class="mono">${escapeHtml((p.weight_kg ?? "") + "")}</td>
+            <td class="mono">${fmtMoney(p.price_piece_rub) || ""}</td>
+            <td><button class="add-btn" data-add="${data}">В корзину</button></td>
+          </tr>
+        `;
+      }).join("");
 
       return `
         <section class="cat-section" id="${id}">
@@ -206,21 +244,16 @@
                   <th>1–5 т</th>
                   <th>Вес 1 шт</th>
                   <th>Цена 1 шт</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
-                ${rows || `<tr><td colspan="9" style="color:var(--muted)">Нет позиций по фильтрам</td></tr>`}
+                ${rows || `<tr><td colspan="10" style="color:var(--muted)">Нет позиций по фильтрам</td></tr>`}
               </tbody>
             </table>
           </div>
         </section>
       `;
-    }
-
-    function escapeHtml(str){
-      return (str || '').toString()
-        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
-        .replaceAll('"','&quot;').replaceAll("'","&#039;");
     }
 
     async function main(){
@@ -267,6 +300,9 @@
 
         $out.innerHTML = html || `<div class="notice">По текущим фильтрам ничего не найдено.</div>`;
         $count.textContent = filtered.length;
+
+        // ВАЖНО: биндим кнопки после вставки HTML
+        bindAddButtons();
       }
 
       [$q, $cat, $pmin, $pmax].forEach(el => el.addEventListener('input', apply));
@@ -292,5 +328,38 @@
 
     main();
   </script>
+
+  <nav class="bottom-nav" aria-label="Нижнее меню">
+    <div class="grid">
+      <a href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
+        </svg>
+        Главная
+      </a>
+      <a href="catalog.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h16M4 18h10"/>
+        </svg>
+        Каталог
+      </a>
+      <a href="cart.html" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/>
+          <path d="M9 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          <path d="M18 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+        Корзина
+        <span class="cart-badge" data-cart-badge style="display:none">0</span>
+      </a>
+      <a href="tel:+79000000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.6-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/>
+        </svg>
+        Звонок
+      </a>
+    </div>
+  </nav>
+
 </body>
 </html>
