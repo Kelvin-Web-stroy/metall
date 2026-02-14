@@ -3,534 +3,764 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>ГераМеталл — цветной металлопрокат | Склад | Доставка | Резка</title>
-  <meta name="description" content="Цветной металлопрокат со склада: алюминий, медь, латунь, бронза. Опт/розница. Доставка, резка в размер. Каталог по прайсу."/>
+  <title>ГераМеталл — цветной металлопрокат</title>
+  <meta name="description" content="Цветной металлопрокат: алюминий, медь, латунь, бронза. Склад, доставка, резка. Каталог по прайсу."/>
 
   <style>
     :root{
-      --bg:#0b0c0f;
-      --panel:#111318;
-      --panel2:#151822;
-      --text:#f2f5fb;
-      --muted:#aeb6c7;
-      --border:rgba(255,255,255,.10);
-      --shadow:0 18px 46px rgba(0,0,0,.55);
+      --bg:#f3f4f6;            /* светлый фон как на примере */
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --card:#ffffff;
+      --shadow:0 12px 28px rgba(17,24,39,.08);
 
-      /* Акцент под “цветмет”: медь/золото */
-      --c1:#ffcc66;   /* золото */
-      --c2:#ff8a3d;   /* медь */
-      --c3:#ff4b2e;   /* теплый красный */
-      --accent: linear-gradient(135deg, var(--c1), var(--c2), var(--c3));
+      /* акцент под цветмет (медь/золото) */
+      --a:#ff8a3d;
+      --a2:#ffcc66;
+      --a3:#ff4b2e;
+      --accent: linear-gradient(135deg, var(--a2), var(--a), var(--a3));
 
-      --max:1200px;
+      --max:1220px;
       --r:16px;
       --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
     body{
       margin:0;
       font-family:var(--sans);
+      background:var(--bg);
       color:var(--text);
-      background:linear-gradient(180deg,#08090c,#0b0c0f 60%,#08090c);
     }
     a{color:inherit;text-decoration:none}
     .container{max-width:var(--max); margin:0 auto; padding:0 18px}
 
-    /* TOP LINE (как у пром.сайтов) */
+    /* top mini line */
     .topline{
-      background:#0a0b0e;
+      background:#fff;
       border-bottom:1px solid var(--border);
       font-size:13px;
       color:var(--muted);
     }
     .topline .row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      padding:10px 0;
-      flex-wrap:wrap;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; padding:10px 0; flex-wrap:wrap;
     }
-    .topline .left, .topline .right{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
-    .topline a{color:#dbe2ef}
-    .topline .sep{opacity:.35}
+    .topline .row .left, .topline .row .right{
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+    }
 
-    /* HEADER */
+    /* header with search like example */
     header{
-      position:sticky; top:0; z-index:50;
-      background:rgba(11,12,15,.84);
-      backdrop-filter: blur(10px);
+      background:#fff;
       border-bottom:1px solid var(--border);
+      position:sticky; top:0; z-index:60;
     }
     .head{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:14px; padding:14px 0;
+      display:flex; align-items:center; gap:14px;
+      padding:14px 0;
     }
     .brand{
       display:flex; align-items:center; gap:12px;
-      font-weight:900; letter-spacing:.3px;
+      min-width: 200px;
     }
-    .logo{
-      width:40px;height:40px;border-radius:14px;
+    .brand .logo{
+      width:40px; height:40px; border-radius:14px;
       background:var(--accent);
-      box-shadow:0 16px 34px rgba(255,138,61,.22);
+      box-shadow:0 10px 18px rgba(255,138,61,.18);
+      overflow:hidden;
+      position:relative;
+      flex:0 0 auto;
     }
-    .nav{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
+    .brand .logo img{
+      width:100%; height:100%; object-fit:contain; background:#fff;
     }
-    .nav a{
+    .brand .name{
+      font-weight:900;
+      letter-spacing:.2px;
+      line-height:1.05;
+    }
+    .brand .tag{
+      display:block;
+      font-size:12px;
       color:var(--muted);
-      font-weight:800;
-      padding:10px 12px;
-      border-radius:12px;
-      border:1px solid transparent;
+      font-weight:700;
+      margin-top:2px;
     }
-    .nav a:hover{color:var(--text); background:rgba(255,255,255,.04); border-color:var(--border)}
-    .cta{
-      display:flex; gap:10px; align-items:center; flex-wrap:wrap;
-    }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
+
+    .catalog-btn{
+      display:inline-flex; align-items:center; gap:10px;
       padding:12px 14px;
       border-radius:12px;
       border:1px solid var(--border);
-      background:rgba(255,255,255,.04);
+      background:#111827;
+      color:#fff;
+      font-weight:850;
+      cursor:pointer;
+      user-select:none;
+      flex:0 0 auto;
+    }
+    .catalog-btn .burger{
+      width:18px; height:12px; position:relative; display:inline-block;
+    }
+    .catalog-btn .burger:before,
+    .catalog-btn .burger:after,
+    .catalog-btn .burger i{
+      content:"";
+      position:absolute; left:0; right:0;
+      height:2px; background:#fff; border-radius:3px;
+    }
+    .catalog-btn .burger:before{top:0}
+    .catalog-btn .burger i{top:5px}
+    .catalog-btn .burger:after{bottom:0}
+
+    .search{
+      flex:1 1 auto;
+      display:flex;
+      gap:10px;
+      align-items:center;
+      min-width: 260px;
+    }
+    .search input{
+      width:100%;
+      border:1px solid var(--border);
+      background:#f9fafb;
+      border-radius:12px;
+      padding:14px 14px;
+      font-size:14px;
+      outline:none;
+    }
+    .search button{
+      border:0;
+      border-radius:12px;
+      padding:14px 16px;
+      font-weight:900;
+      background: var(--accent);
+      color:#111827;
+      cursor:pointer;
+      box-shadow:0 10px 18px rgba(17,24,39,.10);
+      white-space:nowrap;
+    }
+
+    .head-right{
+      display:flex; align-items:center; gap:12px;
+      flex:0 0 auto;
+    }
+    .phone{
+      font-weight:900;
+      color:#111827;
+      white-space:nowrap;
+    }
+    .mini-links{
+      display:flex; gap:10px; align-items:center;
+      color:var(--muted); font-weight:750; font-size:13px;
+      white-space:nowrap;
+    }
+
+    /* hero grid like example */
+    .hero{
+      padding:18px 0 8px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr}
+      .brand{min-width:unset}
+      .head{flex-wrap:wrap}
+      .head-right{width:100%; justify-content:space-between}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--r);
+      box-shadow:var(--shadow);
+    }
+    .left-card{
+      padding:18px;
+      display:flex;
+      flex-direction:column;
+      min-height: 360px;
+      position:relative;
+      overflow:hidden;
+    }
+    .left-card h1{
+      margin:0 0 10px;
+      font-size:42px;
+      line-height:1.05;
+      font-weight:950;
+      letter-spacing:-.4px;
+    }
+    @media (max-width: 520px){
+      .left-card h1{font-size:32px}
+    }
+    .left-card .lead{
+      color:var(--muted);
+      margin:0 0 14px;
+      font-weight:650;
+      line-height:1.45;
+    }
+    .left-card .form{
+      margin-top:auto;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    .left-card .form input{
+      width:100%;
+      border:1px solid var(--border);
+      background:#f9fafb;
+      border-radius:12px;
+      padding:14px 14px;
+      font-size:14px;
+      outline:none;
+    }
+    .left-card .form .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 520px){
+      .left-card .form .row{grid-template-columns:1fr}
+    }
+    .left-card .form .btns{
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      padding:14px 16px;
+      border-radius:12px;
       font-weight:900;
       cursor:pointer;
+      border:1px solid var(--border);
+      background:#fff;
+      color:#111827;
       user-select:none;
     }
     .btn.primary{
       border:0;
       background:var(--accent);
-      color:#0b0c0f;
-      box-shadow:0 18px 40px rgba(255,138,61,.20);
+      color:#111827;
+    }
+    .hint{
+      margin-top:8px;
+      color:var(--muted);
+      font-size:12.5px;
+      line-height:1.45;
     }
 
-    /* HERO (баннер + форма, как на tagilsteel) */
-    .hero{
-      padding:18px 0 22px;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:14px;
-      align-items:stretch;
-    }
-    @media (max-width: 980px){ .hero-grid{grid-template-columns:1fr} }
-
+    /* right banner like slider */
     .banner{
-      border:1px solid var(--border);
-      border-radius:var(--r);
-      overflow:hidden;
-      box-shadow:var(--shadow);
       position:relative;
-      min-height:360px;
+      overflow:hidden;
+      min-height: 360px;
+      border-radius:var(--r);
+      border:1px solid var(--border);
+      box-shadow:var(--shadow);
       background:
-        linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.55)),
+        linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.12) 100%),
         url("assets/hero.jpg") center/cover no-repeat;
     }
     .banner .content{
       position:absolute; inset:0;
+      padding:18px;
       display:flex;
       flex-direction:column;
-      justify-content:flex-end;
-      padding:22px;
-      gap:10px;
+      justify-content:space-between;
+      color:#fff;
     }
-    .banner .kicker{
-      display:inline-flex; align-items:center; gap:10px;
-      font-weight:900; text-transform:uppercase; letter-spacing:.45px;
-      font-size:12px; color:#e9edf7;
-      opacity:.92;
-    }
-    .banner .kicker .dot{
-      width:10px;height:10px;border-radius:999px;background:var(--accent);
-      box-shadow:0 0 0 6px rgba(255,138,61,.12);
-    }
-    .banner h1{
+    .banner .title{
       margin:0;
-      font-size:40px;
-      line-height:1.04;
+      font-size:38px;
+      line-height:1.05;
       font-weight:950;
       max-width: 18ch;
+      letter-spacing:-.4px;
     }
-    @media (max-width: 520px){ .banner h1{font-size:32px} }
-    .banner p{
-      margin:0;
-      color:rgba(242,245,251,.86);
-      line-height:1.55;
-      max-width: 62ch;
+    @media (max-width: 520px){
+      .banner .title{font-size:30px}
     }
-    .banner .actions{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top:6px;
+    .banner .sub{
+      margin:8px 0 0;
+      opacity:.9;
+      max-width: 52ch;
+      line-height:1.45;
+      font-weight:650;
     }
-
-    .panel{
-      border:1px solid var(--border);
-      border-radius:var(--r);
-      background:linear-gradient(180deg, rgba(21,24,34,.92), rgba(14,16,22,.92));
-      box-shadow:var(--shadow);
-      padding:18px;
+    .banner .bottom{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
     }
-    .panel .title{
-      font-size:18px;
-      font-weight:950;
-      margin:0 0 10px;
-    }
-    .panel .sub{
-      margin:0 0 12px;
-      color:var(--muted);
-      line-height:1.55;
-      font-size:13.5px;
-    }
-    .grid2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
+    .banner .more{
+      display:inline-flex;
+      align-items:center;
       gap:10px;
-    }
-    @media (max-width: 520px){ .grid2{grid-template-columns:1fr} }
-
-    label{
-      display:block;
-      font-size:12px;
-      font-weight:850;
-      color:var(--muted);
-      margin:0 0 6px;
-    }
-    input, select, textarea{
-      width:100%;
-      background:rgba(10,12,16,.75);
-      border:1px solid var(--border);
+      background:#fff;
+      color:#111827;
       border-radius:12px;
-      padding:12px 12px;
-      color:var(--text);
-      outline:none;
-      font-family:var(--sans);
-    }
-    textarea{min-height:96px; resize:vertical}
-    .help{
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.5;
-      margin-top:10px;
-    }
-
-    /* BLOCKS */
-    .section{padding:18px 0}
-    .h2{
-      margin:0 0 10px;
-      font-size:22px;
+      padding:12px 14px;
       font-weight:950;
+      border:0;
+      cursor:pointer;
     }
-    .desc{
-      margin:0 0 14px;
-      color:var(--muted);
-      line-height:1.6;
+    .banner .nav-arrows{
+      display:flex;
+      gap:10px;
+      margin-left:auto;
     }
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:12px;
+    .circle{
+      width:46px;height:46px;
+      border-radius:999px;
+      border:0;
+      cursor:pointer;
+      background:rgba(255,255,255,.35);
+      color:#111;
+      font-weight:950;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      backdrop-filter: blur(6px);
     }
-    @media (max-width: 980px){ .cards{grid-template-columns:repeat(2, 1fr)} }
-    @media (max-width: 520px){ .cards{grid-template-columns:1fr} }
 
-    .card{
-      border:1px solid var(--border);
-      border-radius:var(--r);
-      background:rgba(255,255,255,.03);
-      padding:14px;
-    }
-    .card b{display:block; font-weight:950; margin-bottom:6px}
-    .card span{display:block; color:var(--muted); line-height:1.5}
-    .card a.more{display:inline-block; margin-top:10px; font-weight:950; color:#ffb86b}
-
+    /* 3 feature cards under hero */
     .features{
+      margin-top:14px;
       display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
     }
     @media (max-width: 980px){ .features{grid-template-columns:1fr} }
     .feat{
-      border:1px solid var(--border);
-      border-radius:var(--r);
-      background:rgba(255,255,255,.03);
       padding:16px;
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
     }
-    .feat .t{margin:0 0 6px; font-weight:950}
-    .feat .d{margin:0; color:var(--muted); line-height:1.6}
+    .icon{
+      width:42px;height:42px;border-radius:14px;
+      background:rgba(255,138,61,.12);
+      border:1px solid rgba(255,138,61,.20);
+      display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
+    }
+    .icon svg{width:22px;height:22px}
+    .feat b{display:block; font-weight:950; margin:0 0 4px}
+    .feat p{margin:0; color:var(--muted); line-height:1.45; font-weight:650}
 
-    /* FOOTER */
+    /* Popular categories section like your screenshot */
+    .section{
+      padding:26px 0 10px;
+    }
+    .section-head{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+    }
+    .section h2{
+      margin:0;
+      font-size:44px;
+      letter-spacing:-.6px;
+      font-weight:950;
+    }
+    @media (max-width: 520px){ .section h2{font-size:34px} }
+
+    .cats{
+      margin-top:14px;
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+    }
+    @media (max-width: 1100px){ .cats{grid-template-columns:repeat(2, 1fr)} }
+    @media (max-width: 520px){ .cats{grid-template-columns:1fr} }
+
+    .cat{
+      padding:16px;
+      position:relative;
+      overflow:hidden;
+      min-height: 320px;
+    }
+    .cat .top{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      margin-bottom:10px;
+    }
+    .cat .name{
+      font-weight:950;
+      font-size:26px;
+      letter-spacing:-.2px;
+      margin:0;
+    }
+    .cat .img{
+      width:98px; height:78px;
+      border-radius:14px;
+      background:linear-gradient(180deg,#f9fafb,#fff);
+      border:1px solid var(--border);
+      display:flex; align-items:center; justify-content:center;
+      overflow:hidden;
+      flex:0 0 auto;
+    }
+    .cat .img span{
+      color:var(--muted);
+      font-weight:900;
+      font-size:12px;
+      text-align:center;
+      padding:8px;
+    }
+    .cat ul{
+      list-style:none;
+      padding:0;
+      margin:10px 0 0;
+      display:grid;
+      gap:10px;
+    }
+    .cat li a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:8px 0;
+      border-bottom:1px dashed var(--border);
+      color:#111827;
+      font-weight:750;
+    }
+    .cat li a small{color:var(--muted); font-weight:700}
+    .cat li a:hover{color:var(--a)}
+    .arrow{color:#9ca3af; font-weight:950}
+
     footer{
+      margin-top:22px;
+      background:#fff;
       border-top:1px solid var(--border);
-      margin-top:18px;
-      padding:22px 0 36px;
+    }
+    .foot{
+      padding:18px 0 26px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:14px;
       color:var(--muted);
       font-size:13px;
     }
-    .foot{
-      display:grid;
-      grid-template-columns:1.2fr .8fr;
-      gap:14px;
-    }
     @media (max-width: 980px){ .foot{grid-template-columns:1fr} }
-    .small{font-size:12.5px; line-height:1.55}
+    .foot b{color:#111827}
   </style>
 </head>
 
 <body>
 
-  <!-- TOP LINE -->
+  <!-- top line -->
   <div class="topline">
     <div class="container">
       <div class="row">
         <div class="left">
-          <span>Цветной металлопрокат • склад • резка • доставка</span>
-          <span class="sep">|</span>
-          <span>Опт / розница</span>
+          <span>Цветной металлопрокат</span>
+          <span>•</span>
+          <span>Склад • Резка • Доставка</span>
         </div>
         <div class="right">
-          <a href="tel:+79000000000">+7 (900) 000-00-00</a>
-          <span class="sep">|</span>
-          <a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a>
+          <a href="#about">Компания</a>
+          <span>•</span>
+          <a href="#contacts">Контакты</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- HEADER -->
+  <!-- header -->
   <header>
     <div class="container">
       <div class="head">
-        <a class="brand" href="index.html" aria-label="На главную">
-          <span class="logo" aria-hidden="true"></span>
-          <span>ГераМеталл</span>
+        <a class="brand" href="index.html">
+          <span class="logo" aria-hidden="true">
+            <!-- если есть logo.png — раскомментируй -->
+            <!-- <img src="assets/logo.png" alt="ГераМеталл"> -->
+          </span>
+          <span class="name">
+            ГераМеталл
+            <span class="tag">цветной металлопрокат</span>
+          </span>
         </a>
 
-        <nav class="nav" aria-label="Навигация">
-          <a href="catalog.html">Каталог</a>
-          <a href="#services">Услуги</a>
-          <a href="#delivery">Доставка</a>
-          <a href="#about">О компании</a>
-          <a href="#contacts">Контакты</a>
-        </nav>
+        <a class="catalog-btn" href="catalog.html" title="Каталог">
+          <span class="burger"><i></i></span>
+          Каталог
+        </a>
 
-        <div class="cta">
-          <a class="btn" href="catalog.html">Цены</a>
-          <a class="btn primary" href="#request">Запросить счёт</a>
+        <form class="search" action="catalog.html" method="GET" onsubmit="return goSearch(event)">
+          <input id="topSearch" placeholder="Название, марка, размер, ГОСТ (например: Л63 Ø20, М1, АД31…)" />
+          <button type="submit">Найти</button>
+        </form>
+
+        <div class="head-right">
+          <div class="mini-links">
+            <a href="catalog.html">Цены</a>
+            <span>·</span>
+            <a href="#services">Услуги</a>
+          </div>
+          <a class="phone" href="tel:+79000000000">+7 (900) 000-00-00</a>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
-  <main>
+  <!-- hero -->
+  <main class="container">
     <section class="hero">
-      <div class="container hero-grid">
+      <div class="hero-grid">
 
-        <!-- Banner -->
-        <div class="banner" role="img" aria-label="Баннер">
+        <!-- left promo card -->
+        <div class="card left-card">
+          <h1><span style="background:var(--accent); -webkit-background-clip:text; background-clip:text; color:transparent">Цветной</span> металлопрокат в наличии</h1>
+          <p class="lead">Быстрый подбор по марке/размеру. Резка в размер и доставка на объект. Опт/розница.</p>
+
+          <div class="form">
+            <div class="row">
+              <input id="q1" placeholder="Материал / марка (например: Л63, М1, АД31)" />
+              <input id="q2" placeholder="Размер (например: Ø20, 2×1000×2000)" />
+            </div>
+            <input id="q3" placeholder="Форма (лист/пруток/труба/шина) или запрос текстом" />
+            <div class="btns">
+              <a class="btn primary" href="catalog.html" onclick="return toCatalogWithQuery()">Найти в каталоге</a>
+              <a class="btn" href="#popular">Популярные категории</a>
+            </div>
+            <div class="hint">Подсказка: в каталоге можно фильтровать по категориям и цене. Данные подтягиваются из прайса.</div>
+          </div>
+        </div>
+
+        <!-- right banner -->
+        <div class="banner">
           <div class="content">
-            <div class="kicker"><span class="dot"></span> Поставки цветного металла со склада</div>
-            <h1>Алюминий, медь, латунь, бронза — в наличии и под заказ</h1>
-            <p>
-              Быстрый подбор по марке/размеру. Резка в размер, комплектация, доставка на объект.
-              Счёт и документы для юрлиц.
-            </p>
-            <div class="actions">
-              <a class="btn primary" href="catalog.html">Открыть каталог</a>
-              <a class="btn" href="#request">Получить счёт</a>
-            </div>
-          </div>
-        </div>
-
-        <!-- Request form -->
-        <div class="panel" id="request">
-          <div class="title">Быстрый запрос</div>
-          <p class="sub">Оставьте параметры — посчитаем стоимость и сроки. Ответ обычно 10–20 минут.</p>
-
-          <div class="grid2">
             <div>
-              <label>Имя</label>
-              <input placeholder="Как к вам обращаться"/>
+              <h3 class="title">Поставка цветмета под производство</h3>
+              <p class="sub">Алюминий • Медь • Латунь • Бронза. Отгрузка со склада и под заказ. Документы для юрлиц.</p>
             </div>
-            <div>
-              <label>Телефон</label>
-              <input placeholder="+7 ..."/>
-            </div>
-            <div>
-              <label>Материал</label>
-              <select>
-                <option>Алюминий</option>
-                <option>Медь</option>
-                <option>Латунь</option>
-                <option>Бронза</option>
-                <option>Другое</option>
-              </select>
-            </div>
-            <div>
-              <label>Объём</label>
-              <input placeholder="например: 80 кг / 2 прутка / 10 м"/>
-            </div>
-          </div>
 
-          <div style="margin-top:10px">
-            <label>Что нужно (марка, размер, длина)</label>
-            <textarea placeholder="Например: латунный пруток Л63 Ø20, 3м — 10 шт. Нужна резка 1м/1м/1м и доставка."></textarea>
-          </div>
+            <div class="bottom">
+              <button class="more" onclick="location.href='catalog.html'">Подробнее</button>
 
-          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px">
-            <a class="btn primary" href="javascript:void(0)"
-               onclick="alert('Здесь подключим отправку заявки: Telegram/WhatsApp/почта. Скажи куда — сделаю.');">
-              Отправить заявку
-            </a>
-            <a class="btn" href="catalog.html">Смотреть цены</a>
-          </div>
-
-          <div class="help">
-            Можно подключить отправку заявок в Telegram/WhatsApp без сервера (через ссылку/форму) или на почту.
+              <div class="nav-arrows" aria-hidden="true">
+                <button class="circle" type="button">←</button>
+                <button class="circle" type="button">→</button>
+              </div>
+            </div>
           </div>
         </div>
 
       </div>
-    </section>
 
-    <!-- Categories (под цветмет) -->
-    <section class="section">
-      <div class="container">
-        <div class="h2">Каталог цветного металлопроката</div>
-        <p class="desc">Каталог сформирован из прайса. Внутри — поиск по размерам, маркам и категориям.</p>
+      <!-- feature cards -->
+      <div class="features">
+        <div class="card feat">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M4 7h16M4 12h16M4 17h10"/>
+            </svg>
+          </div>
+          <div>
+            <b>Документы и качество</b>
+            <p>Работа по спецификации: марка, размер, партия. Счёт/договор/закрывающие.</p>
+          </div>
+        </div>
 
-        <div class="cards">
-          <div class="card">
-            <b>Алюминий</b>
-            <span>лист • пруток • труба • профиль</span>
-            <a class="more" href="catalog.html">Открыть →</a>
+        <div class="card feat">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 17l2 2 4-4"/>
+              <path d="M3 7h18M7 7v10"/>
+              <path d="M12 17h9"/>
+            </svg>
           </div>
-          <div class="card">
-            <b>Медь</b>
-            <span>шина • лист • пруток • труба</span>
-            <a class="more" href="catalog.html">Открыть →</a>
+          <div>
+            <b>Резка в размер</b>
+            <p>Подготовим металл к производству/монтажу: резка, комплектация, маркировка.</p>
           </div>
-          <div class="card">
-            <b>Латунь</b>
-            <span>круг • лист • шестигранник • труба</span>
-            <a class="more" href="catalog.html">Открыть →</a>
+        </div>
+
+        <div class="card feat">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 16V6a2 2 0 0 1 2-2h11l5 5v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <path d="M7 20a2 2 0 1 0 4 0"/>
+              <path d="M15 20a2 2 0 1 0 4 0"/>
+            </svg>
           </div>
-          <div class="card">
-            <b>Бронза</b>
-            <span>круг • втулка • лист • заготовки</span>
-            <a class="more" href="catalog.html">Открыть →</a>
+          <div>
+            <b>Доставка</b>
+            <p>По городу и области. Рассчитаем логистику по весу/габариту и адресу.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Services -->
+    <!-- popular categories -->
+    <section class="section" id="popular">
+      <div class="section-head">
+        <h2>Популярные категории</h2>
+      </div>
+
+      <div class="cats" id="cats">
+        <!-- сюда подставим из products.json -->
+      </div>
+    </section>
+
+    <!-- about + contacts -->
     <section class="section" id="services">
-      <div class="container">
-        <div class="h2">Услуги</div>
-        <p class="desc">Закрываем задачу “под ключ”: от подбора до поставки.</p>
+      <div class="section-head">
+        <h2 style="font-size:34px;margin-top:10px">Услуги</h2>
+      </div>
 
-        <div class="features">
-          <div class="feat">
-            <p class="t">Резка в размер</p>
-            <p class="d">Подготовим металл к производству/монтажу. Указывайте длины и допуски.</p>
-          </div>
-          <div class="feat">
-            <p class="t">Комплектация заявок</p>
-            <p class="d">Сбор по спецификации, маркировка, упаковка, документы.</p>
-          </div>
-          <div class="feat">
-            <p class="t">Работа с юрлицами</p>
-            <p class="d">Счёт/договор/закрывающие. Регулярные поставки по графику.</p>
-          </div>
-        </div>
+      <div class="features" style="margin-top:14px">
+        <div class="card feat"><div class="icon" aria-hidden="true"></div><div><b>Комплектация</b><p>Соберём заказ под объект/цех по ведомости. Согласуем замены и аналоги.</p></div></div>
+        <div class="card feat"><div class="icon" aria-hidden="true"></div><div><b>Подбор материала</b><p>Поможем выбрать марку и формат (лист/пруток/труба/шина) под задачу.</p></div></div>
+        <div class="card feat"><div class="icon" aria-hidden="true"></div><div><b>Поставки по графику</b><p>Регулярные отгрузки для производств. Приоритет и фиксирование условий.</p></div></div>
       </div>
     </section>
 
-    <!-- Delivery -->
-    <section class="section" id="delivery">
-      <div class="container">
-        <div class="h2">Доставка</div>
-        <p class="desc">Рассчитываем стоимость доставки по адресу, весу и габариту. Возможна отгрузка день-в-день при наличии.</p>
-
-        <div class="features">
-          <div class="feat">
-            <p class="t">По городу</p>
-            <p class="d">Быстро довозим на объект. Согласуем окно разгрузки.</p>
-          </div>
-          <div class="feat">
-            <p class="t">По области</p>
-            <p class="d">Маршруты и отдельный транспорт под объёмы.</p>
-          </div>
-          <div class="feat">
-            <p class="t">Самовывоз</p>
-            <p class="d">Подготовим заказ к приезду, ускорим выдачу.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- About -->
-    <section class="section" id="about">
-      <div class="container">
-        <div class="panel">
-          <div class="title">О компании</div>
-          <p class="sub" style="margin-bottom:0">
-            ГераМеталл — поставщик цветного металлопроката со склада и под заказ.
-            Помогаем подобрать материал под задачу и быстро закрываем потребность производства/объекта.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contacts -->
     <section class="section" id="contacts">
-      <div class="container">
-        <div class="h2">Контакты</div>
-        <p class="desc">Заменим на реальные данные: телефон, почта, адрес склада.</p>
-
-        <div class="features">
-          <div class="feat">
-            <p class="t">Телефон</p>
-            <p class="d"><a href="tel:+79000000000">+7 (900) 000-00-00</a></p>
-          </div>
-          <div class="feat">
-            <p class="t">Почта</p>
-            <p class="d"><a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a></p>
-          </div>
-          <div class="feat">
-            <p class="t">Адрес склада</p>
-            <p class="d">Ваш город, ул. Примерная, 10</p>
-          </div>
-        </div>
+      <div class="section-head">
+        <h2 style="font-size:34px;margin-top:10px">Контакты</h2>
+      </div>
+      <div class="features" style="margin-top:14px">
+        <div class="card feat"><div><b>Телефон</b><p><a href="tel:+79000000000">+7 (900) 000-00-00</a></p></div></div>
+        <div class="card feat"><div><b>Почта</b><p><a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a></p></div></div>
+        <div class="card feat"><div><b>Адрес</b><p>Ваш город, ул. Примерная, 10</p></div></div>
       </div>
     </section>
-
   </main>
 
   <footer>
     <div class="container foot">
       <div>
-        <div class="brand"><span class="logo" aria-hidden="true"></span><span>ГераМеталл</span></div>
+        <b>ГераМеталл</b><br/>
         <div class="small">Цветной металлопрокат • склад • доставка • резка • комплектация.</div>
-        <div class="small">© <span id="y"></span> ГераМеталл</div>
+        <div class="small">© <span id="y"></span></div>
       </div>
-      <div class="small">
-        <b>Ссылки</b><br/>
-        <a href="catalog.html">Каталог</a> · <a href="#services">Услуги</a> · <a href="#delivery">Доставка</a> · <a href="#contacts">Контакты</a><br/>
-        <div style="margin-top:10px">
-          Каталог подтягивается из <span style="font-family:var(--sans); font-weight:900">products.json</span> (рядом с <span style="font-weight:900">catalog.html</span>).
-        </div>
+      <div>
+        <b>Быстрые ссылки</b><br/>
+        <a href="catalog.html">Каталог</a> · <a href="#popular">Популярные категории</a> · <a href="#contacts">Контакты</a>
+        <div class="small" style="margin-top:10px">Категории на главной подтягиваются из <b>products.json</b>.</div>
       </div>
     </div>
   </footer>
 
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
+
+    // отправка поискового запроса в каталог (простая логика)
+    function goSearch(e){
+      e.preventDefault();
+      const q = (document.getElementById('topSearch').value || '').trim();
+      // catalog.html у нас на клиенте, поэтому просто открываем и прокручиваем
+      // (в каталоге поиск уже есть, это просто быстрый переход)
+      location.href = 'catalog.html' + (q ? ('#search=' + encodeURIComponent(q)) : '');
+      return false;
+    }
+
+    function toCatalogWithQuery(){
+      const q = [q1.value, q2.value, q3.value].filter(Boolean).join(' ').trim();
+      location.href = 'catalog.html' + (q ? ('#search=' + encodeURIComponent(q)) : '');
+      return false;
+    }
+
+    // Популярные категории: 4 колонки (как на примере)
+    async function renderPopular(){
+      try{
+        const res = await fetch('products.json', {cache:'no-store'});
+        const products = await res.json();
+
+        // group by category
+        const map = new Map();
+        for(const p of products){
+          const cat = (p.category || 'Каталог').toString().trim();
+          if(!map.has(cat)) map.set(cat, []);
+          map.get(cat).push(p);
+        }
+
+        // sort categories by count desc
+        const sorted = [...map.entries()].sort((a,b) => b[1].length - a[1].length).slice(0,4);
+
+        const catsEl = document.getElementById('cats');
+        catsEl.innerHTML = sorted.map(([cat, list], idx) => {
+          // собрать "подкатегории": уникальные профили/размеры
+          const seen = new Set();
+          const lines = [];
+          for(const it of list){
+            const t = (it.profile || it.size || '').toString().trim();
+            if(!t) continue;
+            if(seen.has(t)) continue;
+            seen.add(t);
+            lines.push(t);
+            if(lines.length >= 7) break;
+          }
+
+          // fallback если профилей нет
+          if(lines.length === 0){
+            for(const it of list){
+              const t = (it.size || '').toString().trim();
+              if(!t) continue;
+              if(seen.has(t)) continue;
+              seen.add(t);
+              lines.push(t);
+              if(lines.length >= 7) break;
+            }
+          }
+
+          const slug = cat.toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu,'').replace(/\s+/g,'-').slice(0,80) || 'cat';
+          const imgText = ['Al','Cu','Br','Zn'][idx] || 'ME';
+
+          return `
+            <div class="card cat" id="${slug}">
+              <div class="top">
+                <h3 class="name">${escapeHtml(shorten(cat, 26))}</h3>
+                <div class="img"><span>${imgText}<br/>METAL</span></div>
+              </div>
+              <ul>
+                ${lines.map(t => `
+                  <li>
+                    <a href="catalog.html#${slugify(cat)}">
+                      <span>${escapeHtml(t)}</span>
+                      <span class="arrow">›</span>
+                    </a>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          `;
+        }).join('');
+
+      }catch(err){
+        console.log(err);
+      }
+    }
+
+    function slugify(text){
+      return (text || '').toString().trim().toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu,'')
+        .replace(/\s+/g,'-')
+        .slice(0,80) || 'cat';
+    }
+    function shorten(s, n){
+      s = (s || '').toString();
+      return s.length > n ? s.slice(0, n-1) + '…' : s;
+    }
+    function escapeHtml(str){
+      return (str || '').toString()
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'","&#039;");
+    }
+
+    renderPopular();
+
+    // Если пришли с #search= — можно потом доработать catalog.html (я сделаю),
+    // чтобы он подхватывал поиск из hash. Сейчас просто оставили задел.
   </script>
 </body>
 </html>
