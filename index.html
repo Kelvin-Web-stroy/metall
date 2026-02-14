@@ -69,13 +69,13 @@
           <p class="lead">Быстрый подбор по марке/размеру. Резка в размер и доставка на объект. Опт/розница.</p>
 
           <div class="form">
-            <div class="row">
-              <input id="q1" placeholder="Материал / марка (например: Л63, М1, АД31)" />
-              <input id="q2" placeholder="Размер (например: Ø20, 2×1000×2000)" />
+            <div class="form-row">
+              <input class="field" placeholder="Материал / марка">
+              <input class="field" placeholder="Размер">
             </div>
-            <input id="q3" placeholder="Форма (лист/пруток/труба/шина) или запрос текстом" />
-            <div class="btns">
-              <a class="btn primary" href="catalog.html" onclick="return toCatalogWithQuery()">Найти в каталоге</a>
+            <input class="field" placeholder="Форма (лист/пруток/труба/шина) или запрос текстом">
+            <div class="form-actions">
+              <a class="btn primary" href="catalog.html">Найти в каталоге</a>
               <a class="btn" href="#popular">Популярные категории</a>
             </div>
             <div class="hint">Категории на главной и позиции в каталоге подтягиваются из прайса.</div>
@@ -179,13 +179,11 @@
         </div>
     
         <div class="cta-form">
-          <input id="rName" class="field" placeholder="Имя" />
-          <input id="rPhone" class="field" placeholder="Телефон" />
-          <textarea id="rMsg" class="field" rows="4" placeholder="Что нужно: металл, размер, количество, доставка…"></textarea>
-    
+          <input id="rName" class="field" placeholder="Имя">
+          <input id="rPhone" class="field" placeholder="Телефон">
+          <textarea id="rMsg" class="field" placeholder="Что нужно: металл, размер, количество, доставка…"></textarea>
           <button class="btn primary" type="button" id="btnSend">Отправить заявку</button>
-          <div class="cta-alt">
-            <a class="btn" href="catalog.html">Добавить товары в корзину</a>
+          <a class="btn" href="catalog.html">Добавить товары в корзину</a>
           </div>
     
           <div class="small" style="color:var(--muted)">
