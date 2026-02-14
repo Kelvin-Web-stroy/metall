@@ -150,6 +150,108 @@
       <div class="cats" id="cats"></div>
     </section>
 
+    <section class="cta-strip">
+      <div>
+        <div class="kicker">Цветной металлопрокат со склада</div>
+        <h2 class="h2">Быстрый расчёт, резка в размер, доставка по городу и регионам</h2>
+        <p class="lead">
+          Медь, латунь, бронза, алюминий — под заявки производства и строительных объектов.
+          Подберём аналог и оперативно выставим счёт.
+        </p>
+    
+        <div class="cta-actions">
+          <a class="btn primary" href="catalog.html">Открыть каталог</a>
+          <a class="btn" href="#request">Получить расчёт</a>
+        </div>
+    
+        <div class="trust">
+          <div class="trust-item"><b>Отгрузка</b><span>в день оплаты*</span></div>
+          <div class="trust-item"><b>Резка</b><span>в размер</span></div>
+          <div class="trust-item"><b>Документы</b><span>счёт/УПД/сертификаты*</span></div>
+          <div class="trust-item"><b>Доставка</b><span>своим транспортом/ТК</span></div>
+        </div>
+      </div>
+    
+      <div class="cta-card" id="request">
+        <div class="cta-card__top">
+          <div class="cta-card__title">Быстрая заявка</div>
+          <div class="cta-card__sub">Ответим и посчитаем в течение рабочего времени</div>
+        </div>
+    
+        <div class="cta-form">
+          <input id="rName" class="field" placeholder="Имя" />
+          <input id="rPhone" class="field" placeholder="Телефон" />
+          <textarea id="rMsg" class="field" rows="4" placeholder="Что нужно: металл, размер, количество, доставка…"></textarea>
+    
+          <button class="btn primary" type="button" id="btnSend">Отправить заявку</button>
+          <div class="cta-alt">
+            <a class="btn" href="catalog.html">Добавить товары в корзину</a>
+          </div>
+    
+          <div class="small" style="color:var(--muted)">
+            * Условия зависят от позиции и объёма. Уточняйте у менеджера.
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="grid-3">
+      <article class="info-card">
+        <div class="ic-ico">⚙️</div>
+        <h3>Подбор под задачу</h3>
+        <p>Подскажем марку/сплав, формат (лист/пруток/труба), аналоги и оптимальную нарезку под ваш проект.</p>
+      </article>
+    
+      <article class="info-card">
+        <div class="ic-ico">📦</div>
+        <h3>Склад и логистика</h3>
+        <p>Оперативная комплектация, упаковка, доставка по городу и отправка ТК в регионы.</p>
+      </article>
+    
+      <article class="info-card">
+        <div class="ic-ico">🧾</div>
+        <h3>Понятная экономика</h3>
+        <p>Цены по диапазонам объёма, быстрое КП, счёт и закрывающие документы для юрлиц.</p>
+      </article>
+    </section>
+    
+    <section class="steps">
+      <h2 class="h2">Как купить</h2>
+      <div class="steps-row">
+        <div class="step">
+          <div class="num">1</div>
+          <b>Выберите позиции</b>
+          <span>Откройте каталог и добавьте нужные товары в корзину</span>
+        </div>
+        <div class="step">
+          <div class="num">2</div>
+          <b>Уточните объём и резку</b>
+          <span>Укажите количество, резку, доставку — мы сделаем расчёт</span>
+        </div>
+        <div class="step">
+          <div class="num">3</div>
+          <b>Получите счёт</b>
+          <span>Подтвердим наличие/сроки и выставим счёт</span>
+        </div>
+        <div class="step">
+          <div class="num">4</div>
+          <b>Отгрузка</b>
+          <span>Самовывоз / доставка / отправка ТК</span>
+        </div>
+      </div>
+    </section>
+    
+    <section class="final-cta">
+      <div>
+        <h2 class="h2">Нужен расчёт сегодня?</h2>
+        <p class="lead">Напишите, что требуется — мы подберём и выставим счёт.</p>
+      </div>
+      <div class="final-actions">
+        <a class="btn primary" href="catalog.html">Перейти в каталог</a>
+        <a class="btn" href="#request">Оставить заявку</a>
+      </div>
+    </section>
+
     <section class="section" id="about">
       <div class="section-head">
         <h2 style="font-size:34px;margin-top:10px">О компании</h2>
@@ -300,5 +402,32 @@
     </div>
   </nav>
   <script src="assets/app.js"></script>
+  <script>
+    // поменяй на свои
+    const EMAIL_TO = "sales@gerametal.ru";
+    const WA_PHONE = "79000000000"; // без +
+  
+    function buildRequest(){
+      const name = (document.getElementById('rName')?.value || '').trim();
+      const phone = (document.getElementById('rPhone')?.value || '').trim();
+      const msg = (document.getElementById('rMsg')?.value || '').trim();
+  
+      const lines = [];
+      lines.push("Заявка с сайта ГераМеталл");
+      if(name) lines.push("Имя: " + name);
+      if(phone) lines.push("Телефон: " + phone);
+      if(msg) lines.push("Запрос: " + msg);
+      return lines.join("\n");
+    }
+  
+    document.getElementById('btnSend')?.addEventListener('click', () => {
+      const text = buildRequest();
+      const subject = encodeURIComponent("Заявка с сайта ГераМеталл");
+      const body = encodeURIComponent(text);
+  
+      // откроем почту (самый стабильный вариант без сервера)
+      location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+    });
+  </script>
 </body>
 </html>
