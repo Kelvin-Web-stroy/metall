@@ -5,455 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>ГераМеталл — цветной металлопрокат</title>
   <meta name="description" content="Цветной металлопрокат: алюминий, медь, латунь, бронза. Склад, доставка, резка. Каталог по прайсу."/>
-
-  <style>
-    :root{
-      --bg:#f3f4f6;            /* светлый фон как на примере */
-      --text:#111827;
-      --muted:#6b7280;
-      --border:#e5e7eb;
-      --card:#ffffff;
-      --shadow:0 12px 28px rgba(17,24,39,.08);
-
-      /* акцент под цветмет (медь/золото) */
-      --a:#ff8a3d;
-      --a2:#ffcc66;
-      --a3:#ff4b2e;
-      --accent: linear-gradient(135deg, var(--a2), var(--a), var(--a3));
-
-      --max:1220px;
-      --r:16px;
-      --sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Arial, "Noto Sans", "Helvetica Neue", sans-serif;
-    }
-
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family:var(--sans);
-      background:var(--bg);
-      color:var(--text);
-    }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
-
-    /* top mini line */
-    .topline{
-      background:#fff;
-      border-bottom:1px solid var(--border);
-      font-size:13px;
-      color:var(--muted);
-    }
-    .topline .row{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; padding:10px 0; flex-wrap:wrap;
-    }
-    .topline .row .left, .topline .row .right{
-      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
-    }
-
-    /* header with search like example */
-    header{
-      background:#fff;
-      border-bottom:1px solid var(--border);
-      position:sticky; top:0; z-index:60;
-    }
-    .head{
-      display:flex; align-items:center; gap:14px;
-      padding:14px 0;
-    }
-    .brand{
-      display:flex; align-items:center; gap:12px;
-      min-width: 200px;
-    }
-    .brand .logo{
-      width:40px; height:40px; border-radius:14px;
-      background:var(--accent);
-      box-shadow:0 10px 18px rgba(255,138,61,.18);
-      overflow:hidden;
-      position:relative;
-      flex:0 0 auto;
-    }
-    .brand .logo img{
-      width:100%; height:100%; object-fit:contain; background:#fff;
-    }
-    .brand .name{
-      font-weight:900;
-      letter-spacing:.2px;
-      line-height:1.05;
-    }
-    .brand .tag{
-      display:block;
-      font-size:12px;
-      color:var(--muted);
-      font-weight:700;
-      margin-top:2px;
-    }
-
-    .catalog-btn{
-      display:inline-flex; align-items:center; gap:10px;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid var(--border);
-      background:#111827;
-      color:#fff;
-      font-weight:850;
-      cursor:pointer;
-      user-select:none;
-      flex:0 0 auto;
-    }
-    .catalog-btn .burger{
-      width:18px; height:12px; position:relative; display:inline-block;
-    }
-    .catalog-btn .burger:before,
-    .catalog-btn .burger:after,
-    .catalog-btn .burger i{
-      content:"";
-      position:absolute; left:0; right:0;
-      height:2px; background:#fff; border-radius:3px;
-    }
-    .catalog-btn .burger:before{top:0}
-    .catalog-btn .burger i{top:5px}
-    .catalog-btn .burger:after{bottom:0}
-
-    .search{
-      flex:1 1 auto;
-      display:flex;
-      gap:10px;
-      align-items:center;
-      min-width: 260px;
-    }
-    .search input{
-      width:100%;
-      border:1px solid var(--border);
-      background:#f9fafb;
-      border-radius:12px;
-      padding:14px 14px;
-      font-size:14px;
-      outline:none;
-    }
-    .search button{
-      border:0;
-      border-radius:12px;
-      padding:14px 16px;
-      font-weight:900;
-      background: var(--accent);
-      color:#111827;
-      cursor:pointer;
-      box-shadow:0 10px 18px rgba(17,24,39,.10);
-      white-space:nowrap;
-    }
-
-    .head-right{
-      display:flex; align-items:center; gap:12px;
-      flex:0 0 auto;
-    }
-    .phone{
-      font-weight:900;
-      color:#111827;
-      white-space:nowrap;
-    }
-    .mini-links{
-      display:flex; gap:10px; align-items:center;
-      color:var(--muted); font-weight:750; font-size:13px;
-      white-space:nowrap;
-    }
-
-    /* hero grid like example */
-    .hero{
-      padding:18px 0 8px;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:stretch;
-    }
-    @media (max-width: 980px){
-      .hero-grid{grid-template-columns:1fr}
-      .brand{min-width:unset}
-      .head{flex-wrap:wrap}
-      .head-right{width:100%; justify-content:space-between}
-    }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--border);
-      border-radius:var(--r);
-      box-shadow:var(--shadow);
-    }
-    .left-card{
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      min-height: 360px;
-      position:relative;
-      overflow:hidden;
-    }
-    .left-card h1{
-      margin:0 0 10px;
-      font-size:42px;
-      line-height:1.05;
-      font-weight:950;
-      letter-spacing:-.4px;
-    }
-    @media (max-width: 520px){
-      .left-card h1{font-size:32px}
-    }
-    .left-card .lead{
-      color:var(--muted);
-      margin:0 0 14px;
-      font-weight:650;
-      line-height:1.45;
-    }
-    .left-card .form{
-      margin-top:auto;
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:10px;
-    }
-    .left-card .form input{
-      width:100%;
-      border:1px solid var(--border);
-      background:#f9fafb;
-      border-radius:12px;
-      padding:14px 14px;
-      font-size:14px;
-      outline:none;
-    }
-    .left-card .form .row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    @media (max-width: 520px){
-      .left-card .form .row{grid-template-columns:1fr}
-    }
-    .left-card .form .btns{
-      display:flex; gap:10px; flex-wrap:wrap;
-    }
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      padding:14px 16px;
-      border-radius:12px;
-      font-weight:900;
-      cursor:pointer;
-      border:1px solid var(--border);
-      background:#fff;
-      color:#111827;
-      user-select:none;
-    }
-    .btn.primary{
-      border:0;
-      background:var(--accent);
-      color:#111827;
-    }
-    .hint{
-      margin-top:8px;
-      color:var(--muted);
-      font-size:12.5px;
-      line-height:1.45;
-    }
-
-    /* right banner like slider */
-    .banner{
-      position:relative;
-      overflow:hidden;
-      min-height: 360px;
-      border-radius:var(--r);
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-      background:
-        linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.25) 55%, rgba(0,0,0,.12) 100%),
-        url("assets/hero.jpg") center/cover no-repeat;
-    }
-    .banner .content{
-      position:absolute; inset:0;
-      padding:18px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      color:#fff;
-    }
-    .banner .title{
-      margin:0;
-      font-size:38px;
-      line-height:1.05;
-      font-weight:950;
-      max-width: 18ch;
-      letter-spacing:-.4px;
-    }
-    @media (max-width: 520px){
-      .banner .title{font-size:30px}
-    }
-    .banner .sub{
-      margin:8px 0 0;
-      opacity:.9;
-      max-width: 52ch;
-      line-height:1.45;
-      font-weight:650;
-    }
-    .banner .bottom{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-    }
-    .banner .more{
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      background:#fff;
-      color:#111827;
-      border-radius:12px;
-      padding:12px 14px;
-      font-weight:950;
-      border:0;
-      cursor:pointer;
-    }
-    .banner .nav-arrows{
-      display:flex;
-      gap:10px;
-      margin-left:auto;
-    }
-    .circle{
-      width:46px;height:46px;
-      border-radius:999px;
-      border:0;
-      cursor:pointer;
-      background:rgba(255,255,255,.35);
-      color:#111;
-      font-weight:950;
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      backdrop-filter: blur(6px);
-    }
-
-    /* 3 feature cards under hero */
-    .features{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    @media (max-width: 980px){ .features{grid-template-columns:1fr} }
-    .feat{
-      padding:16px;
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-    }
-    .icon{
-      width:42px;height:42px;border-radius:14px;
-      background:rgba(255,138,61,.12);
-      border:1px solid rgba(255,138,61,.20);
-      display:flex; align-items:center; justify-content:center;
-      flex:0 0 auto;
-    }
-    .icon svg{width:22px;height:22px}
-    .feat b{display:block; font-weight:950; margin:0 0 4px}
-    .feat p{margin:0; color:var(--muted); line-height:1.45; font-weight:650}
-
-    /* Popular categories section like your screenshot */
-    .section{
-      padding:26px 0 10px;
-    }
-    .section-head{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
-    }
-    .section h2{
-      margin:0;
-      font-size:44px;
-      letter-spacing:-.6px;
-      font-weight:950;
-    }
-    @media (max-width: 520px){ .section h2{font-size:34px} }
-
-    .cats{
-      margin-top:14px;
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:14px;
-    }
-    @media (max-width: 1100px){ .cats{grid-template-columns:repeat(2, 1fr)} }
-    @media (max-width: 520px){ .cats{grid-template-columns:1fr} }
-
-    .cat{
-      padding:16px;
-      position:relative;
-      overflow:hidden;
-      min-height: 320px;
-    }
-    .cat .top{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-      margin-bottom:10px;
-    }
-    .cat .name{
-      font-weight:950;
-      font-size:26px;
-      letter-spacing:-.2px;
-      margin:0;
-    }
-    .cat .img{
-      width:98px; height:78px;
-      border-radius:14px;
-      background:linear-gradient(180deg,#f9fafb,#fff);
-      border:1px solid var(--border);
-      display:flex; align-items:center; justify-content:center;
-      overflow:hidden;
-      flex:0 0 auto;
-    }
-    .cat .img span{
-      color:var(--muted);
-      font-weight:900;
-      font-size:12px;
-      text-align:center;
-      padding:8px;
-    }
-    .cat ul{
-      list-style:none;
-      padding:0;
-      margin:10px 0 0;
-      display:grid;
-      gap:10px;
-    }
-    .cat li a{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:8px 0;
-      border-bottom:1px dashed var(--border);
-      color:#111827;
-      font-weight:750;
-    }
-    .cat li a small{color:var(--muted); font-weight:700}
-    .cat li a:hover{color:var(--a)}
-    .arrow{color:#9ca3af; font-weight:950}
-
-    footer{
-      margin-top:22px;
-      background:#fff;
-      border-top:1px solid var(--border);
-    }
-    .foot{
-      padding:18px 0 26px;
-      display:grid;
-      grid-template-columns: 1.2fr .8fr;
-      gap:14px;
-      color:var(--muted);
-      font-size:13px;
-    }
-    @media (max-width: 980px){ .foot{grid-template-columns:1fr} }
-    .foot b{color:#111827}
-  </style>
+  <link rel="stylesheet" href="assets/site.css"/>
+  <link rel="stylesheet" href="assets/index.css"/>
 </head>
-
 <body>
 
-  <!-- top line -->
   <div class="topline">
     <div class="container">
       <div class="row">
@@ -471,19 +27,15 @@
     </div>
   </div>
 
-  <!-- header -->
   <header>
     <div class="container">
       <div class="head">
-        <a class="brand" href="index.html">
+        <a class="brand" href="index.html" aria-label="На главную">
           <span class="logo" aria-hidden="true">
-            <!-- если есть logo.png — раскомментируй -->
+            <!-- если есть логотип: assets/logo.png — раскомментируй -->
             <!-- <img src="assets/logo.png" alt="ГераМеталл"> -->
           </span>
-          <span class="name">
-            ГераМеталл
-            <span class="tag">цветной металлопрокат</span>
-          </span>
+          <span class="name">ГераМеталл<span class="tag">цветной металлопрокат</span></span>
         </a>
 
         <a class="catalog-btn" href="catalog.html" title="Каталог">
@@ -492,7 +44,7 @@
         </a>
 
         <form class="search" action="catalog.html" method="GET" onsubmit="return goSearch(event)">
-          <input id="topSearch" placeholder="Название, марка, размер, ГОСТ (например: Л63 Ø20, М1, АД31…)" />
+          <input id="topSearch" placeholder="Название, марка, размер (например: Л63 Ø20, М1, АД31…)" />
           <button type="submit">Найти</button>
         </form>
 
@@ -508,12 +60,10 @@
     </div>
   </header>
 
-  <!-- hero -->
   <main class="container">
     <section class="hero">
       <div class="hero-grid">
 
-        <!-- left promo card -->
         <div class="card left-card">
           <h1><span style="background:var(--accent); -webkit-background-clip:text; background-clip:text; color:transparent">Цветной</span> металлопрокат в наличии</h1>
           <p class="lead">Быстрый подбор по марке/размеру. Резка в размер и доставка на объект. Опт/розница.</p>
@@ -528,21 +78,18 @@
               <a class="btn primary" href="catalog.html" onclick="return toCatalogWithQuery()">Найти в каталоге</a>
               <a class="btn" href="#popular">Популярные категории</a>
             </div>
-            <div class="hint">Подсказка: в каталоге можно фильтровать по категориям и цене. Данные подтягиваются из прайса.</div>
+            <div class="hint">Категории на главной и позиции в каталоге подтягиваются из прайса.</div>
           </div>
         </div>
 
-        <!-- right banner -->
-        <div class="banner">
+        <div class="banner" role="img" aria-label="Баннер (замени assets/hero.jpg)">
           <div class="content">
             <div>
               <h3 class="title">Поставка цветмета под производство</h3>
               <p class="sub">Алюминий • Медь • Латунь • Бронза. Отгрузка со склада и под заказ. Документы для юрлиц.</p>
             </div>
-
             <div class="bottom">
               <button class="more" onclick="location.href='catalog.html'">Подробнее</button>
-
               <div class="nav-arrows" aria-hidden="true">
                 <button class="circle" type="button">←</button>
                 <button class="circle" type="button">→</button>
@@ -553,8 +100,7 @@
 
       </div>
 
-      <!-- feature cards -->
-      <div class="features">
+      <div class="features" id="services">
         <div class="card feat">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -597,27 +143,22 @@
       </div>
     </section>
 
-    <!-- popular categories -->
     <section class="section" id="popular">
       <div class="section-head">
         <h2>Популярные категории</h2>
       </div>
-
-      <div class="cats" id="cats">
-        <!-- сюда подставим из products.json -->
-      </div>
+      <div class="cats" id="cats"></div>
     </section>
 
-    <!-- about + contacts -->
-    <section class="section" id="services">
+    <section class="section" id="about">
       <div class="section-head">
-        <h2 style="font-size:34px;margin-top:10px">Услуги</h2>
+        <h2 style="font-size:34px;margin-top:10px">О компании</h2>
       </div>
-
-      <div class="features" style="margin-top:14px">
-        <div class="card feat"><div class="icon" aria-hidden="true"></div><div><b>Комплектация</b><p>Соберём заказ под объект/цех по ведомости. Согласуем замены и аналоги.</p></div></div>
-        <div class="card feat"><div class="icon" aria-hidden="true"></div><div><b>Подбор материала</b><p>Поможем выбрать марку и формат (лист/пруток/труба/шина) под задачу.</p></div></div>
-        <div class="card feat"><div class="icon" aria-hidden="true"></div><div><b>Поставки по графику</b><p>Регулярные отгрузки для производств. Приоритет и фиксирование условий.</p></div></div>
+      <div class="card" style="padding:16px">
+        <div class="small" style="color:var(--muted)">
+          ГераМеталл — поставщик металлопроката. Каталог на сайте сформирован из прайса: группы (заголовки) и все позиции внутри.
+          Под ваш бизнес можно добавить: WhatsApp/Telegram, форму заявки, загрузку нового прайса, SEO-страницы.
+        </div>
       </div>
     </section>
 
@@ -648,15 +189,14 @@
     </div>
   </footer>
 
+  <a class="mobile-call" href="tel:+79000000000">Позвонить</a>
+
   <script>
     document.getElementById('y').textContent = new Date().getFullYear();
 
-    // отправка поискового запроса в каталог (простая логика)
     function goSearch(e){
       e.preventDefault();
       const q = (document.getElementById('topSearch').value || '').trim();
-      // catalog.html у нас на клиенте, поэтому просто открываем и прокручиваем
-      // (в каталоге поиск уже есть, это просто быстрый переход)
       location.href = 'catalog.html' + (q ? ('#search=' + encodeURIComponent(q)) : '');
       return false;
     }
@@ -667,13 +207,11 @@
       return false;
     }
 
-    // Популярные категории: 4 колонки (как на примере)
     async function renderPopular(){
       try{
         const res = await fetch('products.json', {cache:'no-store'});
         const products = await res.json();
 
-        // group by category
         const map = new Map();
         for(const p of products){
           const cat = (p.category || 'Каталог').toString().trim();
@@ -681,12 +219,10 @@
           map.get(cat).push(p);
         }
 
-        // sort categories by count desc
         const sorted = [...map.entries()].sort((a,b) => b[1].length - a[1].length).slice(0,4);
 
         const catsEl = document.getElementById('cats');
         catsEl.innerHTML = sorted.map(([cat, list], idx) => {
-          // собрать "подкатегории": уникальные профили/размеры
           const seen = new Set();
           const lines = [];
           for(const it of list){
@@ -697,24 +233,9 @@
             lines.push(t);
             if(lines.length >= 7) break;
           }
-
-          // fallback если профилей нет
-          if(lines.length === 0){
-            for(const it of list){
-              const t = (it.size || '').toString().trim();
-              if(!t) continue;
-              if(seen.has(t)) continue;
-              seen.add(t);
-              lines.push(t);
-              if(lines.length >= 7) break;
-            }
-          }
-
-          const slug = cat.toLowerCase().replace(/[^\p{L}\p{N}\s-]/gu,'').replace(/\s+/g,'-').slice(0,80) || 'cat';
           const imgText = ['Al','Cu','Br','Zn'][idx] || 'ME';
-
           return `
-            <div class="card cat" id="${slug}">
+            <div class="card cat">
               <div class="top">
                 <h3 class="name">${escapeHtml(shorten(cat, 26))}</h3>
                 <div class="img"><span>${imgText}<br/>METAL</span></div>
@@ -722,7 +243,7 @@
               <ul>
                 ${lines.map(t => `
                   <li>
-                    <a href="catalog.html#${slugify(cat)}">
+                    <a href="catalog.html#search=${encodeURIComponent(t)}">
                       <span>${escapeHtml(t)}</span>
                       <span class="arrow">›</span>
                     </a>
@@ -738,29 +259,14 @@
       }
     }
 
-    function slugify(text){
-      return (text || '').toString().trim().toLowerCase()
-        .replace(/[^\p{L}\p{N}\s-]/gu,'')
-        .replace(/\s+/g,'-')
-        .slice(0,80) || 'cat';
-    }
-    function shorten(s, n){
-      s = (s || '').toString();
-      return s.length > n ? s.slice(0, n-1) + '…' : s;
-    }
+    function shorten(s, n){ s = (s || '').toString(); return s.length > n ? s.slice(0, n-1) + '…' : s; }
     function escapeHtml(str){
       return (str || '').toString()
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
+        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+        .replaceAll('"','&quot;').replaceAll("'","&#039;");
     }
 
     renderPopular();
-
-    // Если пришли с #search= — можно потом доработать catalog.html (я сделаю),
-    // чтобы он подхватывал поиск из hash. Сейчас просто оставили задел.
   </script>
 </body>
 </html>
