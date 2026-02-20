@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>ГераМеталл — цветной металлопрокат</title>
-  <meta name="description" content="Цветной металлопрокат: алюминий, медь, латунь, бронза. Склад, доставка, резка. Каталог по прайсу."/>
+  <title>ГераМеталл — металлопрокат (черный и цветной)</title>
+  <meta name="description" content="Металлопрокат: цветной и черный. Склад, резка в размер, доставка. Каталог по прайсу, корзина и заявка."/>
   <link rel="stylesheet" href="assets/site.css"/>
   <link rel="stylesheet" href="assets/index.css"/>
 </head>
@@ -14,12 +14,12 @@
     <div class="container">
       <div class="row">
         <div class="left">
-          <span>Цветной металлопрокат</span>
+          <span>Металлопрокат</span>
           <span>•</span>
           <span>Склад • Резка • Доставка</span>
         </div>
         <div class="right">
-          <a href="#about">Компания</a>
+          <a href="#services">Услуги</a>
           <span>•</span>
           <a href="#contacts">Контакты</a>
         </div>
@@ -30,29 +30,29 @@
   <header>
     <div class="container">
       <div class="head">
-        <a class="brand" href="index.html" aria-label="На главную">
-          <span class="logo" aria-hidden="true">
-            <!-- если есть логотип: assets/logo.png — раскомментируй -->
-            <!-- <img src="assets/logo.png" alt="ГераМеталл"> -->
-          </span>
-          <span class="name">ГераМеталл<span class="tag">цветной металлопрокат</span></span>
+        <a class="brand" href="index.html">
+          <span class="logo" aria-hidden="true"></span>
+          <span class="name">ГераМеталл<span class="tag">черный и цветной прокат</span></span>
         </a>
 
-        <a class="catalog-btn" href="catalog.html" title="Каталог">
+        <a class="catalog-btn" href="catalog.html?dir=color" title="Каталог">
           <span class="burger"><i></i></span>
           Каталог
         </a>
 
-        <form class="search" action="catalog.html" method="GET" onsubmit="return goSearch(event)">
-          <input id="topSearch" placeholder="Название, марка, размер (например: Л63 Ø20, М1, АД31…)" />
-          <button type="submit">Найти</button>
+        <form class="search" onsubmit="return false">
+          <input id="q" placeholder="Поиск по прайсу: материал, марка, размер, ГОСТ…" />
+          <button type="button" id="btnGo">Найти</button>
         </form>
 
         <div class="head-right">
+          <a class="cart-link" href="cart.html" title="Корзина">
+            🛒 <span class="cart-badge" data-cart-badge style="display:none">0</span>
+          </a>
           <div class="mini-links">
-            <a href="catalog.html">Цены</a>
-            <span>·</span>
             <a href="#services">Услуги</a>
+            <span>·</span>
+            <a href="#contacts">Контакты</a>
           </div>
           <a class="phone" href="tel:+79000000000">+7 (900) 000-00-00</a>
         </div>
@@ -60,314 +60,124 @@
     </div>
   </header>
 
-  <main class="container">
+  <main>
     <section class="hero">
-      <div class="hero-grid">
-
+      <div class="container hero-grid">
         <div class="card left-card">
-          <h1><span style="background:var(--accent); -webkit-background-clip:text; background-clip:text; color:transparent">Цветной</span> металлопрокат в наличии</h1>
-          <p class="lead">Быстрый подбор по марке/размеру. Резка в размер и доставка на объект. Опт/розница.</p>
+          <h1><span style="background:var(--accent); -webkit-background-clip:text; background-clip:text; color:transparent">Металлопрокат</span><br/>в наличии</h1>
+          <p class="lead">Быстрый расчет, резка в размер, доставка на объект. Опт/розница. Работаем по спецификации.</p>
 
-          <div class="form">
-            <div class="form-row">
-              <input class="field" placeholder="Материал / марка">
-              <input class="field" placeholder="Размер">
+          <div class="hero-form">
+            <div class="tabs">
+              <button class="tab active" data-dir="color">Цветная металлургия</button>
+              <button class="tab" data-dir="black">Черная металлургия</button>
             </div>
-            <input class="field" placeholder="Форма (лист/пруток/труба/шина) или запрос текстом">
-            <div class="form-actions">
-              <a class="btn primary" href="catalog.html">Найти в каталоге</a>
+
+            <div class="row2">
+              <input id="f1" placeholder="Материал / марка (например: М1, Л63, АД31)" />
+              <input id="f2" placeholder="Размер (например: Ø20, 2×1000×2000)" />
+            </div>
+            <input id="f3" placeholder="Форма (лист/пруток/труба/шина) или запрос текстом" />
+            <div class="actions">
+              <a class="btn primary" id="btnCatalog" href="catalog.html?dir=color">Найти в каталоге</a>
               <a class="btn" href="#popular">Популярные категории</a>
             </div>
-            <div class="hint">Категории на главной и позиции в каталоге подтягиваются из прайса.</div>
+            <div class="small" style="color:var(--muted); font-weight:700; margin-top:10px">
+              Категории на главной и позиции в каталоге подтягиваются из прайса.
+            </div>
           </div>
         </div>
 
-        <div class="banner" role="img" aria-label="Баннер (замени assets/hero.jpg)">
-          <div class="content">
+        <div class="card right-banner">
+          <!-- картинку баннера поставите сами: через CSS background-image или img -->
+          <div class="banner-inner">
+            <div class="banner-title">Поставка металла<br/>под производство и стройку</div>
+            <div class="banner-sub">Алюминий • Медь • Латунь • Бронза • Сталь. Отгрузка под заказ. Документы для юрлиц.</div>
+            <a class="btn" href="#contacts">Подробнее</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding:10px 0 6px">
+      <div class="feat3">
+        <div class="card feat">
+          <div class="ic">📄</div>
+          <div><b>Документы и качество</b><div class="muted">Счёт/договор/закрывающие, сертификаты по запросу.</div></div>
+        </div>
+        <div class="card feat">
+          <div class="ic">✂️</div>
+          <div><b>Резка в размер</b><div class="muted">Подготовим металл: резка, комплектация, маркировка.</div></div>
+        </div>
+        <div class="card feat">
+          <div class="ic">🚚</div>
+          <div><b>Доставка</b><div class="muted">По городу и регионам. Самовывоз со склада.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container" style="padding:12px 0" id="directions">
+      <h2 class="h2">Выберите направление</h2>
+      <div class="dir-grid">
+        <a class="card dir-card" href="catalog.html?dir=color">
+          <div class="dir-top">
+            <div class="dir-badge" style="background:var(--accent)"></div>
             <div>
-              <h3 class="title">Поставка цветмета под производство</h3>
-              <p class="sub">Алюминий • Медь • Латунь • Бронза. Отгрузка со склада и под заказ. Документы для юрлиц.</p>
-            </div>
-            <div class="bottom">
-              <button class="more" onclick="location.href='catalog.html'">Подробнее</button>
-              <div class="nav-arrows" aria-hidden="true">
-                <button class="circle" type="button">←</button>
-                <button class="circle" type="button">→</button>
-              </div>
+              <div class="dir-title">Цветная металлургия</div>
+              <div class="dir-sub">Алюминий, медь, латунь, бронза, никель, цинк…</div>
             </div>
           </div>
-        </div>
+          <div class="dir-cta">Открыть каталог →</div>
+        </a>
 
-      </div>
-
-      <div class="features" id="services">
-        <div class="card feat">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M4 7h16M4 12h16M4 17h10"/>
-            </svg>
+        <a class="card dir-card" href="catalog.html?dir=black">
+          <div class="dir-top">
+            <div class="dir-badge" style="background:#111827"></div>
+            <div>
+              <div class="dir-title">Черная металлургия</div>
+              <div class="dir-sub">Арматура, труба, лист, уголок, балка, швеллер…</div>
+            </div>
           </div>
-          <div>
-            <b>Документы и качество</b>
-            <p>Работа по спецификации: марка, размер, партия. Счёт/договор/закрывающие.</p>
-          </div>
-        </div>
-
-        <div class="card feat">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 17l2 2 4-4"/>
-              <path d="M3 7h18M7 7v10"/>
-              <path d="M12 17h9"/>
-            </svg>
-          </div>
-          <div>
-            <b>Резка в размер</b>
-            <p>Подготовим металл к производству/монтажу: резка, комплектация, маркировка.</p>
-          </div>
-        </div>
-
-        <div class="card feat">
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 16V6a2 2 0 0 1 2-2h11l5 5v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <path d="M7 20a2 2 0 1 0 4 0"/>
-              <path d="M15 20a2 2 0 1 0 4 0"/>
-            </svg>
-          </div>
-          <div>
-            <b>Доставка</b>
-            <p>По городу и области. Рассчитаем логистику по весу/габариту и адресу.</p>
-          </div>
-        </div>
+          <div class="dir-cta">Открыть каталог →</div>
+        </a>
       </div>
     </section>
 
-    <section class="section" id="popular">
-      <div class="section-head">
-        <h2>Популярные категории</h2>
-      </div>
-      <div class="cats" id="cats"></div>
+    <section class="container" style="padding:8px 0 0" id="popular">
+      <h2 class="h2">Популярные категории</h2>
+      <div id="popularOut" class="pop-grid"></div>
     </section>
 
-    <section class="cta-strip">
-      <div>
-        <div class="kicker">Цветной металлопрокат со склада</div>
-        <h2 class="h2">Быстрый расчёт, резка в размер, доставка по городу и регионам</h2>
-        <p class="lead">
-          Медь, латунь, бронза, алюминий — под заявки производства и строительных объектов.
-          Подберём аналог и оперативно выставим счёт.
-        </p>
-    
-        <div class="cta-actions">
-          <a class="btn primary" href="catalog.html">Открыть каталог</a>
-          <a class="btn" href="#request">Получить расчёт</a>
+    <section class="container" style="padding:16px 0 22px" id="services">
+      <div class="card cta">
+        <div>
+          <div class="cta-title">Быстрая заявка</div>
+          <div class="cta-sub">Ответим и посчитаем в течение рабочего времени.</div>
         </div>
-    
-        <div class="trust">
-          <div class="trust-item"><b>Отгрузка</b><span>в день оплаты*</span></div>
-          <div class="trust-item"><b>Резка</b><span>в размер</span></div>
-          <div class="trust-item"><b>Документы</b><span>счёт/УПД/сертификаты*</span></div>
-          <div class="trust-item"><b>Доставка</b><span>своим транспортом/ТК</span></div>
-        </div>
-      </div>
-    
-      <div class="cta-card" id="request">
-        <div class="cta-card__top">
-          <div class="cta-card__title">Быстрая заявка</div>
-          <div class="cta-card__sub">Ответим и посчитаем в течение рабочего времени</div>
-        </div>
-    
-        <div class="cta-form">
-          <input id="rName" class="field" placeholder="Имя">
-          <input id="rPhone" class="field" placeholder="Телефон">
-          <textarea id="rMsg" class="field" placeholder="Что нужно: металл, размер, количество, доставка…"></textarea>
-          <button class="btn primary" type="button" id="btnSend">Отправить заявку</button>
-          <a class="btn" href="catalog.html">Добавить товары в корзину</a>
-          </div>
-    
-          <div class="small" style="color:var(--muted)">
-            * Условия зависят от позиции и объёма. Уточняйте у менеджера.
-          </div>
-        </div>
-      </div>
-    </section>
-    
-    <section class="grid-3">
-      <article class="info-card">
-        <div class="ic-ico">⚙️</div>
-        <h3>Подбор под задачу</h3>
-        <p>Подскажем марку/сплав, формат (лист/пруток/труба), аналоги и оптимальную нарезку под ваш проект.</p>
-      </article>
-    
-      <article class="info-card">
-        <div class="ic-ico">📦</div>
-        <h3>Склад и логистика</h3>
-        <p>Оперативная комплектация, упаковка, доставка по городу и отправка ТК в регионы.</p>
-      </article>
-    
-      <article class="info-card">
-        <div class="ic-ico">🧾</div>
-        <h3>Понятная экономика</h3>
-        <p>Цены по диапазонам объёма, быстрое КП, счёт и закрывающие документы для юрлиц.</p>
-      </article>
-    </section>
-    
-    <section class="steps">
-      <h2 class="h2">Как купить</h2>
-      <div class="steps-row">
-        <div class="step">
-          <div class="num">1</div>
-          <b>Выберите позиции</b>
-          <span>Откройте каталог и добавьте нужные товары в корзину</span>
-        </div>
-        <div class="step">
-          <div class="num">2</div>
-          <b>Уточните объём и резку</b>
-          <span>Укажите количество, резку, доставку — мы сделаем расчёт</span>
-        </div>
-        <div class="step">
-          <div class="num">3</div>
-          <b>Получите счёт</b>
-          <span>Подтвердим наличие/сроки и выставим счёт</span>
-        </div>
-        <div class="step">
-          <div class="num">4</div>
-          <b>Отгрузка</b>
-          <span>Самовывоз / доставка / отправка ТК</span>
-        </div>
-      </div>
-    </section>
-    
-    <section class="final-cta">
-      <div>
-        <h2 class="h2">Нужен расчёт сегодня?</h2>
-        <p class="lead">Напишите, что требуется — мы подберём и выставим счёт.</p>
-      </div>
-      <div class="final-actions">
-        <a class="btn primary" href="catalog.html">Перейти в каталог</a>
-        <a class="btn" href="#request">Оставить заявку</a>
-      </div>
-    </section>
-
-    <section class="section" id="about">
-      <div class="section-head">
-        <h2 style="font-size:34px;margin-top:10px">О компании</h2>
-      </div>
-      <div class="card" style="padding:16px">
-        <div class="small" style="color:var(--muted)">
-          ГераМеталл — поставщик металлопроката. Каталог на сайте сформирован из прайса: группы (заголовки) и все позиции внутри.
-          Под ваш бизнес можно добавить: WhatsApp/Telegram, форму заявки, загрузку нового прайса, SEO-страницы.
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contacts">
-      <div class="section-head">
-        <h2 style="font-size:34px;margin-top:10px">Контакты</h2>
-      </div>
-      <div class="features" style="margin-top:14px">
-        <div class="card feat"><div><b>Телефон</b><p><a href="tel:+79000000000">+7 (900) 000-00-00</a></p></div></div>
-        <div class="card feat"><div><b>Почта</b><p><a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a></p></div></div>
-        <div class="card feat"><div><b>Адрес</b><p>Ваш город, ул. Примерная, 10</p></div></div>
+        <form class="cta-form" onsubmit="return false">
+          <input id="n" placeholder="Имя"/>
+          <input id="p" placeholder="Телефон"/>
+          <textarea id="m" rows="3" placeholder="Что нужно: металл, размер, количество, доставка…"></textarea>
+          <button class="btn primary" id="sendLead">Отправить заявку</button>
+        </form>
       </div>
     </section>
   </main>
 
-  <footer>
+  <footer id="contacts">
     <div class="container foot">
       <div>
         <b>ГераМеталл</b><br/>
-        <div class="small">Цветной металлопрокат • склад • доставка • резка • комплектация.</div>
-        <div class="small">© <span id="y"></span></div>
+        <div class="small">Металлопрокат по прайсу. Резка/доставка — по заявке.</div>
       </div>
       <div>
-        <b>Быстрые ссылки</b><br/>
-        <a href="catalog.html">Каталог</a> · <a href="#popular">Популярные категории</a> · <a href="#contacts">Контакты</a>
-        <div class="small" style="margin-top:10px">Категории на главной подтягиваются из <b>products.json</b>.</div>
+        <b>Контакты</b><br/>
+        <a href="tel:+79000000000">+7 (900) 000-00-00</a> · <a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a><br/>
+        <div class="small" style="margin-top:8px">© <span id="y"></span></div>
       </div>
     </div>
   </footer>
 
-  <a class="mobile-call" href="tel:+79000000000">Позвонить</a>
-
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    function goSearch(e){
-      e.preventDefault();
-      const q = (document.getElementById('topSearch').value || '').trim();
-      location.href = 'catalog.html' + (q ? ('#search=' + encodeURIComponent(q)) : '');
-      return false;
-    }
-
-    function toCatalogWithQuery(){
-      const q = [q1.value, q2.value, q3.value].filter(Boolean).join(' ').trim();
-      location.href = 'catalog.html' + (q ? ('#search=' + encodeURIComponent(q)) : '');
-      return false;
-    }
-
-    async function renderPopular(){
-      try{
-        const res = await fetch('products.json', {cache:'no-store'});
-        const products = await res.json();
-
-        const map = new Map();
-        for(const p of products){
-          const cat = (p.category || 'Каталог').toString().trim();
-          if(!map.has(cat)) map.set(cat, []);
-          map.get(cat).push(p);
-        }
-
-        const sorted = [...map.entries()].sort((a,b) => b[1].length - a[1].length).slice(0,4);
-
-        const catsEl = document.getElementById('cats');
-        catsEl.innerHTML = sorted.map(([cat, list], idx) => {
-          const seen = new Set();
-          const lines = [];
-          for(const it of list){
-            const t = (it.profile || it.size || '').toString().trim();
-            if(!t) continue;
-            if(seen.has(t)) continue;
-            seen.add(t);
-            lines.push(t);
-            if(lines.length >= 7) break;
-          }
-          const imgText = ['Al','Cu','Br','Zn'][idx] || 'ME';
-          return `
-            <div class="card cat">
-              <div class="top">
-                <h3 class="name">${escapeHtml(shorten(cat, 26))}</h3>
-                <div class="img"><span>${imgText}<br/>METAL</span></div>
-              </div>
-              <ul>
-                ${lines.map(t => `
-                  <li>
-                    <a href="catalog.html#search=${encodeURIComponent(t)}">
-                      <span>${escapeHtml(t)}</span>
-                      <span class="arrow">›</span>
-                    </a>
-                  </li>
-                `).join('')}
-              </ul>
-            </div>
-          `;
-        }).join('');
-
-      }catch(err){
-        console.log(err);
-      }
-    }
-
-    function shorten(s, n){ s = (s || '').toString(); return s.length > n ? s.slice(0, n-1) + '…' : s; }
-    function escapeHtml(str){
-      return (str || '').toString()
-        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
-        .replaceAll('"','&quot;').replaceAll("'","&#039;");
-    }
-
-    renderPopular();
-  </script>
   <nav class="bottom-nav" aria-label="Нижнее меню">
     <div class="grid">
       <a href="index.html">
@@ -376,7 +186,7 @@
         </svg>
         Главная
       </a>
-      <a href="catalog.html">
+      <a href="catalog.html?dir=color">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M4 6h16M4 12h16M4 18h10"/>
         </svg>
@@ -399,33 +209,77 @@
       </a>
     </div>
   </nav>
+
   <script src="assets/app.js"></script>
   <script>
-    // поменяй на свои
-    const EMAIL_TO = "sales@gerametal.ru";
-    const WA_PHONE = "79000000000"; // без +
-  
-    function buildRequest(){
-      const name = (document.getElementById('rName')?.value || '').trim();
-      const phone = (document.getElementById('rPhone')?.value || '').trim();
-      const msg = (document.getElementById('rMsg')?.value || '').trim();
-  
-      const lines = [];
-      lines.push("Заявка с сайта ГераМеталл");
-      if(name) lines.push("Имя: " + name);
-      if(phone) lines.push("Телефон: " + phone);
-      if(msg) lines.push("Запрос: " + msg);
-      return lines.join("\n");
-    }
-  
-    document.getElementById('btnSend')?.addEventListener('click', () => {
-      const text = buildRequest();
-      const subject = encodeURIComponent("Заявка с сайта ГераМеталл");
-      const body = encodeURIComponent(text);
-  
-      // откроем почту (самый стабильный вариант без сервера)
-      location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // табы направления в форме
+    let currentDir = 'color';
+    document.querySelectorAll('.tab').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+        btn.classList.add('active');
+        currentDir = btn.getAttribute('data-dir') || 'color';
+        document.getElementById('btnCatalog').setAttribute('href', 'catalog.html?dir=' + encodeURIComponent(currentDir));
+      });
     });
+
+    // поиск в шапке -> каталог
+    document.getElementById('btnGo').addEventListener('click', ()=>{
+      const q = (document.getElementById('q').value||'').trim();
+      const url = 'catalog.html?dir=' + encodeURIComponent(currentDir) + (q ? ('&search=' + encodeURIComponent(q)) : '');
+      location.href = url;
+    });
+
+    // поиск из hero формы
+    document.getElementById('btnCatalog').addEventListener('click', (e)=>{
+      const a = e.currentTarget;
+      const q = [document.getElementById('f1').value, document.getElementById('f2').value, document.getElementById('f3').value].join(' ').trim();
+      a.setAttribute('href', 'catalog.html?dir=' + encodeURIComponent(currentDir) + (q ? ('&search=' + encodeURIComponent(q)) : ''));
+    });
+
+    // заявка -> mailto
+    document.getElementById('sendLead').addEventListener('click', ()=>{
+      const name = (document.getElementById('n').value||'').trim();
+      const phone = (document.getElementById('p').value||'').trim();
+      const msg = (document.getElementById('m').value||'').trim();
+      const subject = encodeURIComponent('Заявка с сайта ГераМеталл');
+      const body = encodeURIComponent('Имя: '+name+'\nТелефон: '+phone+'\n\nЗапрос:\n'+msg);
+      location.href = 'mailto:sales@gerametal.ru?subject='+subject+'&body='+body;
+    });
+
+    // популярные категории (по 6 на направление)
+    (async ()=>{
+      try{
+        const res = await fetch('products.json', {cache:'no-store'});
+        const products = await res.json();
+        const pick = (dir) => {
+          const cats = [];
+          const seen = new Set();
+          for(const p of products){
+            if(p.metallurgy!==dir) continue;
+            if(!p.category || seen.has(p.category)) continue;
+            seen.add(p.category);
+            cats.push(p.category);
+            if(cats.length>=6) break;
+          }
+          return cats;
+        }
+        const colorCats = pick('color');
+        const blackCats = pick('black');
+
+        const makeCard = (dir, cat) => `
+          <a class="card pop-card" href="catalog.html?dir=${dir}&group=${encodeURIComponent(cat)}">
+            <div class="pop-title">${cat.replace(/\s+Цена.*$/,'')}</div>
+            <div class="pop-sub">Открыть группу →</div>
+          </a>
+        `;
+
+        document.getElementById('popularOut').innerHTML =
+          [...colorCats.map(c=>makeCard('color', c)), ...blackCats.map(c=>makeCard('black', c))].join('');
+      }catch(e){}
+    })();
   </script>
 </body>
 </html>

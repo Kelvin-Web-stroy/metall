@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Каталог — ГераМеталл</title>
-  <meta name="description" content="Каталог по прайсу: группы (синие заголовки), поиск, фильтр цен."/>
+  <meta name="description" content="Каталог по прайсу: направления (черный/цветной), группы, поиск, фильтр цен, корзина."/>
   <link rel="stylesheet" href="assets/site.css"/>
   <link rel="stylesheet" href="assets/catalog.css"/>
 </head>
@@ -14,9 +14,7 @@
     <div class="container">
       <div class="head">
         <a class="brand" href="index.html">
-          <span class="logo" aria-hidden="true">
-            <!-- <img src="assets/logo.png" alt="ГераМеталл"> -->
-          </span>
+          <span class="logo" aria-hidden="true"></span>
           <span class="name">ГераМеталл<span class="tag">каталог и цены</span></span>
         </a>
 
@@ -32,10 +30,9 @@
 
         <div class="head-right">
           <a class="cart-link" href="cart.html" title="Корзина">
-            🛒 Корзина
+            🛒
             <span class="cart-badge" data-cart-badge style="display:none">0</span>
           </a>
-
           <div class="mini-links">
             <a href="index.html#contacts">Контакты</a>
             <span>·</span>
@@ -49,11 +46,19 @@
 
   <main class="container page">
     <h1 class="page-title">Каталог и цены</h1>
-    <p class="page-sub">Группы товаров сформированы из прайса (заголовки). Используйте поиск и фильтр цен.</p>
+    <p class="page-sub">Выберите направление (черная/цветная металлургия), затем группу. Добавляйте позиции в корзину и отправляйте заявку.</p>
 
     <div class="catalog-wrap">
       <aside class="sidebar">
         <h3>Фильтры</h3>
+
+        <label class="small" style="color:var(--muted); font-weight:900">Направление</label>
+        <select id="dir" class="field">
+          <option value="color">Цветная металлургия</option>
+          <option value="black">Черная металлургия</option>
+        </select>
+
+        <div style="height:10px"></div>
 
         <label class="small" style="color:var(--muted); font-weight:900">Группа</label>
         <select id="cat" class="field">
@@ -62,11 +67,11 @@
 
         <div class="filters">
           <div>
-            <label class="small" style="color:var(--muted); font-weight:900">Цена от (₽/т)</label>
+            <label class="small" style="color:var(--muted); font-weight:900">Цена от</label>
             <input id="pmin" class="field" inputmode="numeric" placeholder="0"/>
           </div>
           <div>
-            <label class="small" style="color:var(--muted); font-weight:900">Цена до (₽/т)</label>
+            <label class="small" style="color:var(--muted); font-weight:900">Цена до</label>
             <input id="pmax" class="field" inputmode="numeric" placeholder="999999"/>
           </div>
         </div>
@@ -75,16 +80,14 @@
           <span class="pill">Найдено: <span id="count">—</span></span>
         </div>
 
-        <div class="side-nav">
-          <hr style="border:none;border-top:1px solid var(--border); margin:14px 0"/>
-          <h3>Навигация</h3>
-          <div id="nav" class="navlist"></div>
+        <div class="hint" style="margin-top:12px; color:var(--muted); font-weight:650; font-size:12.5px; line-height:1.5">
+          Для удобства навигацию списком убрали — используйте «Группа» и поиск.
         </div>
       </aside>
 
       <section>
         <div class="notice">
-          <b>Примечание:</b> цены показаны в ₽/т по диапазонам объёма. Для резки/доставки — оставьте заявку (телефон/почта).
+          <b>Примечание:</b> цены указаны по прайсу (для цветмета — чаще ₽/кг, для чермета — ₽/т). Для резки/доставки — оставьте заявку или добавьте позиции в корзину.
         </div>
 
         <div id="out" style="margin-top:14px"></div>
@@ -105,230 +108,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- ВАЖНО: app.js подключаем ДО основного скрипта, чтобы cartAdd() был доступен -->
-  <script src="assets/app.js"></script>
-
-  <script>
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    const fmtInt = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU').format(n));
-    const fmtMoney = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU', {maximumFractionDigits: 2}).format(n));
-
-    function slugify(text){
-      return (text || "")
-        .toString().trim().toLowerCase()
-        .replace(/[^\p{L}\p{N}\s-]/gu, "")
-        .replace(/\s+/g, "-")
-        .slice(0, 80) || "cat";
-    }
-
-    function rowMatches(p, q){
-      if(!q) return true;
-      const hay = (p.category+" "+p.profile+" "+p.size+" "+p.steel+" "+p.length_m).toLowerCase();
-      return hay.includes(q.toLowerCase());
-    }
-
-    function withinPrice(p, min, max){
-      const v = p.price_ton_to_0_3 ?? p.price_ton_0_3_1 ?? p.price_ton_1_5;
-      if(v===null || v===undefined) return true;
-      if(min && v < min) return false;
-      if(max && v > max) return false;
-      return true;
-    }
-
-    function readHashSearch(){
-      const h = (location.hash || "");
-      if(!h) return null;
-      if(h.startsWith("#search=")){
-        try{ return decodeURIComponent(h.slice("#search=".length)); }
-        catch(e){ return h.slice("#search=".length); }
-      }
-      return null;
-    }
-
-    function escapeHtml(str){
-      return (str || '').toString()
-        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
-        .replaceAll('"','&quot;').replaceAll("'","&#039;");
-    }
-
-    function bindAddButtons(){
-      document.querySelectorAll('[data-add]').forEach(btn=>{
-        btn.addEventListener('click', ()=>{
-          try{
-            const p = JSON.parse(decodeURIComponent(btn.getAttribute('data-add')));
-            cartAdd(p);
-            btn.textContent = 'Добавлено ✅';
-            setTimeout(()=>btn.textContent='В корзину', 900);
-          }catch(e){}
-        });
-      });
-    }
-
-    function renderSection(cat, list){
-      const id = slugify(cat);
-      const meta = `${list.length} позиций`;
-
-      const mCards = list.map(p => {
-        const data = encodeURIComponent(JSON.stringify(p));
-
-        const title = `${p.profile || "Позиция"} ${p.size || ""}`.trim();
-        const sub = [
-          p.steel ? `Марка: ${p.steel}` : "",
-          p.length_m ? `Длина: ${p.length_m}` : "",
-          (p.weight_kg ?? "") !== "" ? `Вес 1 шт: ${p.weight_kg} кг` : ""
-        ].filter(Boolean).join(" • ");
-
-        return `
-          <div class="m-card">
-            <div class="m-top">
-              <div>
-                <div class="m-title">${escapeHtml(title)}</div>
-                <div class="m-sub">${escapeHtml(sub)}</div>
-              </div>
-              <span class="badge">₽/т</span>
-            </div>
-
-            <div class="m-prices">
-              <div class="m-price"><b>до 0,3 т</b><span>${fmtInt(p.price_ton_to_0_3) || "—"} ₽/т</span></div>
-              <div class="m-price"><b>0,3–1 т</b><span>${fmtInt(p.price_ton_0_3_1) || "—"} ₽/т</span></div>
-              <div class="m-price"><b>1–5 т</b><span>${fmtInt(p.price_ton_1_5) || "—"} ₽/т</span></div>
-              <div class="m-price"><b>Цена 1 шт</b><span>${fmtMoney(p.price_piece_rub) || "—"} ₽</span></div>
-            </div>
-
-            <div class="m-add">
-              <button class="add-btn" data-add="${data}">В корзину</button>
-              <a class="btn primary" href="cart.html">Оформить</a>
-            </div>
-          </div>
-        `;
-      }).join("");
-
-      const rows = list.map(p => {
-        const data = encodeURIComponent(JSON.stringify(p));
-        return `
-          <tr>
-            <td><span class="badge">${escapeHtml(p.profile || "—")}</span></td>
-            <td class="mono">${escapeHtml(p.size || "—")}</td>
-            <td class="mono">${escapeHtml(p.steel || "—")}</td>
-            <td class="mono">${escapeHtml(p.length_m || "—")}</td>
-            <td class="mono">${fmtInt(p.price_ton_to_0_3) || ""}</td>
-            <td class="mono">${fmtInt(p.price_ton_0_3_1) || ""}</td>
-            <td class="mono">${fmtInt(p.price_ton_1_5) || ""}</td>
-            <td class="mono">${escapeHtml((p.weight_kg ?? "") + "")}</td>
-            <td class="mono">${fmtMoney(p.price_piece_rub) || ""}</td>
-            <td><button class="add-btn" data-add="${data}">В корзину</button></td>
-          </tr>
-        `;
-      }).join("");
-
-      return `
-        <section class="cat-section" id="${id}">
-          <div class="cat-head">
-            <h2 class="cat-title">${escapeHtml(cat)}</h2>
-            <div class="cat-meta">${meta}</div>
-          </div>
-
-          <div class="m-cards">${mCards}</div>
-
-          <div class="table-wrap">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Профиль</th>
-                  <th>Размер</th>
-                  <th>Марка</th>
-                  <th>Длина</th>
-                  <th>до 0,3 т</th>
-                  <th>0,3–1 т</th>
-                  <th>1–5 т</th>
-                  <th>Вес 1 шт</th>
-                  <th>Цена 1 шт</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                ${rows || `<tr><td colspan="10" style="color:var(--muted)">Нет позиций по фильтрам</td></tr>`}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      `;
-    }
-
-    async function main(){
-      const res = await fetch('products.json', {cache:'no-store'});
-      const products = await res.json();
-
-      const cats = [...new Set(products.map(p => p.category).filter(Boolean))];
-
-      const $q = document.querySelector('#q');
-      const $cat = document.querySelector('#cat');
-      const $pmin = document.querySelector('#pmin');
-      const $pmax = document.querySelector('#pmax');
-      const $out = document.querySelector('#out');
-      const $count = document.querySelector('#count');
-      const $nav = document.querySelector('#nav');
-      const $btn = document.querySelector('#btnFind');
-
-      $cat.innerHTML = `<option value="">Все группы</option>` + cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
-      $nav.innerHTML = cats.map(c => `<a href="#${slugify(c)}">${escapeHtml(c)}</a>`).join("");
-
-      function apply(){
-        const q = ($q.value || "").trim();
-        const cat = $cat.value;
-        const min = parseInt(($pmin.value || "").replace(/\D/g,""), 10) || null;
-        const max = parseInt(($pmax.value || "").replace(/\D/g,""), 10) || null;
-
-        const filtered = products.filter(p =>
-          (!cat || p.category === cat) &&
-          rowMatches(p, q) &&
-          withinPrice(p, min, max)
-        );
-
-        const map = new Map();
-        for(const p of filtered){
-          const key = p.category || "Без категории";
-          if(!map.has(key)) map.set(key, []);
-          map.get(key).push(p);
-        }
-
-        let html = "";
-        for(const [k, list] of map.entries()){
-          html += renderSection(k, list);
-        }
-
-        $out.innerHTML = html || `<div class="notice">По текущим фильтрам ничего не найдено.</div>`;
-        $count.textContent = filtered.length;
-
-        // ВАЖНО: биндим кнопки после вставки HTML
-        bindAddButtons();
-      }
-
-      [$q, $cat, $pmin, $pmax].forEach(el => el.addEventListener('input', apply));
-      $btn.addEventListener('click', apply);
-
-      // hash search
-      const hashSearch = readHashSearch();
-      if(hashSearch){
-        $q.value = hashSearch;
-      }
-
-      apply();
-
-      // scroll to section if hash is category slug
-      const h = location.hash?.slice(1);
-      if(h && !h.startsWith("search=")){
-        setTimeout(() => {
-          const el = document.getElementById(h);
-          if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
-        }, 250);
-      }
-    }
-
-    main();
-  </script>
 
   <nav class="bottom-nav" aria-label="Нижнее меню">
     <div class="grid">
@@ -362,5 +141,211 @@
     </div>
   </nav>
 
+  <script src="assets/app.js"></script>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    const fmtInt = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU').format(n));
+    const fmtMoney = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU', {maximumFractionDigits: 2}).format(n));
+
+    function escapeHtml(str){
+      return (str || '').toString()
+        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+        .replaceAll('"','&quot;').replaceAll("'","&#039;");
+    }
+
+    function rowMatches(p, q){
+      if(!q) return true;
+      const hay = (p.category+' '+p.metallurgy+' '+p.profile+' '+(p.size||'')+' '+(p.steel||'')+' '+(p.gost||'')).toLowerCase();
+      return hay.includes(q.toLowerCase());
+    }
+    function withinPrice(p, min, max){
+      const v = p.price_ton_to_0_3 ?? p.price_ton_0_3_1 ?? p.price_ton_1_5 ?? p.price_piece_rub;
+      if(v===null || v===undefined) return true;
+      if(min && v < min) return false;
+      if(max && v > max) return false;
+      return true;
+    }
+
+    function getParams(){
+      const s = new URLSearchParams(location.search || '');
+      return {
+        dir: s.get('dir') || null,
+        search: s.get('search') || null,
+        group: s.get('group') || null,
+      };
+    }
+
+    function renderSection(cat, list, unit){
+      const meta = `${list.length} позиций`;
+      const rows = list.map(p => `
+        <tr>
+          <td><span class="badge">${escapeHtml(p.profile || "—")}</span></td>
+          <td class="mono">${escapeHtml(p.size || "—")}</td>
+          <td class="mono">${escapeHtml(p.steel || "—")}</td>
+          <td class="mono">${escapeHtml(p.gost || "—")}</td>
+          <td class="mono">${escapeHtml(p.length_m || "")}</td>
+          <td class="mono">${fmtInt(p.price_ton_to_0_3) || ""}</td>
+          <td class="mono">${fmtInt(p.price_ton_0_3_1) || ""}</td>
+          <td class="mono">${fmtInt(p.price_ton_1_5) || ""}</td>
+          <td class="mono">${fmtMoney(p.price_piece_rub) || ""}</td>
+          <td><button class="add-btn" data-add-id="${escapeHtml(p.id)}">В корзину</button></td>
+        </tr>
+      `).join("");
+
+      const mCards = list.map(p => {
+        const title = `${p.profile || "Позиция"} ${p.size || ""}`.trim();
+        const sub = [
+          p.steel ? `Марка: ${p.steel}` : "",
+          p.gost ? `ГОСТ: ${p.gost}` : "",
+          p.length_m ? `Длина: ${p.length_m}` : "",
+        ].filter(Boolean).join(" • ");
+        return `
+          <div class="m-card">
+            <div class="m-top">
+              <div>
+                <div class="m-title">${escapeHtml(title)}</div>
+                <div class="m-sub">${escapeHtml(sub)}</div>
+              </div>
+              <span class="badge">${escapeHtml(unit)}</span>
+            </div>
+
+            <div class="m-prices">
+              <div class="m-price"><b>Цена 1</b><span>${fmtInt(p.price_ton_to_0_3) || "—"} ${escapeHtml(unit)}</span></div>
+              <div class="m-price"><b>Цена 2</b><span>${fmtInt(p.price_ton_0_3_1) || "—"} ${escapeHtml(unit)}</span></div>
+              <div class="m-price"><b>Цена 3</b><span>${fmtInt(p.price_ton_1_5) || "—"} ${escapeHtml(unit)}</span></div>
+              <div class="m-price"><b>Цена 4</b><span>${fmtMoney(p.price_piece_rub) || "—"} ${escapeHtml(unit)}</span></div>
+            </div>
+
+            <div class="m-add">
+              <button class="btn primary" data-add-id="${escapeHtml(p.id)}">В корзину</button>
+              <a class="btn" href="cart.html">Корзина</a>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      return `
+        <section class="cat-section">
+          <div class="cat-head">
+            <h2 class="cat-title">${escapeHtml(cat)}</h2>
+            <div class="cat-meta">${meta}</div>
+          </div>
+
+          <div class="m-cards">${mCards}</div>
+
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Позиция</th>
+                  <th>Размер</th>
+                  <th>Марка</th>
+                  <th>ГОСТ/ТУ</th>
+                  <th>Длина</th>
+                  <th>Цена 1</th>
+                  <th>Цена 2</th>
+                  <th>Цена 3</th>
+                  <th>Цена 4</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows || `<tr><td colspan="10" style="color:var(--muted)">Нет позиций по фильтрам</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      `;
+    }
+
+    async function main(){
+      const res = await fetch('products.json', {cache:'no-store'});
+      const products = await res.json();
+      const byId = new Map(products.map(p => [p.id, p]));
+
+      const $dir = document.querySelector('#dir');
+      const $q = document.querySelector('#q');
+      const $cat = document.querySelector('#cat');
+      const $pmin = document.querySelector('#pmin');
+      const $pmax = document.querySelector('#pmax');
+      const $out = document.querySelector('#out');
+      const $count = document.querySelector('#count');
+      const $btn = document.querySelector('#btnFind');
+
+      const params = getParams();
+      if(params.dir) $dir.value = params.dir;
+      if(params.search) $q.value = params.search;
+
+      function catsForDir(d){
+        return [...new Set(products.filter(p=>p.metallurgy===d).map(p=>p.category).filter(Boolean))];
+      }
+
+      function updateCatOptions(){
+        const cats = catsForDir($dir.value);
+        $cat.innerHTML = `<option value="">Все группы</option>` + cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+        if(params.group && cats.includes(params.group)) $cat.value = params.group;
+      }
+
+      function apply(){
+        const q = ($q.value || "").trim();
+        const cat = $cat.value;
+        const dir = $dir.value;
+        const min = parseInt(($pmin.value || "").replace(/\D/g,""), 10) || null;
+        const max = parseInt(($pmax.value || "").replace(/\D/g,""), 10) || null;
+
+        const filtered = products.filter(p =>
+          p.metallurgy===dir &&
+          (!cat || p.category === cat) &&
+          rowMatches(p, q) &&
+          withinPrice(p, min, max)
+        );
+
+        const map = new Map();
+        for(const p of filtered){
+          const key = p.category || "Без категории";
+          if(!map.has(key)) map.set(key, []);
+          map.get(key).push(p);
+        }
+
+        const unit = (dir==='color') ? '₽/кг' : '₽/т';
+        let html = "";
+        for(const [k, list] of map.entries()){
+          html += renderSection(k, list, unit);
+        }
+
+        $out.innerHTML = html || `<div class="notice">По текущим фильтрам ничего не найдено.</div>`;
+        $count.textContent = filtered.length;
+
+        // bind add buttons (delegation)
+        document.querySelectorAll('[data-add-id]').forEach(btn=>{
+          btn.onclick = () => {
+            const id = btn.getAttribute('data-add-id');
+            const p = byId.get(id);
+            if(!p) return;
+            cartAdd(p);
+            btn.textContent = 'Добавлено';
+            setTimeout(()=>btn.textContent='В корзину', 900);
+          };
+        });
+      }
+
+      updateCatOptions();
+      apply();
+
+      [$q, $cat, $pmin, $pmax].forEach(el => el.addEventListener('input', apply));
+      $btn.addEventListener('click', apply);
+      $dir.addEventListener('change', () => { 
+        // сбрасываем group при смене направления
+        history.replaceState(null,'', location.pathname + '?dir=' + encodeURIComponent($dir.value));
+        params.group = null;
+        updateCatOptions();
+        apply();
+      });
+      $cat.addEventListener('change', apply);
+    }
+
+    main();
+  </script>
 </body>
 </html>
