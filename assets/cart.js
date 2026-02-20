@@ -1,128 +1,123 @@
-function esc(s){
-  return (s||'').toString()
-    .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
-    .replaceAll('"','&quot;').replaceAll("'","&#039;");
-}
-function fmt(n){
-  return (n==null||n==='' ? '' : new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n));
-}
+// assets/cart.js
+(function(){
+  const fmtInt = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU').format(n));
+  const fmtMoney = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU', {maximumFractionDigits: 2}).format(n));
 
-function buildText(items, meta){
-  const lines=[];
-  lines.push('Заявка с сайта ГераМеталл');
-  if(meta.name) lines.push('Имя: '+meta.name);
-  if(meta.phone) lines.push('Телефон: '+meta.phone);
-  if(meta.comment) lines.push('Комментарий: '+meta.comment);
-  lines.push('');
-  lines.push('Позиции:');
-  items.forEach((it,i)=>{
-    const title=[it.profile,it.size].filter(Boolean).join(' ');
-    lines.push(`${i+1}) ${title} — ${it.qty} шт/ед. (Группа: ${it.category || '-'})`);
-  });
-  return lines.join('\n');
-}
+  function dirLabel(d){ return d==='black' ? 'Черная металлургия' : 'Цветная металлургия'; }
 
-function render(){
-  const items = cartLoad();
-  document.getElementById('cartCount').textContent = items.reduce((s,i)=>s+(Number(i.qty)||0),0);
+  function unitFor(d){ return d==='black' ? '₽/т' : '₽/кг'; }
 
-  const out=document.getElementById('cartOut');
-  const cards=document.getElementById('cartCards');
-
-  if(items.length===0){
-    out.innerHTML = `<div class="notice"><b>Корзина пуста.</b> Перейдите в каталог и добавьте позиции.</div>`;
-    cards.innerHTML='';
-    return;
+  function lineFor(item){
+    const p = item.product || {};
+    const unit = unitFor(p.metallurgy);
+    const price = p.price_ton_to_0_3 ?? p.price_ton_0_3_1 ?? p.price_ton_1_5 ?? p.price_piece_rub;
+    const priceStr = (price===null||price===undefined) ? '' : (fmtInt(price) + ' ' + unit);
+    return [
+      `• ${p.profile || ''} ${p.size || ''}`.trim(),
+      p.steel ? `марка: ${p.steel}` : '',
+      p.gost ? `ГОСТ/ТУ: ${p.gost}` : '',
+      p.category ? `группа: ${p.category}` : '',
+      `кол-во: ${item.qty || 1}`,
+      priceStr ? `цена: ${priceStr}` : ''
+    ].filter(Boolean).join(' | ');
   }
 
-  out.innerHTML = `
-    <div class="cart-list">
-      <table class="cart-table">
-        <thead><tr>
-          <th>Товар</th><th>Группа</th><th>Кол-во</th><th></th>
-        </tr></thead>
-        <tbody>
-          ${items.map(it=>{
-            const title=[it.profile,it.size].filter(Boolean).join(' ');
-            return `
-              <tr>
-                <td><b>${esc(title)}</b></td>
-                <td>${esc(it.category||'')}</td>
-                <td><input class="qty" type="number" min="1" value="${it.qty}" data-qty="${it.id}"></td>
-                <td><button class="remove" data-remove="${it.id}">Удалить</button></td>
-              </tr>
-            `;
-          }).join('')}
-        </tbody>
-      </table>
-    </div>
-  `;
+  function render(){
+    const list = window.cartGet ? window.cartGet() : [];
+    const out = document.getElementById('cartOut');
+    const cnt = document.getElementById('cartCount');
+    if(cnt) cnt.textContent = String(list.length);
 
-  cards.innerHTML = items.map(it=>{
-    const title=[it.profile,it.size].filter(Boolean).join(' ');
-    return `
-      <div class="cart-card">
-        <div style="display:flex;justify-content:space-between;gap:10px">
-          <div>
-            <div style="font-weight:950">${esc(title)}</div>
-            <div class="small" style="color:var(--muted);margin-top:6px">${esc(it.category||'')}</div>
-          </div>
-          <button class="remove" data-remove="${it.id}">Удалить</button>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center;margin-top:10px">
-          <span class="small" style="color:var(--muted);font-weight:900">Кол-во</span>
-          <input class="qty" type="number" min="1" value="${it.qty}" data-qty="${it.id}">
-        </div>
-      </div>
-    `;
-  }).join('');
-
-  document.querySelectorAll('[data-remove]').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      cartRemove(btn.getAttribute('data-remove'));
-      render();
-    });
-  });
-  document.querySelectorAll('[data-qty]').forEach(inp=>{
-    inp.addEventListener('change', ()=>{
-      cartSetQty(inp.getAttribute('data-qty'), inp.value);
-      render();
-    });
-  });
-}
-
-document.addEventListener('DOMContentLoaded', ()=>{
-  render();
-
-  document.getElementById('clearCart').addEventListener('click', ()=>{
-    cartClear(); render();
-  });
-
-  const getMeta = ()=>({
-    name: document.getElementById('name').value.trim(),
-    phone: document.getElementById('phone').value.trim(),
-    comment: document.getElementById('comment').value.trim()
-  });
-
-  const getText = ()=>buildText(cartLoad(), getMeta());
-
-  document.getElementById('copyRequest').addEventListener('click', async (e)=>{
-    try{
-      await navigator.clipboard.writeText(getText());
-      e.target.textContent='Скопировано ✅';
-      setTimeout(()=>e.target.textContent='Скопировать заявку',1200);
-    }catch(err){
-      alert('Не удалось скопировать.');
+    if(!out) return;
+    if(!list.length){
+      out.innerHTML = `<div class="notice">Корзина пустая. Перейдите в <a href="catalog.html">каталог</a> и добавьте позиции.</div>`;
+      return;
     }
-  });
 
-  document.getElementById('mailRequest').addEventListener('click', ()=>{
-    const to = 'sales@ВАШ_ДОМЕН.ru'; // поменяй
-    location.href = `mailto:${to}?subject=${encodeURIComponent('Заявка с сайта')}&body=${encodeURIComponent(getText())}`;
-  });
+    out.innerHTML = list.map(it=>{
+      const p=it.product||{};
+      const unit=unitFor(p.metallurgy);
+      const price1 = p.price_ton_to_0_3 ?? '';
+      return `
+        <div class="cart-item">
+          <div class="cart-row">
+            <div>
+              <div class="cart-title">${(p.profile||'Позиция')} <span class="muted">${p.size||''}</span></div>
+              <div class="cart-sub">
+                <span class="pill">${dirLabel(p.metallurgy)}</span>
+                ${p.category ? `<span class="pill">${p.category}</span>`:''}
+                ${p.steel ? `<span class="pill">Марка: ${p.steel}</span>`:''}
+                ${p.gost ? `<span class="pill">ГОСТ: ${p.gost}</span>`:''}
+              </div>
+            </div>
+            <button class="btn" data-remove="${it.id}">Удалить</button>
+          </div>
 
-  document.getElementById('waRequest').addEventListener('click', ()=>{
-    const waPhone = '79XXXXXXXXX'; // поменяй (без +)
-    window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(getText())}`, '_blank');
+          <div class="cart-row" style="margin-top:10px">
+            <div class="muted">Базовая цена: <b>${fmtInt(price1) || '—'}</b> ${unit}</div>
+            <div class="qty">
+              <button class="btn" data-dec="${it.id}">−</button>
+              <input class="field qty-inp" value="${it.qty||1}" inputmode="numeric" data-qty="${it.id}"/>
+              <button class="btn" data-inc="${it.id}">+</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    out.querySelectorAll('[data-remove]').forEach(b=>b.addEventListener('click', ()=>{
+      cartRemove(b.getAttribute('data-remove'));
+      render();
+    }));
+    out.querySelectorAll('[data-inc]').forEach(b=>b.addEventListener('click', ()=>{
+      const id=b.getAttribute('data-inc');
+      const list=cartGet();
+      const it=list.find(x=>x.id===id);
+      cartSetQty(id, (it?.qty||1)+1);
+      render();
+    }));
+    out.querySelectorAll('[data-dec]').forEach(b=>b.addEventListener('click', ()=>{
+      const id=b.getAttribute('data-dec');
+      const list=cartGet();
+      const it=list.find(x=>x.id===id);
+      cartSetQty(id, Math.max(1,(it?.qty||1)-1));
+      render();
+    }));
+    out.querySelectorAll('[data-qty]').forEach(inp=>inp.addEventListener('input', ()=>{
+      const id=inp.getAttribute('data-qty');
+      const v=parseInt((inp.value||'').replace(/\D/g,''),10)||1;
+      cartSetQty(id,v);
+      cartUpdateBadges();
+    }));
+  }
+
+  function send(){
+    const name = (document.getElementById('name')?.value||'').trim();
+    const phone = (document.getElementById('phone')?.value||'').trim();
+    const msg = (document.getElementById('msg')?.value||'').trim();
+    const list = cartGet();
+
+    const lines = [
+      'Заявка с сайта ГераМеталл',
+      '',
+      name ? ('Имя: '+name) : '',
+      phone ? ('Телефон: '+phone) : '',
+      msg ? ('Комментарий: '+msg) : '',
+      '',
+      'Позиции:',
+      ...list.map(lineFor)
+    ].filter(Boolean);
+
+    const subject = encodeURIComponent('Заявка с сайта ГераМеталл — корзина');
+    const body = encodeURIComponent(lines.join('\n'));
+    location.href = 'mailto:sales@gerametal.ru?subject='+subject+'&body='+body;
+  }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    render();
+    document.getElementById('sendCart')?.addEventListener('click', send);
+    document.getElementById('clearCart')?.addEventListener('click', ()=>{
+      cartClear(); render();
+    });
   });
-});
+})();

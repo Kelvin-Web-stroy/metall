@@ -1,46 +1,92 @@
-const CART_KEY = 'gerametal_cart_v1';
+// assets/app.js
+// Shared helpers + cart storage (localStorage). Works on GitHub Pages.
 
-function cartLoad(){ try{ return JSON.parse(localStorage.getItem(CART_KEY)||'[]'); }catch(e){ return []; } }
-function cartSave(items){ localStorage.setItem(CART_KEY, JSON.stringify(items||[])); cartUpdateBadges(); }
-function cartCount(){ return cartLoad().reduce((s,i)=> s + (Number(i.qty)||0), 0); }
+(function () {
+  const CART_KEY = "gm_cart_v1";
 
-function cartUpdateBadges(){
-  const n = cartCount();
-  document.querySelectorAll('[data-cart-badge]').forEach(el=>{
-    el.textContent = n;
-    el.style.display = n>0 ? 'flex' : 'none';
-  });
-}
+  function safeJSONParse(s, fallback) {
+    try { return JSON.parse(s); } catch (e) { return fallback; }
+  }
 
-function cartItemId(p){
-  const raw = [p.category,p.profile,p.size,p.steel,p.length_m].join('|');
-  let h=0; for(let i=0;i<raw.length;i++){ h=((h<<5)-h)+raw.charCodeAt(i); h|=0; }
-  return 'i'+Math.abs(h);
-}
+  function getCart() {
+    return safeJSONParse(localStorage.getItem(CART_KEY) || "[]", []);
+  }
 
-function cartAdd(p){
-  const items = cartLoad();
-  const id = cartItemId(p);
-  const idx = items.findIndex(x=>x.id===id);
-  if(idx>=0) items[idx].qty = (Number(items[idx].qty)||0) + 1;
-  else items.push({
-    id, qty:1,
-    category:p.category||'', profile:p.profile||'', size:p.size||'',
-    steel:p.steel||'', length_m:p.length_m||'',
-    price_ton_to_0_3:p.price_ton_to_0_3 ?? null,
-    price_ton_0_3_1:p.price_ton_0_3_1 ?? null,
-    price_ton_1_5:p.price_ton_1_5 ?? null,
-    weight_kg:p.weight_kg ?? null,
-    price_piece_rub:p.price_piece_rub ?? null,
-  });
-  cartSave(items);
-}
-function cartRemove(id){ cartSave(cartLoad().filter(x=>x.id!==id)); }
-function cartSetQty(id, qty){
-  qty=Math.max(1, Number(qty)||1);
-  const items=cartLoad(); const it=items.find(x=>x.id===id);
-  if(it){ it.qty=qty; cartSave(items); }
-}
-function cartClear(){ cartSave([]); }
+  function saveCart(list) {
+    localStorage.setItem(CART_KEY, JSON.stringify(list));
+    updateBadges();
+  }
 
-document.addEventListener('DOMContentLoaded', cartUpdateBadges);
+  function addToCart(product, qty = 1) {
+    if (!product) return;
+    const id = product.id || (product.metallurgy + "|" + product.category + "|" + product.profile + "|" + product.size + "|" + product.steel + "|" + product.gost);
+    const cart = getCart();
+    const found = cart.find(x => x.id === id);
+    if (found) {
+      found.qty = (parseInt(found.qty || 1, 10) || 1) + (parseInt(qty, 10) || 1);
+    } else {
+      cart.push({
+        id,
+        qty: parseInt(qty, 10) || 1,
+        product: {
+          id,
+          metallurgy: product.metallurgy || "",
+          category: product.category || "",
+          profile: product.profile || "",
+          size: product.size || "",
+          steel: product.steel || "",
+          gost: product.gost || "",
+          length_m: product.length_m || "",
+          price_ton_to_0_3: product.price_ton_to_0_3 ?? null,
+          price_ton_0_3_1: product.price_ton_0_3_1 ?? null,
+          price_ton_1_5: product.price_ton_1_5 ?? null,
+          price_piece_rub: product.price_piece_rub ?? null,
+          note: product.note || "",
+          origin: product.origin || ""
+        }
+      });
+    }
+    saveCart(cart);
+  }
+
+  function removeFromCart(id) {
+    const cart = getCart().filter(x => x.id !== id);
+    saveCart(cart);
+  }
+
+  function setQty(id, qty) {
+    const cart = getCart();
+    const found = cart.find(x => x.id === id);
+    if (!found) return;
+    const q = parseInt(qty, 10) || 1;
+    found.qty = Math.max(1, q);
+    saveCart(cart);
+  }
+
+  function clearCart() {
+    saveCart([]);
+  }
+
+  function countCart() {
+    return getCart().reduce((s, x) => s + (parseInt(x.qty || 1, 10) || 1), 0);
+  }
+
+  function updateBadges() {
+    const n = countCart();
+    document.querySelectorAll("[data-cart-badge]").forEach(el => {
+      if (!n) { el.style.display = "none"; el.textContent = "0"; }
+      else { el.style.display = "inline-flex"; el.textContent = String(n); }
+    });
+  }
+
+  // expose
+  window.cartGet = getCart;
+  window.cartAdd = addToCart;
+  window.cartRemove = removeFromCart;
+  window.cartSetQty = setQty;
+  window.cartClear = clearCart;
+  window.cartCount = countCart;
+  window.cartUpdateBadges = updateBadges;
+
+  document.addEventListener("DOMContentLoaded", updateBadges);
+})();
