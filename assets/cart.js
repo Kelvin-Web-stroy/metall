@@ -3,22 +3,27 @@ function esc(s){
     .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
     .replaceAll('"','&quot;').replaceAll("'","&#039;");
 }
-function fmt(n){
-  return (n==null||n==='' ? '' : new Intl.NumberFormat('ru-RU',{maximumFractionDigits:2}).format(n));
-}
 
-function buildText(items, meta){
-  const lines=[];
+function buildRequestText(items, meta){
+  const lines = [];
   lines.push('Заявка с сайта ГераМеталл');
-  if(meta.name) lines.push('Имя: '+meta.name);
-  if(meta.phone) lines.push('Телефон: '+meta.phone);
-  if(meta.comment) lines.push('Комментарий: '+meta.comment);
+  if(meta?.name) lines.push('Имя: ' + meta.name);
+  if(meta?.phone) lines.push('Телефон: ' + meta.phone);
+  if(meta?.comment) lines.push('Комментарий: ' + meta.comment);
   lines.push('');
-  lines.push('Позиции:');
-  items.forEach((it,i)=>{
-    const title=[it.profile,it.size].filter(Boolean).join(' ');
-    lines.push(`${i+1}) ${title} — ${it.qty} шт/ед. (Группа: ${it.category || '-'})`);
+  lines.push('Товары:');
+  items.forEach((it, i) => {
+    const head = [it.product].filter(Boolean).join(' ');
+    const metaParts = [
+      it.main ? ('Направление: ' + it.main) : '',
+      it.sub ? ('Подкатегория: ' + it.sub) : '',
+      it.gost ? ('ГОСТ: ' + it.gost) : '',
+    ].filter(Boolean).join(', ');
+    lines.push(`${i+1}) ${head} — кол-во: ${it.qty}` + (metaParts ? ` (${metaParts})` : ''));
+    if(it.description) lines.push('   ' + it.description);
   });
+  lines.push('');
+  lines.push('Источник: корзина сайта');
   return lines.join('\n');
 }
 
@@ -39,15 +44,19 @@ function render(){
     <div class="cart-list">
       <table class="cart-table">
         <thead><tr>
-          <th>Товар</th><th>Группа</th><th>Кол-во</th><th></th>
+          <th>Товар</th><th>Направление</th><th>Подкатегория</th><th>Кол-во</th><th></th>
         </tr></thead>
         <tbody>
           ${items.map(it=>{
-            const title=[it.profile,it.size].filter(Boolean).join(' ');
             return `
               <tr>
-                <td><b>${esc(title)}</b></td>
-                <td>${esc(it.category||'')}</td>
+                <td>
+                  <b>${esc(it.product||'')}</b>
+                  ${it.description ? `<div class="small" style="color:var(--muted);margin-top:6px">${esc(it.description)}</div>`:''}
+                  ${it.gost ? `<div class="small" style="color:var(--muted)">${esc('ГОСТ: '+it.gost)}</div>`:''}
+                </td>
+                <td>${esc(it.main||'')}</td>
+                <td>${esc(it.sub||'')}</td>
                 <td><input class="qty" type="number" min="1" value="${it.qty}" data-qty="${it.id}"></td>
                 <td><button class="remove" data-remove="${it.id}">Удалить</button></td>
               </tr>
@@ -59,13 +68,13 @@ function render(){
   `;
 
   cards.innerHTML = items.map(it=>{
-    const title=[it.profile,it.size].filter(Boolean).join(' ');
     return `
       <div class="cart-card">
         <div style="display:flex;justify-content:space-between;gap:10px">
           <div>
-            <div style="font-weight:950">${esc(title)}</div>
-            <div class="small" style="color:var(--muted);margin-top:6px">${esc(it.category||'')}</div>
+            <div style="font-weight:950">${esc(it.product||'')}</div>
+            <div class="small" style="color:var(--muted);margin-top:6px">${esc([it.main,it.sub].filter(Boolean).join(' • '))}</div>
+            ${it.description ? `<div class="small" style="color:var(--muted);margin-top:6px">${esc(it.description)}</div>`:''}
           </div>
           <button class="remove" data-remove="${it.id}">Удалить</button>
         </div>
@@ -91,38 +100,55 @@ function render(){
   });
 }
 
-document.addEventListener('DOMContentLoaded', ()=>{
-  render();
-
+function initActions(){
   document.getElementById('clearCart').addEventListener('click', ()=>{
-    cartClear(); render();
+    cartClear();
+    render();
   });
 
-  const getMeta = ()=>({
-    name: document.getElementById('name').value.trim(),
-    phone: document.getElementById('phone').value.trim(),
-    comment: document.getElementById('comment').value.trim()
-  });
+  const copyBtn = document.getElementById('copyRequest');
+  const mailBtn = document.getElementById('mailRequest');
+  const waBtn = document.getElementById('waRequest');
 
-  const getText = ()=>buildText(cartLoad(), getMeta());
+  function getMeta(){
+    return {
+      name: document.getElementById('name').value.trim(),
+      phone: document.getElementById('phone').value.trim(),
+      comment: document.getElementById('comment').value.trim(),
+    };
+  }
 
-  document.getElementById('copyRequest').addEventListener('click', async (e)=>{
+  function getText(){
+    const items = cartLoad();
+    return buildRequestText(items, getMeta());
+  }
+
+  copyBtn.addEventListener('click', async ()=>{
+    const text = getText();
     try{
-      await navigator.clipboard.writeText(getText());
-      e.target.textContent='Скопировано ✅';
-      setTimeout(()=>e.target.textContent='Скопировать заявку',1200);
-    }catch(err){
-      alert('Не удалось скопировать.');
+      await navigator.clipboard.writeText(text);
+      copyBtn.textContent = 'Скопировано ✅';
+      setTimeout(()=>copyBtn.textContent='Скопировать заявку', 1200);
+    }catch(e){
+      alert('Не удалось скопировать. Выделите текст вручную и скопируйте.');
     }
   });
 
-  document.getElementById('mailRequest').addEventListener('click', ()=>{
-    const to = 'sales@ВАШ_ДОМЕН.ru'; // поменяй
-    location.href = `mailto:${to}?subject=${encodeURIComponent('Заявка с сайта')}&body=${encodeURIComponent(getText())}`;
+  mailBtn.addEventListener('click', ()=>{
+    const subject = encodeURIComponent('Заявка с сайта ГераМеталл');
+    const body = encodeURIComponent(getText());
+    const to = 'sales@gerametal.ru';
+    location.href = `mailto:${to}?subject=${subject}&body=${body}`;
   });
 
-  document.getElementById('waRequest').addEventListener('click', ()=>{
-    const waPhone = '79XXXXXXXXX'; // поменяй (без +)
-    window.open(`https://wa.me/${waPhone}?text=${encodeURIComponent(getText())}`, '_blank');
+  waBtn.addEventListener('click', ()=>{
+    const text = encodeURIComponent(getText());
+    const waPhone = '79000000000';
+    window.open(`https://wa.me/${waPhone}?text=${text}`, '_blank');
   });
+}
+
+document.addEventListener('DOMContentLoaded', ()=>{
+  render();
+  initActions();
 });

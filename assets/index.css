@@ -191,3 +191,49 @@
   .mobile-call{display:block}
   body{padding-bottom:76px}
 }
+
+/* ===== Direction cards ===== */
+.dir-grid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap:14px;
+  margin-top:14px;
+}
+@media (max-width:980px){ .dir-grid{grid-template-columns:1fr} }
+
+.dir-card{
+  display:block;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+.dir-card:hover{transform:translateY(-1px)}
+.dir-kicker{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  border:1px solid var(--border);
+  background:#f9fafb;
+  color:var(--muted);
+  font-weight:900;
+  font-size:12px;
+}
+.dir-title{
+  margin-top:10px;
+  font-size:24px;
+  font-weight:950;
+  letter-spacing:-.3px;
+}
+.dir-sub{
+  margin-top:8px;
+  color:var(--muted);
+  font-weight:650;
+  line-height:1.55;
+}
+.dir-cta{
+  margin-top:12px;
+  font-weight:950;
+  color:#111827;
+}
