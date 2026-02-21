@@ -68,3 +68,10 @@
 @media (max-width: 520px){
   .cart-cards { display: grid; gap: 10px; }
 }
+/* FIX: нижнее меню не перекрывает контент на мобиле */
+@media (max-width:520px){
+  body{ padding-bottom: 120px; } /* было 88, увеличиваем */
+}
+@media (max-width:520px){
+  .actions{ padding-bottom: 16px; }
+}
