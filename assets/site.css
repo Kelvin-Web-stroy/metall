@@ -446,3 +446,19 @@ textarea.field{ min-height: 120px; resize: vertical; }
 .cta-card .field{
   border-radius:14px;
 }
+/* LOGO image вместо градиентной точки */
+.brand .logo{
+  background: transparent !important;
+  box-shadow: none !important;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand .logo img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
