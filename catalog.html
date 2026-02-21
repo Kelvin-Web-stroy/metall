@@ -4,396 +4,363 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Каталог — ГераМеталл</title>
-  <meta name="description" content="Каталог металлопроката: Цветной и Черный. Фильтры: направление → подгруппа → товар."/>
+  <meta name="description" content="Каталог по прайсу: группы (синие заголовки), поиск, фильтр цен."/>
   <link rel="stylesheet" href="assets/site.css"/>
   <link rel="stylesheet" href="assets/catalog.css"/>
 </head>
 <body>
 
-<header>
-  <div class="container">
-    <div class="head">
-      <a class="brand" href="index.html">
-        <span class="logo" aria-hidden="true"></span>
-        <span class="name">ГераМеталл<span class="tag">каталог и цены</span></span>
-      </a>
-
-      <a class="catalog-btn" href="catalog.html" title="Каталог">
-        <span class="burger"><i></i></span>
-        Каталог
-      </a>
-
-      <form class="search" onsubmit="return false">
-        <input id="q" placeholder="Поиск: марка, размер, ГОСТ, товар…" />
-        <button type="button" id="btnFind">Найти</button>
-      </form>
-
-      <div class="head-right">
-        <a class="cart-link" href="cart.html" title="Корзина">
-          🛒 Корзина
-          <span class="cart-badge" data-cart-badge style="display:none">0</span>
+  <header>
+    <div class="container">
+      <div class="head">
+        <a class="brand" href="index.html">
+          <span class="logo" aria-hidden="true">
+            <!-- <img src="assets/logo.png" alt="ГераМеталл"> -->
+          </span>
+          <span class="name">ГераМеталл<span class="tag">каталог и цены</span></span>
         </a>
-        <div class="mini-links">
-          <a href="index.html#contacts">Контакты</a>
-          <span>·</span>
-          <a href="index.html#services">Услуги</a>
+
+        <a class="catalog-btn" href="catalog.html" title="Каталог">
+          <span class="burger"><i></i></span>
+          Каталог
+        </a>
+
+        <form class="search" onsubmit="return false">
+          <input id="q" placeholder="Поиск: марка, размер, профиль, ГОСТ…" />
+          <button type="button" id="btnFind">Найти</button>
+        </form>
+
+        <div class="head-right">
+          <a class="cart-link" href="cart.html" title="Корзина">
+            🛒 Корзина
+            <span class="cart-badge" data-cart-badge style="display:none">0</span>
+          </a>
+
+          <div class="mini-links">
+            <a href="index.html#contacts">Контакты</a>
+            <span>·</span>
+            <a href="index.html#services">Услуги</a>
+          </div>
+          <a class="phone" href="tel:+79000000000">+7 (900) 000-00-00</a>
         </div>
-        <a class="phone" href="tel:+79000000000">+7 (900) 000-00-00</a>
       </div>
     </div>
-  </div>
-</header>
+  </header>
 
-<main class="container page">
-  <h1 class="page-title">Каталог и цены</h1>
-  <p class="page-sub">Выберите направление → подгруппу → товар. Данные показываем компактно: “товар + описание + цена”.</p>
+  <main class="container page">
+    <h1 class="page-title">Каталог и цены</h1>
+    <p class="page-sub">Группы товаров сформированы из прайса (заголовки). Используйте поиск и фильтр цен.</p>
 
-  <div class="catalog-wrap">
-    <aside class="sidebar">
-      <h3>Фильтры</h3>
+    <div class="catalog-wrap">
+      <aside class="sidebar">
+        <h3>Фильтры</h3>
 
-      <label class="small" style="color:var(--muted); font-weight:900">Направление</label>
-      <select id="dir" class="field">
-        <option value="color">Цветной металлопрокат</option>
-        <option value="black">Черная металлургия</option>
-      </select>
+        <label class="small" style="color:var(--muted); font-weight:900">Группа</label>
+        <select id="cat" class="field">
+          <option value="">Все группы</option>
+        </select>
 
-      <div style="height:10px"></div>
-
-      <label class="small" style="color:var(--muted); font-weight:900">Подгруппа</label>
-      <select id="sub" class="field">
-        <option value="">Все подгруппы</option>
-      </select>
-
-      <div style="height:10px"></div>
-
-      <label class="small" style="color:var(--muted); font-weight:900">Товар</label>
-      <select id="prod" class="field">
-        <option value="">Все товары</option>
-      </select>
-
-      <div class="filters">
-        <div>
-          <label class="small" style="color:var(--muted); font-weight:900">Цена от</label>
-          <input id="pmin" class="field" inputmode="numeric" placeholder="0"/>
+        <div class="filters">
+          <div>
+            <label class="small" style="color:var(--muted); font-weight:900">Цена от (₽/т)</label>
+            <input id="pmin" class="field" inputmode="numeric" placeholder="0"/>
+          </div>
+          <div>
+            <label class="small" style="color:var(--muted); font-weight:900">Цена до (₽/т)</label>
+            <input id="pmax" class="field" inputmode="numeric" placeholder="999999"/>
+          </div>
         </div>
-        <div>
-          <label class="small" style="color:var(--muted); font-weight:900">Цена до</label>
-          <input id="pmax" class="field" inputmode="numeric" placeholder="999999"/>
+
+        <div style="margin-top:10px">
+          <span class="pill">Найдено: <span id="count">—</span></span>
         </div>
-      </div>
 
-      <div style="margin-top:10px">
-        <span class="pill">Найдено: <span id="count">—</span></span>
-      </div>
-
-      <div class="switch-row" style="margin-top:12px">
-        <div class="switch-text">
-          <b>Чермет: все цены</b>
-          <span class="small" style="color:var(--muted)">включает все диапазоны</span>
+        <div class="side-nav">
+          <hr style="border:none;border-top:1px solid var(--border); margin:14px 0"/>
+          <h3>Навигация</h3>
+          <div id="nav" class="navlist"></div>
         </div>
-        <label class="switch">
-          <input id="toggleAllPrices" type="checkbox">
-          <span class="slider"></span>
-        </label>
-      </div>
-    </aside>
+      </aside>
 
-    <section>
-      <div class="notice">
-        <b>Подсказка:</b> всё отображаем компактно: характеристики внутри описания, цены — одной строкой.
-      </div>
+      <section>
+        <div class="notice">
+          <b>Примечание:</b> цены показаны в ₽/т по диапазонам объёма. Для резки/доставки — оставьте заявку (телефон/почта).
+        </div>
 
-      <div id="out" style="margin-top:14px"></div>
-    </section>
-  </div>
-</main>
-
-<footer>
-  <div class="container foot">
-    <div>
-      <b>ГераМеталл</b><br/>
-      <div class="small">Каталог подтягивается из <b>products.json</b>. Для наличия и сроков — запросите счёт.</div>
+        <div id="out" style="margin-top:14px"></div>
+      </section>
     </div>
-    <div>
-      <b>Контакты</b><br/>
-      <a href="tel:+79000000000">+7 (900) 000-00-00</a> · <a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a><br/>
-      <div class="small" style="margin-top:8px">© <span id="y"></span></div>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>
+        <b>ГераМеталл</b><br/>
+        <div class="small">Каталог подтягивается из <b>products.json</b>. Для наличия и сроков — запросите счёт.</div>
+      </div>
+      <div>
+        <b>Контакты</b><br/>
+        <a href="tel:+79000000000">+7 (900) 000-00-00</a> · <a href="mailto:sales@gerametal.ru">sales@gerametal.ru</a><br/>
+        <div class="small" style="margin-top:8px">© <span id="y"></span></div>
+      </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<script src="assets/app.js"></script>
+  <!-- ВАЖНО: app.js подключаем ДО основного скрипта, чтобы cartAdd() был доступен -->
+  <script src="assets/app.js"></script>
 
-<script>
-  document.getElementById('y').textContent = new Date().getFullYear();
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
 
-  const fmtInt = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU').format(n));
-  const fmtMoney = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU', {maximumFractionDigits: 2}).format(n));
+    const fmtInt = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU').format(n));
+    const fmtMoney = (n) => (n===null || n===undefined || n==="" ? "" : new Intl.NumberFormat('ru-RU', {maximumFractionDigits: 2}).format(n));
 
-  function escapeHtml(str){
-    return (str || '').toString()
-      .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
-      .replaceAll('"','&quot;').replaceAll("'","&#039;");
-  }
+    function slugify(text){
+      return (text || "")
+        .toString().trim().toLowerCase()
+        .replace(/[^\p{L}\p{N}\s-]/gu, "")
+        .replace(/\s+/g, "-")
+        .slice(0, 80) || "cat";
+    }
 
-  function parseHash(){
-    const hp = new URLSearchParams((location.hash || "").replace(/^#/, ""));
-    const qp = new URLSearchParams(location.search || "");
-    return {
-      dir: hp.get("dir") || qp.get("dir"),
-      sub: hp.get("sub") || qp.get("sub"),
-      prod: hp.get("prod") || qp.get("prod"),
-      search: hp.get("search") || qp.get("search"),
-    };
-  }
+    function rowMatches(p, q){
+      if(!q) return true;
+      const hay = (p.category+" "+p.profile+" "+p.size+" "+p.steel+" "+p.length_m).toLowerCase();
+      return hay.includes(q.toLowerCase());
+    }
 
-  function normUnit(u){
-    if(!u) return "";
-    const s = String(u).trim();
-    if(!s) return "";
-    if(s.toLowerCase().includes("nan")) return "";
-    return s;
-  }
-  function normRange(r){
-    if(!r) return "Цена";
-    const s = String(r).trim();
-    if(!s) return "Цена";
-    if(s.toLowerCase() === "nan") return "Цена";
-    return s;
-  }
+    function withinPrice(p, min, max){
+      const v = p.price_ton_to_0_3 ?? p.price_ton_0_3_1 ?? p.price_ton_1_5;
+      if(v===null || v===undefined) return true;
+      if(min && v < min) return false;
+      if(max && v > max) return false;
+      return true;
+    }
 
-  function priceMinOf(p){
-    let min = null;
-    for(const pr of (p.prices || [])){
-      if(typeof pr.value === "number"){
-        if(min === null || pr.value < min) min = pr.value;
+    function readHashSearch(){
+      const h = (location.hash || "");
+      if(!h) return null;
+      if(h.startsWith("#search=")){
+        try{ return decodeURIComponent(h.slice("#search=".length)); }
+        catch(e){ return h.slice("#search=".length); }
       }
+      return null;
     }
-    return min;
-  }
 
-  function withinPrice(p, min, max){
-    const v = priceMinOf(p);
-    if(v === null) return true;
-    if(min && v < min) return false;
-    if(max && v > max) return false;
-    return true;
-  }
+    function escapeHtml(str){
+      return (str || '').toString()
+        .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+        .replaceAll('"','&quot;').replaceAll("'","&#039;");
+    }
 
-  function rowMatches(p, q){
-    if(!q) return true;
-    const hay = (
-      (p.direction_label||"") + " " +
-      (p.subgroup||"") + " " +
-      (p.product||"") + " " +
-      JSON.stringify(p.attrs||{})
-    ).toLowerCase();
-    return hay.includes(q.toLowerCase());
-  }
-
-  function bindAddButtons(){
-    document.querySelectorAll('[data-add]').forEach(btn=>{
-      btn.addEventListener('click', ()=>{
-        try{
-          const p = JSON.parse(decodeURIComponent(btn.getAttribute('data-add')));
-          cartAdd(p);
-          btn.textContent = 'Добавлено ✅';
-          setTimeout(()=>btn.textContent='В корзину', 900);
-        }catch(e){}
+    function bindAddButtons(){
+      document.querySelectorAll('[data-add]').forEach(btn=>{
+        btn.addEventListener('click', ()=>{
+          try{
+            const p = JSON.parse(decodeURIComponent(btn.getAttribute('data-add')));
+            cartAdd(p);
+            btn.textContent = 'Добавлено ✅';
+            setTimeout(()=>btn.textContent='В корзину', 900);
+          }catch(e){}
+        });
       });
-    });
-  }
-
-  function buildPriceLineColor(p){
-    const pr = (p.prices && p.prices[0]) ? p.prices[0] : null;
-    if(!pr) return "—";
-    if(typeof pr.value === "number") return `${fmtMoney(pr.value)} ${pr.unit || "₽/кг"}`;
-    if(pr.note) return pr.note;
-    return "—";
-  }
-
-  function buildPriceLineBlack(p, showAll){
-    // Собираем пары range+unit → value
-    const arr = [];
-    for(const pr of (p.prices || [])){
-      const range = normRange(pr.range);
-      const unit = normUnit(pr.unit);
-      const label = unit ? `${range} ${unit}` : `${range}`;
-      let val = "—";
-      if(typeof pr.value === "number") val = fmtInt(pr.value);
-      else if(pr.note) val = pr.note;
-
-      arr.push({ range, unit, label, val });
     }
 
-    // компакт: берем 4 первых осмысленных цены
-    const compact = showAll ? arr : arr.filter(x=>x.val!=="—").slice(0,4);
-    if(compact.length === 0) return "—";
+    function renderSection(cat, list){
+      const id = slugify(cat);
+      const meta = `${list.length} позиций`;
 
-    return compact.map(x => `${x.label}: ${x.val}`).join(" · ");
-  }
+      const mCards = list.map(p => {
+        const data = encodeURIComponent(JSON.stringify(p));
 
-  function buildDescColor(p){
-    const a = p.attrs || {};
-    const parts = [];
-    if(a["Марка/сплав"]) parts.push(`Марка: ${a["Марка/сплав"]}`);
-    if(a["Размер/параметры"]) parts.push(`Размер: ${a["Размер/параметры"]}`);
-    if(a["ГОСТ/ТУ"]) parts.push(`ГОСТ: ${a["ГОСТ/ТУ"]}`);
-    if(a["Происхождение"]) parts.push(`Происхождение: ${a["Происхождение"]}`);
-    return parts.join(" • ");
-  }
+        const title = `${p.profile || "Позиция"} ${p.size || ""}`.trim();
+        const sub = [
+          p.steel ? `Марка: ${p.steel}` : "",
+          p.length_m ? `Длина: ${p.length_m}` : "",
+          (p.weight_kg ?? "") !== "" ? `Вес 1 шт: ${p.weight_kg} кг` : ""
+        ].filter(Boolean).join(" • ");
 
-  function buildDescBlack(p){
-    const a = p.attrs || {};
-    const parts = [];
-    if(a["Длина"]) parts.push(`Длина: ${a["Длина"]}`);
-    if(a["Категория"]) parts.push(`Категория: ${a["Категория"]}`);
-    if(a["ГОСТ/ТУ"]) parts.push(`ГОСТ: ${a["ГОСТ/ТУ"]}`);
-    if(a["Марка стали"]) parts.push(`Сталь: ${a["Марка стали"]}`);
-    return parts.join(" • ");
-  }
+        return `
+          <div class="m-card">
+            <div class="m-top">
+              <div>
+                <div class="m-title">${escapeHtml(title)}</div>
+                <div class="m-sub">${escapeHtml(sub)}</div>
+              </div>
+              <span class="badge">₽/т</span>
+            </div>
 
-  function renderSection(title, list, direction, showAllPrices){
-    const rows = list.map(p=>{
-      const data = encodeURIComponent(JSON.stringify(p));
-      const desc = (direction==="color") ? buildDescColor(p) : buildDescBlack(p);
-      const price = (direction==="color") ? buildPriceLineColor(p) : buildPriceLineBlack(p, showAllPrices);
+            <div class="m-prices">
+              <div class="m-price"><b>до 0,3 т</b><span>${fmtInt(p.price_ton_to_0_3) || "—"} ₽/т</span></div>
+              <div class="m-price"><b>0,3–1 т</b><span>${fmtInt(p.price_ton_0_3_1) || "—"} ₽/т</span></div>
+              <div class="m-price"><b>1–5 т</b><span>${fmtInt(p.price_ton_1_5) || "—"} ₽/т</span></div>
+              <div class="m-price"><b>Цена 1 шт</b><span>${fmtMoney(p.price_piece_rub) || "—"} ₽</span></div>
+            </div>
+
+            <div class="m-add">
+              <button class="add-btn" data-add="${data}">В корзину</button>
+              <a class="btn primary" href="cart.html">Оформить</a>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      const rows = list.map(p => {
+        const data = encodeURIComponent(JSON.stringify(p));
+        return `
+          <tr>
+            <td><span class="badge">${escapeHtml(p.profile || "—")}</span></td>
+            <td class="mono">${escapeHtml(p.size || "—")}</td>
+            <td class="mono">${escapeHtml(p.steel || "—")}</td>
+            <td class="mono">${escapeHtml(p.length_m || "—")}</td>
+            <td class="mono">${fmtInt(p.price_ton_to_0_3) || ""}</td>
+            <td class="mono">${fmtInt(p.price_ton_0_3_1) || ""}</td>
+            <td class="mono">${fmtInt(p.price_ton_1_5) || ""}</td>
+            <td class="mono">${escapeHtml((p.weight_kg ?? "") + "")}</td>
+            <td class="mono">${fmtMoney(p.price_piece_rub) || ""}</td>
+            <td><button class="add-btn" data-add="${data}">В корзину</button></td>
+          </tr>
+        `;
+      }).join("");
 
       return `
-        <tr>
-          <td>
-            <b>${escapeHtml(p.product||"")}</b>
-            <div class="row-meta">${escapeHtml(desc || "")}</div>
-          </td>
-          <td class="mono">${escapeHtml(price)}</td>
-          <td style="width:140px"><button class="add-btn" data-add="${data}">В корзину</button></td>
-        </tr>
+        <section class="cat-section" id="${id}">
+          <div class="cat-head">
+            <h2 class="cat-title">${escapeHtml(cat)}</h2>
+            <div class="cat-meta">${meta}</div>
+          </div>
+
+          <div class="m-cards">${mCards}</div>
+
+          <div class="table-wrap">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Профиль</th>
+                  <th>Размер</th>
+                  <th>Марка</th>
+                  <th>Длина</th>
+                  <th>до 0,3 т</th>
+                  <th>0,3–1 т</th>
+                  <th>1–5 т</th>
+                  <th>Вес 1 шт</th>
+                  <th>Цена 1 шт</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows || `<tr><td colspan="10" style="color:var(--muted)">Нет позиций по фильтрам</td></tr>`}
+              </tbody>
+            </table>
+          </div>
+        </section>
       `;
-    }).join("");
-
-    return `
-      <section class="cat-section">
-        <div class="cat-head">
-          <h2 class="cat-title">${escapeHtml(title)}</h2>
-          <div class="cat-meta">${list.length} позиций</div>
-        </div>
-
-        <div class="table-wrap">
-          <table class="table table-simple" style="min-width: 820px">
-            <thead>
-              <tr>
-                <th>Товар и описание</th>
-                <th>Цена</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              ${rows || `<tr><td colspan="3" style="color:var(--muted)">Нет позиций</td></tr>`}
-            </tbody>
-          </table>
-        </div>
-      </section>
-    `;
-  }
-
-  async function main(){
-    const res = await fetch('products.json', {cache:'no-store'});
-    const products = await res.json();
-
-    const $dir = document.querySelector('#dir');
-    const $sub = document.querySelector('#sub');
-    const $prod = document.querySelector('#prod');
-    const $q = document.querySelector('#q');
-    const $pmin = document.querySelector('#pmin');
-    const $pmax = document.querySelector('#pmax');
-    const $out = document.querySelector('#out');
-    const $count = document.querySelector('#count');
-    const $btn = document.querySelector('#btnFind');
-    const $toggle = document.querySelector('#toggleAllPrices');
-
-    const LS_KEY = "gm_black_all_prices";
-    $toggle.checked = (localStorage.getItem(LS_KEY) === "1");
-
-    const hash = parseHash();
-    if(hash.dir){ $dir.value = hash.dir; }
-    if(hash.search){ $q.value = hash.search; }
-
-    function subgroupsFor(dir){
-      return [...new Set(products.filter(p=>p.direction===dir).map(p=>p.subgroup).filter(Boolean))].sort();
-    }
-    function productsFor(dir, sub){
-      return [...new Set(products.filter(p=>p.direction===dir && (!sub || p.subgroup===sub)).map(p=>p.product).filter(Boolean))].sort();
     }
 
-    function refillSub(){
-      const dir = $dir.value;
-      const subs = subgroupsFor(dir);
-      $sub.innerHTML = '<option value="">Все подгруппы</option>' + subs.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
-      $sub.value = "";
-    }
+    async function main(){
+      const res = await fetch('products.json', {cache:'no-store'});
+      const products = await res.json();
 
-    function refillProd(){
-      const dir = $dir.value;
-      const sub = $sub.value || "";
-      const prods = productsFor(dir, sub);
-      $prod.innerHTML = '<option value="">Все товары</option>' + prods.map(s=>`<option value="${escapeHtml(s)}">${escapeHtml(s)}</option>`).join('');
-      $prod.value = "";
-    }
+      const cats = [...new Set(products.map(p => p.category).filter(Boolean))];
 
-    function apply(){
-      const dir = $dir.value;
-      const sub = $sub.value || "";
-      const prod = $prod.value || "";
-      const q = ($q.value || "").trim();
-      const min = parseInt(($pmin.value||"").replace(/\D/g,""),10) || null;
-      const max = parseInt(($pmax.value||"").replace(/\D/g,""),10) || null;
-      const showAllPrices = $toggle.checked;
+      const $q = document.querySelector('#q');
+      const $cat = document.querySelector('#cat');
+      const $pmin = document.querySelector('#pmin');
+      const $pmax = document.querySelector('#pmax');
+      const $out = document.querySelector('#out');
+      const $count = document.querySelector('#count');
+      const $nav = document.querySelector('#nav');
+      const $btn = document.querySelector('#btnFind');
 
-      const filtered = products.filter(p =>
-        p.direction === dir &&
-        (!sub || p.subgroup === sub) &&
-        (!prod || p.product === prod) &&
-        rowMatches(p, q) &&
-        withinPrice(p, min, max)
-      );
+      $cat.innerHTML = `<option value="">Все группы</option>` + cats.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('');
+      $nav.innerHTML = cats.map(c => `<a href="#${slugify(c)}">${escapeHtml(c)}</a>`).join("");
 
-      $count.textContent = filtered.length;
+      function apply(){
+        const q = ($q.value || "").trim();
+        const cat = $cat.value;
+        const min = parseInt(($pmin.value || "").replace(/\D/g,""), 10) || null;
+        const max = parseInt(($pmax.value || "").replace(/\D/g,""), 10) || null;
 
-      const map = new Map();
-      for(const p of filtered){
-        const key = p.subgroup || "Без подгруппы";
-        if(!map.has(key)) map.set(key, []);
-        map.get(key).push(p);
+        const filtered = products.filter(p =>
+          (!cat || p.category === cat) &&
+          rowMatches(p, q) &&
+          withinPrice(p, min, max)
+        );
+
+        const map = new Map();
+        for(const p of filtered){
+          const key = p.category || "Без категории";
+          if(!map.has(key)) map.set(key, []);
+          map.get(key).push(p);
+        }
+
+        let html = "";
+        for(const [k, list] of map.entries()){
+          html += renderSection(k, list);
+        }
+
+        $out.innerHTML = html || `<div class="notice">По текущим фильтрам ничего не найдено.</div>`;
+        $count.textContent = filtered.length;
+
+        // ВАЖНО: биндим кнопки после вставки HTML
+        bindAddButtons();
       }
 
-      let html = "";
-      for(const [k, list] of map.entries()){
-        html += renderSection(k, list, dir, showAllPrices);
+      [$q, $cat, $pmin, $pmax].forEach(el => el.addEventListener('input', apply));
+      $btn.addEventListener('click', apply);
+
+      // hash search
+      const hashSearch = readHashSearch();
+      if(hashSearch){
+        $q.value = hashSearch;
       }
 
-      $out.innerHTML = html || '<div class="notice">По текущим фильтрам ничего не найдено.</div>';
-      bindAddButtons();
-    }
-
-    $toggle.addEventListener('change', ()=>{
-      localStorage.setItem(LS_KEY, $toggle.checked ? "1" : "0");
       apply();
-    });
 
-    $dir.addEventListener('change', ()=>{ refillSub(); refillProd(); apply(); });
-    $sub.addEventListener('change', ()=>{ refillProd(); apply(); });
-    $prod.addEventListener('change', apply);
-    [$q, $pmin, $pmax].forEach(el => el.addEventListener('input', apply));
-    $btn.addEventListener('click', apply);
+      // scroll to section if hash is category slug
+      const h = location.hash?.slice(1);
+      if(h && !h.startsWith("search=")){
+        setTimeout(() => {
+          const el = document.getElementById(h);
+          if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+        }, 250);
+      }
+    }
 
-    refillSub();
-    refillProd();
-    apply();
-  }
+    main();
+  </script>
 
-  main();
-</script>
+  <nav class="bottom-nav" aria-label="Нижнее меню">
+    <div class="grid">
+      <a href="index.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>
+        </svg>
+        Главная
+      </a>
+      <a href="catalog.html">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M4 6h16M4 12h16M4 18h10"/>
+        </svg>
+        Каталог
+      </a>
+      <a href="cart.html" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 6h15l-1.5 9h-12z"/><path d="M6 6 5 3H2"/>
+          <path d="M9 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+          <path d="M18 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+        </svg>
+        Корзина
+        <span class="cart-badge" data-cart-badge style="display:none">0</span>
+      </a>
+      <a href="tel:+79000000000">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.3 1.8.6 2.6a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.6-1.2a2 2 0 0 1 2.1-.5c.8.3 1.7.5 2.6.6A2 2 0 0 1 22 16.9z"/>
+        </svg>
+        Звонок
+      </a>
+    </div>
+  </nav>
 
 </body>
 </html>
