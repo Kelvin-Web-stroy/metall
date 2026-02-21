@@ -62,3 +62,9 @@
   }
   .cart-list{background:transparent; border:none; box-shadow:none}
 }
+/* FIX: на десктопе карточки скрыты, на мобиле показываем */
+.cart-cards { display: none; }
+
+@media (max-width: 520px){
+  .cart-cards { display: grid; gap: 10px; }
+}
