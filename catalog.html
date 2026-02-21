@@ -123,6 +123,7 @@
     </div>
   </footer>
 
+  <!-- app.js ДО логики каталога -->
   <script src="assets/app.js"></script>
 
   <script>
@@ -153,14 +154,9 @@
     }
 
     function parseHash(){
-      // поддержим оба формата:
-      // 1) #dir=black
-      // 2) ?dir=black
-      const h = (location.hash || "").replace(/^#/, "");
-      const hp = new URLSearchParams(h);
-
+      // поддерживаем оба формата: #dir=black и ?dir=black
+      const hp = new URLSearchParams((location.hash || "").replace(/^#/, ""));
       const qp = new URLSearchParams(location.search || "");
-
       return {
         dir: hp.get("dir") || qp.get("dir"),
         sub: hp.get("sub") || qp.get("sub"),
@@ -257,10 +253,17 @@
 
     function pickCompactGroups(groups){
       // Компактный режим:
-      // - Берём до 3 диапазонов: первый + средний + последний (если разные)
-      // - В каждом диапазоне берём максимум 2 единицы (приоритет: ₽/т, ₽/м, ₽/шт, ₽/кг)
+      // - до 3 диапазонов: первый + середина + последний
+      // - максимум 2 единицы в диапазоне
       const n = groups.length;
-      if(n <= 3) return groups.map(g => ({...g, units: g.units.slice(0,2)}));
+      if(n === 0) return [];
+      if(n <= 3){
+        return groups.map(g => ({
+          ...g,
+          units: g.units.slice(0, 2),
+          keys: g.units.slice(0, 2).map(u => `${g.range}|${u}`)
+        }));
+      }
 
       const idxs = new Set([0, Math.floor((n-1)/2), n-1]);
       const picked = [...idxs].sort((a,b)=>a-b).map(i => groups[i]);
@@ -273,6 +276,7 @@
     }
 
     function renderSection(title, list, direction, showAllPrices){
+      // ===== Цветмет =====
       if(direction === "color"){
         const rows = list.map(p=>{
           const data = encodeURIComponent(JSON.stringify(p));
@@ -325,6 +329,7 @@
       // ===== Чермет =====
       const allGroups = buildBlackPriceGroups(list);
       const groups = showAllPrices ? allGroups : pickCompactGroups(allGroups);
+      const compact = !showAllPrices;
 
       const head1 = groups.map(g => `<th colspan="${g.units.length}">${escapeHtml(g.range)}</th>`).join("");
       const head2 = groups.map(g => g.units.map(u => `<th>${escapeHtml(u || "Цена")}</th>`).join("")).join("");
@@ -333,6 +338,13 @@
         const data = encodeURIComponent(JSON.stringify(p));
         const a = p.attrs || {};
         const pm = blackPriceMap(p);
+
+        const metaLine = [
+          a["Длина"] ? `Длина: ${a["Длина"]}` : null,
+          a["Категория"] ? `Категория: ${a["Категория"]}` : null,
+          a["ГОСТ/ТУ"] ? `ГОСТ: ${a["ГОСТ/ТУ"]}` : null,
+          a["Марка стали"] ? `Сталь: ${a["Марка стали"]}` : null,
+        ].filter(Boolean).join(" • ");
 
         const priceCells = groups.map(g => {
           return g.units.map(u => {
@@ -344,6 +356,19 @@
             return `<td class="mono">—</td>`;
           }).join("");
         }).join("");
+
+        if(compact){
+          return `
+            <tr>
+              <td class="sticky-col">
+                <b>${escapeHtml(p.product||"")}</b>
+                <span class="row-meta">${escapeHtml(metaLine)}</span>
+              </td>
+              ${priceCells}
+              <td><button class="add-btn" data-add="${data}">В корзину</button></td>
+            </tr>
+          `;
+        }
 
         return `
           <tr>
@@ -357,6 +382,38 @@
           </tr>
         `;
       }).join("");
+
+      if(compact){
+        const priceColsCount = groups.reduce((s,g)=>s+g.units.length,0);
+        const totalCols = 1 + priceColsCount + 1;
+
+        return `
+          <section class="cat-section">
+            <div class="cat-head">
+              <h2 class="cat-title">${escapeHtml(title)}</h2>
+              <div class="cat-meta">${list.length} позиций</div>
+            </div>
+
+            <div class="table-wrap">
+              <table class="table table-black" style="min-width: 980px">
+                <thead>
+                  <tr>
+                    <th rowspan="2" class="sticky-head">Номенклатура</th>
+                    ${head1}
+                    <th rowspan="2"></th>
+                  </tr>
+                  <tr>
+                    ${head2}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows || `<tr><td colspan="${totalCols}" style="color:var(--muted)">Нет позиций</td></tr>`}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        `;
+      }
 
       const baseCols = 5;
       const priceColsCount = groups.reduce((s,g)=>s+g.units.length,0);
@@ -409,10 +466,9 @@
       const $btn = document.querySelector('#btnFind');
       const $toggle = document.querySelector('#toggleAllPrices');
 
-      // toggle (persist)
+      // persist toggle
       const LS_KEY = "gm_black_all_prices";
-      const saved = localStorage.getItem(LS_KEY);
-      $toggle.checked = saved === "1";
+      $toggle.checked = (localStorage.getItem(LS_KEY) === "1");
 
       const hash = parseHash();
       if(hash.dir){ $dir.value = hash.dir; }
@@ -460,6 +516,7 @@
 
         $count.textContent = filtered.length;
 
+        // группируем по подгруппе
         const map = new Map();
         for(const p of filtered){
           const key = p.subgroup || "Без подгруппы";
