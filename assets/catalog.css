@@ -52,51 +52,126 @@
 .cat-title{margin:0; font-size:18px; font-weight:950; letter-spacing:-.2px;}
 .cat-meta{color:var(--muted); font-weight:800}
 
-.table-wrap{background:#fff; border:1px solid var(--border); border-radius:var(--r); box-shadow:var(--shadow); overflow:auto;}
-.table{width:100%; border-collapse:separate; border-spacing:0; min-width: 1100px;}
-.table th, .table td{padding:10px 10px; border-bottom:1px solid var(--border); vertical-align:top; font-size:13.5px;}
+.table-wrap{
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  box-shadow:var(--shadow);
+  overflow:auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* широкие таблицы */
+.table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  min-width: 980px;
+}
+.table th, .table td{
+  padding:10px 10px;
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+  font-size:13.5px;
+  white-space:nowrap;
+}
 .table th{
-  font-size:12px; color:var(--muted); text-transform:uppercase; letter-spacing:.4px;
+  font-size:12px;
+  color:var(--muted);
+  text-transform:uppercase;
+  letter-spacing:.4px;
   background:#f9fafb;
   position:sticky; top:0;
+  z-index:2;
 }
 .table tr:last-child td{border-bottom:none}
-.mono{font-variant-numeric: tabular-nums; font-feature-settings:"tnum"; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
-.badge{display:inline-flex; padding:4px 10px; border-radius:999px; background:#fff; border:1px solid var(--border); color:var(--muted); font-weight:900; font-size:12px;}
-
-/* mobile cards */
-.m-cards{display:none}
-@media (max-width: 520px){
-  .table-wrap{display:none}
-  .m-cards{display:grid; gap:10px}
-  .m-card{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:16px;
-    box-shadow:var(--shadow);
-    padding:12px;
-  }
-  .m-top{display:flex; gap:10px; align-items:flex-start; justify-content:space-between;}
-  .m-title{font-weight:950; font-size:14px; line-height:1.25;}
-  .m-sub{margin-top:6px; color:var(--muted); font-size:12.5px; line-height:1.4;}
-  .m-prices{margin-top:10px; display:grid; grid-template-columns:1fr 1fr; gap:8px;}
-  .m-price{
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:10px;
-    background:#f9fafb;
-  }
-  .m-price b{display:block; font-size:12px; color:var(--muted); font-weight:850}
-  .m-price span{display:block; margin-top:4px; font-weight:950}
+.mono{
+  font-variant-numeric: tabular-nums;
+  font-feature-settings:"tnum";
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+.badge{
+  display:inline-flex;
+  padding:4px 10px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid var(--border);
+  color:var(--muted);
+  font-weight:900;
+  font-size:12px;
 }
 
-/* add to cart */
+/* липкая первая колонка для чермета */
+.table-black th.sticky-head{
+  position:sticky;
+  left:0;
+  z-index:4;
+}
+.table-black td.sticky-col{
+  position:sticky;
+  left:0;
+  background:#fff;
+  z-index:3;
+  box-shadow: 10px 0 18px rgba(17,24,39,.06);
+}
+
+/* кнопки */
 .add-btn{
   display:inline-flex; align-items:center; justify-content:center;
   padding:8px 10px; border-radius:12px;
   border:1px solid var(--border); background:#fff;
   font-weight:950; cursor:pointer;
-  white-space:nowrap;
 }
 .add-btn:hover{background:#f3f4f6}
-.m-add{ margin-top:10px; display:flex; gap:10px; }
+
+/* переключатель */
+.switch-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding-top:6px;
+}
+.switch-text b{display:block; font-weight:950}
+.switch{
+  position:relative;
+  width:46px;
+  height:28px;
+  display:inline-block;
+}
+.switch input{display:none;}
+.slider{
+  position:absolute; inset:0;
+  background:#e5e7eb;
+  border-radius:999px;
+  transition:.2s;
+  border:1px solid var(--border);
+}
+.slider:before{
+  content:"";
+  position:absolute;
+  width:22px; height:22px;
+  left:3px; top:2px;
+  background:#fff;
+  border-radius:999px;
+  box-shadow:0 8px 18px rgba(17,24,39,.15);
+  transition:.2s;
+}
+.switch input:checked + .slider{
+  background:linear-gradient(135deg, var(--c1), var(--c2), var(--c3));
+}
+.switch input:checked + .slider:before{
+  transform:translateX(18px);
+}
+
+/* компактнее на ноутбуках */
+@media (max-width: 1200px){
+  .table th, .table td{ padding:8px 8px; font-size:13px; }
+}
+
+/* mobile cards (если будут — оставляем как есть) */
+.m-cards{display:none}
+@media (max-width: 520px){
+  .table-wrap{display:none}
+  .m-cards{display:grid; gap:10px}
+}
